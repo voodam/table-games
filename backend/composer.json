@@ -1,0 +1,16 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Games\\": "src"
+        },
+        "files": [
+            "src/Util/Iter.php",
+            "src/Util/Func.php",
+            "src/Util/Compare/Util.php"
+        ]
+    },
+    "require": {
+        "cboden/ratchet": "^0.4.2",
+        "myclabs/php-enum": "^1.7"
+    }
+}

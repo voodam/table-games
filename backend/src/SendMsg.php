@@ -1,0 +1,12 @@
+<?php
+namespace Games;
+
+use MyCLabs\Enum\Enum;
+
+class SendMsg extends Enum {
+    private const YOUR_TURN = 'yourTurn';
+    private const WAIT_PLAYERS ='waitPlayers';
+    private const TURN_OF = 'turnOf';
+    private const WRONG_TURN = 'wrondTurn';
+    private const WINNER_IS = 'winnerIs';
+}

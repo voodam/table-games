@@ -1,0 +1,96 @@
+<?php
+namespace Games;
+
+use Ratchet\ConnectionInterface;
+use Games\Util\Logging;
+use Games\Util\MyObjectStorage;
+
+class Players implements \IteratorAggregate, \Countable {
+    use Logging;
+
+    private MyObjectStorage $storage; // ConnectionInterface -> Player
+
+    public function __construct() {
+        $this->storage = new MyObjectStorage;
+    }
+
+    public function getIterator(): \Traversable {
+        foreach ($this->storage as $conn) {
+            yield $this->storage[$conn];
+        }
+    }
+
+    public function sendNext(Player $player): void {
+        $player->send(SendMsg::YOUR_TURN());
+        $this->sendAbout($player, SendMsg::TURN_OF());
+    }
+    
+    public function sendAbout(Player $player, Enum $message): void {
+        foreach ($this->getOther($player) as $otherPlayer) {
+            $otherPlayer->send($message, $player->name());
+        }
+    }
+    
+    public function sendWinner(string $winner): void {
+        foreach ($this as $player) {
+            $player->send(SendMsg::WINNER_IS(), $winner);
+        }
+    }
+
+    public function getNext(Player $prevPlayer): Player {
+        $found = false;
+        foreach ($this as $player) {
+            if ($player === $prevPlayer) {
+                $found = true;
+                continue;
+            }
+            if ($found) {
+                return $player;
+            }
+        }
+        
+        if (!$found) throw new \OutOfBoundsException('Player was not found');
+        return $this->getFirst();
+    }
+
+    public function create(ConnectionInterface $conn, string $name): Player {
+        $class = $this->playerClass();
+        $player = new $class($conn, $name);
+        $this->set($conn, $player);
+        return $player;
+    }
+
+    public function getOther(object $connOrPlayer): array {
+        $connection = $this->getConn($connOrPlayer);
+        return $this->storage->getOtherInfo($connection);
+    }
+
+    public function set(ConnectionInterface $conn, Player $player): void {
+        $this->log("set player: $player");
+        if ($this->contains($conn)) throw new \OverflowException('Player exists');
+        $this->storage[$conn] = $player;
+    }
+
+    public function get(ConnectionInterface $conn): Player {
+        if (!$this->contains($conn)) throw new \OutOfBoundsException('Player does not exists');
+        return $this->storage[$conn];
+    }
+    
+    public function getFirst(): Player { return $this->storage->getFirstInfo(); }
+    public function maybeGet(ConnectionInterface $conn): ?Player { return $this->storage[$conn] ?? null; }
+    public function clear(): void { $this->storage->detachAll(); }
+    public function count(): int { return count($this->storage); }
+    public function contains(ConnectionInterface $conn): bool { return isset($this->storage[$conn]); }
+    
+    protected function playerClass(): string { return Player::class; }
+
+    private function getConn(object $object): ConnectionInterface {
+        if ($object instanceof Player) {
+            $conn = $object->conn();
+        } else {
+            assert($object instanceof ConnectionInterface);
+            $conn = $object;
+        }
+        return $conn;
+    }
+}
