@@ -14,6 +14,8 @@ use function Games\Util\Iter\filter;
 class Goat implements MsgObservableInterface {
     use MsgObservable;
     use Loggable;
+    
+    private const WIN_SCORE = 12;
 
     private CardPlayers $players;
     private \SplObjectStorage $scores; // Team -> int
@@ -41,7 +43,7 @@ class Goat implements MsgObservableInterface {
         $this->countScore();
         $winner = $this->winner();
         if ($winner) {
-            $this->players->sendWinner($winner->name());
+            $this->restart();
         } else {
             $this->newPartie();
         }
@@ -55,6 +57,16 @@ class Goat implements MsgObservableInterface {
         foreach ($this->players as $player) {
             $player->joinTeam($playerTeams[$i++]);
         }
+    }
+    
+    private function restart(): void {
+        $this->players->sendWinner($winner->name());
+        
+        foreach ($this->teams() as $team) {
+            $newScore = $team->eq($this->winner()) ? $this->scores[$team] - 12 : 0;
+            $this->scores[$team] -= $newScore;
+        }
+        $this->newPartie();
     }
 
     private function newPartie(): void {
@@ -77,7 +89,7 @@ class Goat implements MsgObservableInterface {
     }
 
     private function isWinner(Team $team): bool {
-        return $this->scores[$team] >= 12;
+        return $this->scores[$team] >= self::WIN_SCORE;
     }
 
     private ?array $teams;
