@@ -36,14 +36,8 @@ class Card implements \JsonSerializable, Comparable {
         return $this->suit->equals($other->suit());
     }
 
-    public function jsonSerialize() {
-        return ['rank' => $this->rank, 'suit' => $this->suit];
-    }
-
-    public function __toString(): string {
-        return "{$this->rank}{$this->suit}";
-    }
-
+    public function jsonSerialize() { return ['rank' => $this->rank, 'suit' => $this->suit]; }
+    public function __toString(): string { return "{$this->rank}{$this->suit}"; }
     public function rank(): Rank { return $this->rank; }
     public function suit(): Suit { return $this->suit; }
 }

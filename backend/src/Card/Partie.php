@@ -49,7 +49,12 @@ abstract class Partie {
         return !$this->players->haveCards();
     }
     
-    public function determTrump(Suit $suit) { $this->trump = $suit; }
+    public function determTrump(Suit $suit, CardPlayer $eldest = null) { 
+        $this->trump = $suit;
+        if ($eldest) {
+            $this->players->sendOther($eldest, CardSendMsg::TRUMP_IS(), $this->trump);
+        }
+    }
     
     protected function createTrick(CardPlayer $eldest): Trick { return new Trick($eldest, $this->players, $this->trump); }
     

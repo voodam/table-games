@@ -10,7 +10,5 @@ class Coords implements \JsonSerializable {
         $this->number = $number;
     }
 
-    public function jsonSerialize() {
-        return ['letter' => $this->letter, 'number' => $this->number];
-    }
+    public function jsonSerialize() { return ['letter' => $this->letter, 'number' => $this->number]; }
 }

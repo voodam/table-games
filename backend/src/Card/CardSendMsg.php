@@ -9,4 +9,5 @@ class CardSendMsg extends Enum {
     private const HE_PUTS_CARD = 'hePutsTrump';
     private const ASK_TRUMP = 'askTrump';
     private const HE_ASKS_TRUMP = 'heAsksTrump';
+    private const TRUMP_IS = 'trumpIs';
 }

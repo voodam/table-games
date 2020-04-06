@@ -3,6 +3,7 @@ namespace Games\Card\Goat;
 
 use Games\MsgObservableInterface;
 use Games\MsgObservable;
+use Games\SendMsg;
 use Games\Card\CardPlayers;
 use Games\Card\Team;
 use Games\Card\Partie;
@@ -41,6 +42,7 @@ class Goat implements MsgObservableInterface {
         $this->countScore();
         $winner = $this->winner();
         if ($winner) {
+            $this->players->sendWinner($winner);
             $this->restart();
         } else {
             $this->newPartie();
@@ -58,8 +60,6 @@ class Goat implements MsgObservableInterface {
     }
     
     private function restart(): void {
-        $this->players->sendWinner($winner->name());
-        
         foreach ($this->teams() as $team) {
             $newScore = $team->eq($this->winner()) ? $this->scores[$team] - 12 : 0;
             $this->scores[$team] -= $newScore;

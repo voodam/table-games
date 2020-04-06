@@ -10,7 +10,7 @@ class CardPlayer extends Player {
     public function joinTeam(Team $team) {
         if (isset($this->team)) throw new \DomainException("Player '$this' has team already");
         $this->team = $team;
-        $this->send(CardSendMsg::YOUR_TEAM(), $team->name());
+        $this->send(CardSendMsg::YOUR_TEAM(), $team);
     }
 
     public function deal(array $hand): void {

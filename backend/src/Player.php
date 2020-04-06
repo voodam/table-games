@@ -6,7 +6,7 @@ use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
 
-class Player {
+class Player implements \JsonSerializable {
     use Logging;
 
     private ConnectionInterface $conn;
@@ -28,6 +28,6 @@ class Player {
     }
 
     public function conn(): ConnectionInterface { return $this->conn; }
-    public function name(): string { return $this->name; }
+    public function jsonSerialize() { return $this->name; }
     public function __toString(): string { return $this->name; }
 }

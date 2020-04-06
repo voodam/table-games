@@ -9,7 +9,5 @@ class Suit extends Enum implements \JsonSerializable {
     private const HEARTS = 'H';
     private const SPADES = 'S';
 
-    public function jsonSerialize() {
-        return $this->getValue();
-    }
+    public function jsonSerialize() { return $this->getValue(); }
 }

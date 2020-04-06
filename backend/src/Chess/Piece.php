@@ -10,7 +10,5 @@ class Piece implements \JsonSerializable {
         $this->color = $color;
     }
 
-    public function jsonSerialize() {
-        return ['type' => $this->type, 'color' => $this->color];
-    }
+    public function jsonSerialize() { return ['type' => $this->type, 'color' => $this->color]; }
 }

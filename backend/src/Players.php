@@ -9,6 +9,15 @@ class Players implements \IteratorAggregate, \Countable {
     use Logging;
 
     private MyObjectStorage $storage; // ConnectionInterface -> Player
+    
+    public static function sendTo(iterable $players, Enum $message, $payload): void {
+        if (!is_callable($payload)) {
+            $payload = fn() => $payload;
+        }
+        foreach ($players as $player) {
+            $player->send($message, $payload($player));
+        }
+    }
 
     public function __construct() {
         $this->storage = new MyObjectStorage;
@@ -26,15 +35,24 @@ class Players implements \IteratorAggregate, \Countable {
     }
     
     public function sendAbout(Player $player, Enum $message): void {
-        foreach ($this->getOther($player) as $otherPlayer) {
-            $otherPlayer->send($message, $player->name());
-        }
+        $this->sendOther($player, $message, $player);
     }
     
-    public function sendWinner(string $winner): void {
-        foreach ($this as $player) {
-            $player->send(SendMsg::WINNER_IS(), $winner);
-        }
+    public function sendOther(object $connOrPlayer, Enum $message, $payload): void {
+        self::sendTo($this->getOther($connOrPlayer), $message, $payload);
+    }
+    
+    public function sendAll(Enum $message, $payload): void {
+        self::sendTo($this, $message, $payload);
+    }
+    
+    public function sendWinner(\JsonSerializable $winner): void {
+        $this->sendAll(SendMsg::WINNER_IS(), $winner);
+    }
+    
+    public function getOther(object $connOrPlayer): array {
+        $connection = $this->getConn($connOrPlayer);
+        return $this->storage->getOtherInfo($connection);
     }
 
     public function getNext(Player $prevPlayer): Player {
@@ -58,11 +76,6 @@ class Players implements \IteratorAggregate, \Countable {
         $player = new $class($conn, $name);
         $this->set($conn, $player);
         return $player;
-    }
-
-    public function getOther(object $connOrPlayer): array {
-        $connection = $this->getConn($connOrPlayer);
-        return $this->storage->getOtherInfo($connection);
     }
 
     public function set(ConnectionInterface $conn, Player $player): void {
