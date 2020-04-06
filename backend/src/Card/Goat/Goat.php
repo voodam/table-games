@@ -80,10 +80,14 @@ class Goat implements MsgObservableInterface {
     }
 
     private function countScore(): void {
-        assert ($this->winner($team) == null);
+        assert ($this->winner() == null);
+        
+        $msgPayload = [];
         foreach ($this->teams() as $team) {
             $this->scores[$team] += $this->partie->score($team);
+            $msgPayload[(string)$team] = $this->scores[$team];
         }
+        $this->players->sendAll(SendMsg::GAME_SCORE(), $msgPayload);
     }
 
     private ?array $teams;

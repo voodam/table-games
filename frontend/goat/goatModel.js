@@ -4,7 +4,8 @@ const RecvMsg = Object.freeze({
     HE_PUTS_CARD: 'hePutsCard',
     ASK_TRUMP: 'askTrump',
     HE_ASKS_TRUMP: 'heAsksTrump',
-    TRUMP_IS: 'trumpIs'
+    TRUMP_IS: 'trumpIs',
+    YOUR_PARTIE_SCORE: 'yourPartieScore'
 });
 
 const SendMsg = Object.freeze({

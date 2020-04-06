@@ -18,7 +18,8 @@ class GameController {
             <input id="name" placeholder="Введите имя">
             <button id="play">Играть!</button>
             <button id="abort" disabled="true">Закончить</button>
-            <div id="message"></div>`);
+            <div id="message"></div>
+            <div>Игровой счет: <span id="score">0</span></div>`);
         
         for (const elem of elems) {
             if (elem.id !== 'name' || withNameInput) {
@@ -32,7 +33,8 @@ class GameController {
             serverUrl: parent.querySelector('#server-url'),
             message: parent.querySelector('#message'),
             name: withNameInput ? parent.querySelector('#name') : undefined,
-        }
+            score: parent.querySelector('#score')
+        };
     }
 
     constructor(elements, messages = GameController.DEFAULT_MSGS) {
@@ -41,6 +43,7 @@ class GameController {
         this._serverUrlInput = elements.serverUrl;
         this._messageInput = elements.message;
         this._nameInput = elements.name;
+        this._scoreStatus = elements.score;
         this._messages = messages;
     }
 
@@ -84,6 +87,10 @@ class GameController {
             this.messageOn(conn, WebsocketConn.RecvMsg.TURN_OF, this._messages.turnOf);
             this.messageOn(conn, WebsocketConn.RecvMsg.WRONG_TURN, this._messages.wrongTurn);
             this.messageOn(conn, WebsocketConn.RecvMsg.WINNER_IS, this._messages.winnerIs);
+            this.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
+                const playerScore = Object.keys(scores).map(name => `${name}: ${scores[name]}`);
+                this._scoreStatus = playerScore.join(' ');
+            });
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);
                 this._toggleButtons();

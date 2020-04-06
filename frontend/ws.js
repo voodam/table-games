@@ -4,7 +4,8 @@ class WebsocketConn {
         WAIT_PLAYERS: 'waitPlayers',
         TURN_OF: 'turnOf',
         WRONG_TURN: 'wrongTurn',
-        WINNER_IS: 'winnerIs'
+        WINNER_IS: 'winnerIs',
+        GAME_SCORE: 'gameScore'
     });
 
     static SendMsg = Object.freeze({

@@ -10,4 +10,5 @@ class CardSendMsg extends Enum {
     private const ASK_TRUMP = 'askTrump';
     private const HE_ASKS_TRUMP = 'heAsksTrump';
     private const TRUMP_IS = 'trumpIs';
+    private const YOUR_PARTIE_SCORE = 'yourPartieScore';
 }

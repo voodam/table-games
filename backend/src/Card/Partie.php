@@ -14,7 +14,7 @@ abstract class Partie {
     protected CardPlayers $players;
     private Trick $trick;
 
-    abstract protected function _score(Team $team): int;
+    abstract protected function _score(Team $team): array;
 
     public function __construct(CardPlayers $players) {
         $this->players = $players;
@@ -43,7 +43,9 @@ abstract class Partie {
 
     public function score(Team $team): int {
         if (!$this->ended()) throw new CardException('Party is not over');
-        return $this->_score($team);
+        [$partieScore, $cardScore] = $this->_score($team);
+        $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $cardScore);
+        return $partieScore;
     }
 
     public function ended(): bool {
@@ -64,6 +66,7 @@ abstract class Partie {
         $deck->shuffle();
         $deck->deal($this->players);
         $this->eldest = $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
+        assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
         $this->players->sendAbout($this->eldest, CardSendMsg::HE_ASKS_TRUMP());
         $this->newTrick($this->eldest);
