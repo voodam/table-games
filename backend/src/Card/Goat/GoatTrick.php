@@ -6,7 +6,7 @@ use Games\Card\CardPlayer;
 use Games\Card\Card;
 
 class GoatTrick extends Trick {
-    public function compareCards(Card $card1, Card $card2): int {
+    protected function compareCards(Card $card1, Card $card2): int {
         return $card1->compareTrump($card2, $this->trump, [Rank::class, 'cmpOrder10']);
     }
     

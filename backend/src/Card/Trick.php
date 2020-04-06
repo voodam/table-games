@@ -16,10 +16,6 @@ class Trick {
         $this->players->sendNext($eldest);
     }
     
-    public function compareCards(Card $card1, Card $card2): int {
-        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
-    }
-    
     public function putCard(CardPlayer $player, Card $card): void {
         if ($this->ended()) throw new CardException('Trick is ended');
         if (!$this->players->contain($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
@@ -41,6 +37,10 @@ class Trick {
 
     public function ended(): bool { 
         return count($this->cards) >= count($this->players);
+    }
+    
+    protected function compareCards(Card $card1, Card $card2): int {
+        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
     }
     
     protected function constrainCard(CardPlayer $player, Card $card): void {}
