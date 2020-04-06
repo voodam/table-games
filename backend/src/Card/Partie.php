@@ -59,6 +59,7 @@ abstract class Partie {
         $deck->deal($this->players);
         $this->eldest = $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
+        $this->players->sendAbout($this->eldest, CardSendMsg::HE_ASKS_TRUMP());
         $this->newTrick($this->eldest);
     }
 

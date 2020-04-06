@@ -3,6 +3,7 @@ namespace Games\Card;
 
 use Games\Util\Compare\Comparable;
 use Games\Util\MyObjectStorage;
+use Games\Card\CardSendMsg;
 
 class Trick {
     private CardPlayers $players;
@@ -21,6 +22,7 @@ class Trick {
         if (!$this->players->contain($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
         $this->constrainCard($player, $card);
         $player->putCard($card);
+        $this->players->sendAbout($player, CardSendMsg::HE_PUTS_CARD());
         $this->cards[$card] = $player;
     }
 
