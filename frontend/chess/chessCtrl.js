@@ -5,8 +5,13 @@ const table = createTable([8, 8], document.getElementById('board'));
 
 ctrl.onPlay(conn => {
     const board = new Board(table);
+    ctrl.lockOnTurns(conn, board);
     conn.onClose(board.clear.bind(board));
 
+    board.onMove((from, to) => {
+        conn.send(SendMsg.MOVE_PIECE, {from, to});
+        board.lock();
+    });
     conn.on(RecvMsg.CREATE_PIECES, (pieces) => {
         for (const [piece, coords] of pieces) {
             board.createPiece(Piece.fromDict(piece), Coords.fromDict(coords));
@@ -23,14 +28,5 @@ ctrl.onPlay(conn => {
             board.highlightMove(from, to);
         }
     });
-
-    board.onMove((from, to) => {
-        conn.send(SendMsg.MOVE_PIECE, {from, to});
-        board.lock();
-    });
-
-    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, board.unlock.bind(board));
-    conn.on(WebsocketConn.RecvMsg.TURN_OF, board.lock.bind(board));
 });
 })();
-

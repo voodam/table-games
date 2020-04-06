@@ -24,21 +24,61 @@
 }
 
 #controls {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.inputs {
     text-align: center;
     margin-top: 30px;
 }
 
-#controls button {
+.inputs button {
     width: 80px;
     height: 40px;
 }
 
-#controls > *:not(:first-child) {    
+.inputs > * {
+    vertical-align: top;    
+}
+
+.inputs > *:not(:first-child) {
     margin-left: 20px;
-    margin-bottom: 15px;
 }
 
-#message {
-    text-align: center;
+.inputs .input-elements {
+    display: inline-block;
 }
 
+.inputs .input-elements input {
+    display: block;
+}
+
+.inputs .input-elements input:not(:first-child) {
+    margin-top: 10px;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.info > *:not(:first-child) {
+    margin-left: 40px;
+}
+
+#messages {
+    overflow-y: scroll;
+    height: 55px;
+    width: 250px;
+}
+
+#messages > *:first-child {
+    font-weight: bold;
+}
+
+#messages > *:not(:first-child) {
+    opacity: 0.5;
+}

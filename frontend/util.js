@@ -31,6 +31,12 @@ const createTable = ([numRows, numCells], table = undefined) => {
     return table;
 };
 
+const createElement = (textContent = '', tagName = 'div') => {
+    const elem = document.createElement(tagName);
+    elem.textContent = textContent;
+    return elem;
+};
+
 const createElemsFromStr = (html) => {
       const div = document.createElement('div');
       div.innerHTML = html.trim();
@@ -54,6 +60,11 @@ const camelCasetoHyphen = str => str.replace(/[A-Z]/g, match => '-' + match.toLo
 const format = (str, ...args) => {
     const replacer = (match, number) => typeof args[number] != 'undefined' ? args[number] : match;
     return str.replace(/{(\d+)}/g, replacer);
+};
+
+const ucfirst = str => {
+    const firstChar = str[0].toUpperCase();
+    return firstChar + str.substring(1);
 };
 
 class Style {
@@ -104,9 +115,4 @@ class Style {
 }
 
 class StyleReplaceException extends Error {}
-
-const ucfirst = str => {
-    const firstChar = str[0].toUpperCase();
-    return firstChar + str.substring(1);
-};
-
+class NotImplemented extends Error {}

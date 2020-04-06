@@ -14,24 +14,31 @@ class GameController {
     static createDefaultElems(parent, withNameInput = true) {
         const serverPath = location.pathname.slice(0, -1);
         const elems = createElemsFromStr(
-            `<input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
-            <input id="name" placeholder="Введите имя">
-            <button id="play">Играть!</button>
-            <button id="abort" disabled="true">Закончить</button>
-            <div id="message"></div>
-            <div>Игровой счет: <span id="score">0</span></div>`);
+            `<div class="inputs">
+                <div class="input-elements">
+                    <input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
+                    <input id="name" placeholder="Введите имя">
+                </div>
+                <button id="play">Играть!</button>
+                <button id="abort" disabled="true">Закончить</button>
+            </div>
+            <div class="info">
+                <div id="messages"></div>
+                <div><div>Игровой счет</div><div id="score">0</div></div>
+            </div>`);
         
         for (const elem of elems) {
-            if (elem.id !== 'name' || withNameInput) {
-                parent.appendChild(elem);
-            }
+            parent.appendChild(elem);
+        }
+        if (!withNameInput) {
+            parent.querySelector('#name').remove();
         }
 
         return {
             play: parent.querySelector('#play'),
             abort: parent.querySelector('#abort'),
             serverUrl: parent.querySelector('#server-url'),
-            message: parent.querySelector('#message'),
+            messages: parent.querySelector('#messages'),
             name: withNameInput ? parent.querySelector('#name') : undefined,
             score: parent.querySelector('#score')
         };
@@ -41,7 +48,7 @@ class GameController {
         this._play = elements.play;
         this._abort = elements.abort;
         this._serverUrlInput = elements.serverUrl;
-        this._messageInput = elements.message;
+        this._messagesContainer = elements.messages;
         this._nameInput = elements.name;
         this._scoreStatus = elements.score;
         this._messages = messages;
@@ -87,9 +94,12 @@ class GameController {
             this.messageOn(conn, WebsocketConn.RecvMsg.TURN_OF, this._messages.turnOf);
             this.messageOn(conn, WebsocketConn.RecvMsg.WRONG_TURN, this._messages.wrongTurn);
             this.messageOn(conn, WebsocketConn.RecvMsg.WINNER_IS, this._messages.winnerIs);
-            this.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
-                const playerScore = Object.keys(scores).map(name => `${name}: ${scores[name]}`);
-                this._scoreStatus = playerScore.join(' ');
+            conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
+                const elements = Object.keys(scores).map(name => createElement(`${name}: ${scores[name]}`));
+                this._scoreStatus.textContent = '';
+                for (const elem of elements) {
+                    this._scoreStatus.appendChild(elem);
+                }
             });
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);
@@ -101,11 +111,20 @@ class GameController {
     }
 
     message(msg) {
-        this._messageInput.textContent = msg;
+        this._messagesContainer.prepend(createElement(msg));
     }
 
     messageOn(conn, type, msg) {
         conn.on( type, payload => this.message(format(msg, payload)) );
+    }
+    
+    /**
+     * @param {WebsocketConn} conn
+     * @param {GameTable} table
+     */
+    lockOnTurns(conn, table) {
+        conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.unlock.bind(table));
+        conn.on(WebsocketConn.RecvMsg.TURN_OF, table.lock.bind(table));
     }
     
     _toggleButtons() {

@@ -8,11 +8,13 @@ const SendMsg = Object.freeze({
     MOVE_PIECE: 'movePiece'
 });
 
-class Board {
+class Board extends GameTable {
     /**
      * @param {HTMLTableElement} table Table 8 x 8 with cells (td-s) images in which can be set through 'background-image' property
      */
     constructor(table, colors = {moveStart: '#7facff', highlight: '#136b26'}) {
+        super();
+        
         const isTbl8x8 = () => this._getCellByCoords(new Coords('A', 8));
         this._table = table;
         if (!isTbl8x8()) throw new BoardException('Table has less then 8 rows or 8 columns');
@@ -24,8 +26,6 @@ class Board {
             [Color.WHITE]: Style.getComputed(a2, 'backgroundColor'),
             [Color.BLACK]: Style.getComputed(a1, 'backgroundColor')
         };
-
-        this._locked = false;
         /**
          * Coordinates of the current moving piece (not empty when the move transaction started).
          *
@@ -78,18 +78,17 @@ class Board {
     }
 
     lock() {
-        this._stopListenBrowserEvents();
+        super.lock();
         this._table.classList.add('locked');
-        this._locked = true;
     }
 
     unlock() {
-        if (!this._locked) {
-            return;
+        if (!super.unlock()) {
+            return false;
         }
-        this._listenBrowserEvents();
+        
         this._table.classList.remove('locked');
-        this._locked = false;
+        return true;
     }
 
     clear() {
@@ -257,4 +256,3 @@ class Coords {
 const Color = Object.freeze({WHITE: 'white', BLACK: 'black'});
 
 class BoardException extends Error {}
-

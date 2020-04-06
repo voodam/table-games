@@ -41,11 +41,9 @@ abstract class Partie {
         }
     }
 
-    public function score(Team $team): int {
+    public function score(Team $team): array {
         if (!$this->ended()) throw new CardException('Party is not over');
-        [$partieScore, $cardScore] = $this->_score($team);
-        $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $cardScore);
-        return $partieScore;
+        return $this->_score($team);
     }
 
     public function ended(): bool {

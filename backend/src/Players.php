@@ -4,6 +4,7 @@ namespace Games;
 use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use Games\Util\MyObjectStorage;
+use MyCLabs\Enum\Enum;
 
 class Players implements \IteratorAggregate, \Countable {
     use Logging;

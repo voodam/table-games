@@ -84,8 +84,10 @@ class Goat implements MsgObservableInterface {
         
         $msgPayload = [];
         foreach ($this->teams() as $team) {
-            $this->scores[$team] += $this->partie->score($team);
+            [$gameScore, $partieScore] = $this->partie->score($team);
+            $this->scores[$team] += $gameScore;
             $msgPayload[(string)$team] = $this->scores[$team];
+            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $partieScore);
         }
         $this->players->sendAll(SendMsg::GAME_SCORE(), $msgPayload);
     }

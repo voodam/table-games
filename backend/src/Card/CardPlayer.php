@@ -2,9 +2,13 @@
 namespace Games\Card;
 
 use Games\Player;
+use Games\Card\Card;
 
 class CardPlayer extends Player {
     private Team $team;
+    /**
+     * @var Card[]
+     */
     private array $hand = [];
 
     public function joinTeam(Team $team) {
@@ -15,7 +19,7 @@ class CardPlayer extends Player {
 
     public function deal(array $hand): void {
         $this->hand = $hand;
-        $this->send(CardSendMsg::DEAL(), $hand); 
+        $this->send(CardSendMsg::DEAL(), $hand);
     }
 
     public function putCard(Card $card): void {
