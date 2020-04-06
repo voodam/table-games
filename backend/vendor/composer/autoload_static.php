@@ -16,6 +16,7 @@ class ComposerStaticInit8fa9fae675b6e365f31eaa8a58f7d0a1
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '39b7a65400605a598b977fc167d85105' => __DIR__ . '/../..' . '/src/Util/Iter.php',
         '333fa91ae8cef458107cc453a24a0226' => __DIR__ . '/../..' . '/src/Util/Func.php',
+        'f3ae8536cd078953baea49eee297ab2d' => __DIR__ . '/../..' . '/src/Util/Translate.php',
         '46853abd98ce4d238434a00044c1dbd4' => __DIR__ . '/../..' . '/src/Util/Compare/Util.php',
     );
 
@@ -25,6 +26,8 @@ class ComposerStaticInit8fa9fae675b6e365f31eaa8a58f7d0a1
             'Symfony\\Polyfill\\Php72\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
+            'Symfony\\Contracts\\Translation\\' => 30,
+            'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\Mime\\' => 23,
             'Symfony\\Component\\HttpFoundation\\' => 33,
@@ -68,6 +71,14 @@ class ComposerStaticInit8fa9fae675b6e365f31eaa8a58f7d0a1
         'Symfony\\Polyfill\\Intl\\Idn\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
+        ),
+        'Symfony\\Contracts\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
         ),
         'Symfony\\Component\\Routing\\' => 
         array (

@@ -6,11 +6,13 @@
         "files": [
             "src/Util/Iter.php",
             "src/Util/Func.php",
+            "src/Util/Translate.php",
             "src/Util/Compare/Util.php"
         ]
     },
     "require": {
         "cboden/ratchet": "^0.4.2",
-        "myclabs/php-enum": "^1.7"
+        "myclabs/php-enum": "^1.7",
+        "symfony/translation": "^5.0"
     }
 }

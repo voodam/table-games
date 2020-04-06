@@ -5,6 +5,7 @@ use Games\Card\Trick;
 use Games\Util\MyObjectStorage;
 use Games\Card\CardConstraintException;
 use Games\SendMsg;
+use function Games\Util\Translate\t;
 
 abstract class Partie {
     protected CardPlayer $eldest;
@@ -52,7 +53,7 @@ abstract class Partie {
     public function determTrump(Suit $suit, CardPlayer $eldest = null) { 
         $this->trump = $suit;
         if ($eldest) {
-            $this->players->sendOther($eldest, CardSendMsg::TRUMP_IS(), $this->trump);
+            $this->players->sendOther($eldest, CardSendMsg::TRUMP_IS(), t($this->trump));
         }
     }
     

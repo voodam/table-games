@@ -2,6 +2,7 @@
 namespace Games\Card;
 
 use Games\Util\Compare\Comparable;
+use function Games\Util\Translate\t;
 
 class Card implements \JsonSerializable, Comparable {
     private Rank $rank;
@@ -37,6 +38,7 @@ class Card implements \JsonSerializable, Comparable {
     }
 
     public function jsonSerialize() { return ['rank' => $this->rank, 'suit' => $this->suit]; }
+    public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }
     public function __toString(): string { return "{$this->rank}{$this->suit}"; }
     public function rank(): Rank { return $this->rank; }
     public function suit(): Suit { return $this->suit; }

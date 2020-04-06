@@ -5,19 +5,19 @@ use MyCLabs\Enum\Enum;
 use Games\Util\Compare\Comparable;
 
 class Rank extends Enum implements \JsonSerializable, Comparable {
-    private const _2 = '2';
-    private const _3 = '3';
-    private const _4 = '4';
-    private const _5 = '5';
-    private const _6 = '6';
-    private const _7 = '7';
-    private const _8 = '8';
-    private const _9 = '9';
-    private const _10 = '10';
-    private const JACK = 'J';
-    private const QUEEN = 'Q';
-    private const KING = 'K';
-    private const ACE = 'A';
+    private const _2 = 'two';
+    private const _3 = 'three';
+    private const _4 = 'four';
+    private const _5 = 'five';
+    private const _6 = 'six';
+    private const _7 = 'seven';
+    private const _8 = 'eight';
+    private const _9 = 'nine';
+    private const _10 = 'ten';
+    private const JACK = 'jack';
+    private const QUEEN = 'queen';
+    private const KING = 'king';
+    private const ACE = 'ace';
 
     public function compare(self $other, callable $cmpOrder = null): int {
         $cmpOrder ??= [self::class, 'cmpOrder'];
