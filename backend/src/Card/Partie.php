@@ -74,7 +74,7 @@ abstract class Partie {
     }
 
     private function newTrick(CardPlayer $eldest): void {
-        if (isset($this->trick) && !$this->trick->ended()) throw new \LogicException('Trick is not ended, why to create new?');
+        assert(!isset($this->trick) || $this->trick->ended());
         $this->trick = $this->createTrick($eldest);
     }
 }

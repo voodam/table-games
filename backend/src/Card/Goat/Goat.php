@@ -15,8 +15,6 @@ class Goat implements MsgObservableInterface {
     use MsgObservable;
     use Loggable;
     
-    private const WIN_SCORE = 12;
-
     private CardPlayers $players;
     private \SplObjectStorage $scores; // Team -> int
     private Partie $partie;
@@ -76,20 +74,16 @@ class Goat implements MsgObservableInterface {
     }
 
     private function winner(): ?Team {
-        $winners = filter($this->teams(), [$this, 'isWinner']);
+        $winners = filter($this->teams(), fn($team) => $this->scores[$team] >= 12);
         assert($winners <= 1);
         return $winners[0] ?? null;
     }
 
     private function countScore(): void {
+        assert ($this->winner($team) == null);
         foreach ($this->teams() as $team) {
-            if ($this->isWinner($team)) throw new \LogicException("Team $team is winner already, why need to count scores?");
             $this->scores[$team] += $this->partie->score($team);
         }
-    }
-
-    private function isWinner(Team $team): bool {
-        return $this->scores[$team] >= self::WIN_SCORE;
     }
 
     private ?array $teams;
