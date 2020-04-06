@@ -6,7 +6,9 @@ class GameController {
         enterUrl: 'Введите адрес сервера',
         enterName: 'Введите имя',
         yourTurn: 'Ваш ход',
-        turnOf: 'Ходит {0}'
+        turnOf: 'Ходит {0}',
+        wrongTurn: 'Неверный ход: {0}',
+        winnerIs: 'Победил(и) {0}!'
     };
 
     static createDefaultElems(parent, withNameInput = true) {
@@ -80,6 +82,8 @@ class GameController {
             this.messageOn(conn, WebsocketConn.RecvMsg.WAIT_PLAYERS, this._messages.waitPlayers);
             this.messageOn(conn, WebsocketConn.RecvMsg.YOUR_TURN, this._messages.yourTurn);
             this.messageOn(conn, WebsocketConn.RecvMsg.TURN_OF, this._messages.turnOf);
+            this.messageOn(conn, WebsocketConn.RecvMsg.WRONG_TURN, this._messages.wrongTurn);
+            this.messageOn(conn, WebsocketConn.RecvMsg.WINNER_IS, this._messages.winnerIs);
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);
                 this._toggleButtons();

@@ -29,7 +29,7 @@ abstract class Partie {
         try {
             $this->trick->putCard($player, $card);
         } catch (CardConstraintException $e) {
-            $player->send(SendMsg::WRONG_TURN());
+            $player->send(SendMsg::WRONG_TURN(), $e->getMessage());
             return;
         }
         

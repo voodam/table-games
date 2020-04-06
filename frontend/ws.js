@@ -2,7 +2,9 @@ class WebsocketConn {
     static RecvMsg = Object.freeze({
         YOUR_TURN: 'yourTurn',
         WAIT_PLAYERS: 'waitPlayers',
-        TURN_OF: 'turnOf'
+        TURN_OF: 'turnOf',
+        WRONG_TURN: 'wrongTurn',
+        WINNER_IS: 'winnerIs'
     });
 
     static SendMsg = Object.freeze({
