@@ -120,6 +120,15 @@ class NotImplemented extends Error {}
 const mapPairs = (fstCb, sndCb, arr) => arr.map(([fst, snd]) => [fstCb(fst), sndCb(snd)]);
 const id = val => val;
 
+const mapDict = (callbacks, dict) => {
+    const newDict = {};
+    for (const [key, value] of Object.entries(dict)) {
+        const cbk = callbacks[key] || id;
+        newDict[key] = cbk(value);
+    }
+    return newDict;
+};
+
 const curry = (func) => {
     const curried = (...args) => {
         if (args.length >= func.length) {

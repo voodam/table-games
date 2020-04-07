@@ -89,11 +89,13 @@ class GameController {
 
             this._abort.addEventListener('click', abortHdl);
 
-            this.messageOn(conn, WebsocketConn.RecvMsg.WAIT_PLAYERS, this._messages.waitPlayers);
-            this.messageOn(conn, WebsocketConn.RecvMsg.YOUR_TURN, this._messages.yourTurn);
-            this.messageOn(conn, WebsocketConn.RecvMsg.TURN_OF, this._messages.turnOf);
-            this.messageOn(conn, WebsocketConn.RecvMsg.WRONG_TURN, this._messages.wrongTurn);
-            this.messageOn(conn, WebsocketConn.RecvMsg.WINNER_IS, this._messages.winnerIs);
+            this.messagesOn(conn, {
+                [WebsocketConn.RecvMsg.WAIT_PLAYERS]: this._messages.waitPlayers,
+                [WebsocketConn.RecvMsg.YOUR_TURN]: this._messages.yourTurn,
+                [WebsocketConn.RecvMsg.TURN_OF]: this._messages.turnOf,
+                [WebsocketConn.RecvMsg.WRONG_TURN]: this._messages.wrongTurn,
+                [WebsocketConn.RecvMsg.WINNER_IS]: this._messages.winnerIs
+            });
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
                 const elements = Object.keys(scores).map(name => createElement(`${name}: ${scores[name]}`));
                 this._scoreStatus.textContent = '';
@@ -114,8 +116,10 @@ class GameController {
         this._messagesContainer.prepend(createElement(msg));
     }
 
-    messageOn(conn, type, msg) {
-        conn.on( type, payload => this.message(format(msg, payload)) );
+    messagesOn(conn, messages) {
+        for (const [type, msg] of Object.entries(messages)) {
+            conn.on( type, payload => this.message(format(msg, payload)) );
+        }
     }
     
     /**

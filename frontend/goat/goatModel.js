@@ -1,9 +1,9 @@
 const RecvMsg = Object.freeze({
     YOUR_TEAM: 'yourTeam',
     DEAL: 'deal',
-    PLAYER_PUTS_CARD: 'hePutsCard', //*
+    PLAYER_PUTS_CARD: 'playerPutsCard',
     ASK_TRUMP: 'askTrump',
-    PLAYER_ASKS_TRUMP: 'heAsksTrump',
+    PLAYER_ASKS_TRUMP: 'playerAsksTrump',
     TRUMP_IS: 'trumpIs',
     YOUR_PARTIE_SCORE: 'yourPartieScore'
 });
