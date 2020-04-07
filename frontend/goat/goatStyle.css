@@ -1,3 +1,9 @@
 #hand img {
     width: 12.5%;
+    padding: 1%;
+}
+
+#hand {
+    position: absolute;
+    bottom: 0;
 }

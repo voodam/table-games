@@ -28,14 +28,4 @@
     #board {
         margin: 0 auto;
     }
-    #controls {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-}
-
-@media (max-width: 767px) {
-    #controls > * {
-    }
 }

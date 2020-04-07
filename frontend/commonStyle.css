@@ -15,11 +15,22 @@
 }
 
 #controls {
-     margin: 20px;
+    margin: 20px;
 }
 #controls .inputs > *,
 #controls .info > *:not(:last-child) {
     margin-bottom: 20px;
+}
+#controls .inputs input {
+    display: block;
+    margin-bottom: 10px;
+}
+@media (min-width: 767px) {
+    #controls {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
 
 * { box-sizing: border-box;}
