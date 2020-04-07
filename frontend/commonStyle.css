@@ -1,59 +1,26 @@
-#controls {
-    margin: 0 auto;
-    width: 600px;
-}
-
-.inputs {
-    text-align: center;
-    margin-top: 30px;
-}
-
 .inputs button {
     width: 80px;
     height: 40px;
 }
 
-.inputs > * {
-    vertical-align: top;    
-}
-
-.inputs > *:not(:first-child) {
-    margin-left: 20px;
-}
-
-.inputs .input-elements {
-    display: inline-block;
-}
-
-.inputs .input-elements input {
-    display: block;
-}
-
-.inputs .input-elements input:not(:first-child) {
-    margin-top: 10px;
-}
-
-.info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.info > *:not(:first-child) {
-    margin-left: 40px;
-}
-
 #messages {
     overflow-y: scroll;
-    height: 55px;
-    width: 250px;
+    height: 80px;
 }
-
 #messages > *:first-child {
     font-weight: bold;
 }
-
 #messages > *:not(:first-child) {
     opacity: 0.5;
 }
+
+#controls {
+     margin: 20px;
+}
+#controls .inputs > *,
+#controls .info > *:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+* { box-sizing: border-box;}
+body { margin: 0; }

@@ -15,7 +15,7 @@ ctrl.onPlay(conn => {
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала в партии {0} очков'
     });
     
-    const table = new CardTable;
+    const table = new CardTable(document.getElementById('hand'), document.getElementById('table'));
     ctrl.lockOnTurns(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, ({player, card}) => table.playerPutsCard(player, card));

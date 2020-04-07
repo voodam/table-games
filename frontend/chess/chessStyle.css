@@ -1,0 +1,41 @@
+#board {
+    width: 100vh;
+    height: 100vh;
+    border-collapse: collapse;
+    background: #ffefd5;
+}
+
+#board tr:nth-child(2n+1) td:nth-child(2n),
+#board tr:nth-child(2n) td:nth-child(2n+1) {
+    background-color: saddlebrown;
+}
+
+#board.locked {
+    filter: brightness(30%);
+}
+
+#board td {
+    width: 12.5%;
+    height: 12.5%;
+    border: 1px solid;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: default;
+}
+
+@media (min-width: 767px) {
+    #board {
+        margin: 0 auto;
+    }
+    #controls {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    #controls > * {
+    }
+}

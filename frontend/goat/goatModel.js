@@ -40,7 +40,7 @@ class Card {
     }
     
     createImage() {
-        const path = `img/${this._suit}_${this._rank}`;
+        const path = `img/${this._suit}_${this._rank}.png`;
         const image = new Image();
         image.src = path;
         return image;

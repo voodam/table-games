@@ -19,12 +19,14 @@ class GameController {
                     <input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
                     <input id="name" placeholder="Введите имя" value="Вася">
                 </div>
-                <button id="play">Играть!</button>
-                <button id="abort" disabled="true">Закончить</button>
+                <div class="buttons">
+                    <button id="play">Играть!</button>
+                    <button id="abort" disabled="true">Закончить</button>
+                </div>
             </div>
             <div class="info">
-                <div id="messages"></div>
                 <div><div>Игровой счет</div><div id="score">0</div></div>
+                <div id="messages"></div>
             </div>`);
         
         appendChildren(parent, elements);

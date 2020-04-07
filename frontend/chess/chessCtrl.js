@@ -1,5 +1,5 @@
 (() => {
-const controls = document.querySelector('#controls');
+const controls = document.getElementById('controls');
 const ctrl = new GameController(GameController.createDefaultElems(controls, false));
 const table = createTable([8, 8], document.getElementById('board'));
 
