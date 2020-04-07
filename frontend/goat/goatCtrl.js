@@ -5,7 +5,7 @@ const ctrl = new GameController(GameController.createDefaultElems(controls));
 ctrl.onPlay(conn => {
     conn.preparePayload({
         [RecvMsg.DEAL]: hand => hand.map(Card.fromDict),
-        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict({player: Player.fromDict, card: Card.fromDict}))
+        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict({player: _new(Player)(), card: Card.fromDict}))
     });
     ctrl.messageOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',

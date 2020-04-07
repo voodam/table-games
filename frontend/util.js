@@ -119,6 +119,7 @@ class NotImplemented extends Error {}
 
 const mapPairs = (fstCb, sndCb, arr) => arr.map(([fst, snd]) => [fstCb(fst), sndCb(snd)]);
 const id = val => val;
+const _new = (cls) => (...args) => new cls(...args);
 
 const mapDict = (callbacks, dict) => {
     const newDict = {};

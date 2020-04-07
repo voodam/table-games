@@ -201,9 +201,7 @@ class Board extends GameTable {
 class Piece {
     static Type = Object.freeze({BISHOP: 'bishop', HORSE: 'horse', KING: 'king', PAWN: 'pawn', QUEEN: 'queen', ROOK: 'rook'});
 
-    static fromDict({type, color}) {
-        return new Piece(type, color);
-    }
+    static fromDict({type, color}) { return new Piece(type, color); }
 
     /**
      * @param {Piece.Type} type
@@ -214,43 +212,22 @@ class Piece {
         this._color = color;
     }
     
-    getImagePath() {
-        return `url(img/${this._color}_${this._type}.svg)`;
-    }
+    getImagePath() { return `url(img/${this._color}_${this._type}.svg)`; }
 }
 
 class Coords {
-    static fromDict({letter, number}) {
-        return new Coords(letter, number);
-    }
+    static fromDict({letter, number}) { return new Coords(letter, number); }
 
     constructor(letter, number) {
         this._letter = letter;
         this._number = number;
     }
 
-    get letter() {  
-        return this._letter;
-    }
-
-    get number() {
-        return this._number;
-    }
-
-    eq({letter, number}) {
-        return this.letter === letter && this.number === number;
-    }
-
-    toString() {
-        return `${this.letter}-${this.number}`;
-    }
-
-    toJSON() {
-        return {
-            letter: this.letter,
-            number: this.number
-        };
-    }
+    get letter() { return this._letter; }
+    get number() { return this._number; }
+    eq({letter, number}) { return this._letter === letter && this._number === number; }
+    toString() { return `${this._letter}-${this._number}`; }
+    toJSON() { return {letter: this._letter, number: this._number}; }
 }
 
 const Color = Object.freeze({WHITE: 'white', BLACK: 'black'});
