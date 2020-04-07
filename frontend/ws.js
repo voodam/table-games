@@ -15,6 +15,7 @@ class WebsocketConn {
     constructor(url) {
         this._url = url;
         this._subscribers = [];
+        this._payloadPreparers = {};
     }
 
     connect(name = null) {
@@ -29,11 +30,11 @@ class WebsocketConn {
         this._ws.close();
     }
 
-    on(type, sub) {
-        if (!this._subscribers[type]) {
-            this._subscribers[type] = [];
+    on(msgType, sub) {
+        if (!this._subscribers[msgType]) {
+            this._subscribers[msgType] = [];
         }
-        this._subscribers[type].push(sub);
+        this._subscribers[msgType].push(sub);
     }
 
     onClose(handler) {
@@ -49,14 +50,20 @@ class WebsocketConn {
             send();
         }
     }
+    
+    preparePayload(preparers) {
+        Object.assign(this._payloadPreparers, preparers);
+    }
 
     _messageListener({data}) {
         console.log(`recv message: ${data}`);
         const message = JSON.parse(data);
         if (typeof message.type !== 'string') throw new Error(`Message ${data} has not type`);
-
-        for (const sub of this._subscribers[message.type] || []) {
-            sub(message.payload, event);
+        
+        let {type, payload} = message;
+        payload = (this._payloadPreparers[type] || id)(payload);
+        for (const sub of this._subscribers[type] || []) {
+            sub(payload, event);
         }
     }
 }

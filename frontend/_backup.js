@@ -1,4 +1,4 @@
-class Board {
+class BoardBkp {
     _getCellAndCoords(cellOrCoords) {
         const isCell = cellOrCoords instanceof HTMLTableCellElement;
         console.assert(isCell || cellOrCoords instanceof Coords);
