@@ -10,7 +10,7 @@ class ChessServer extends GameServer {
 
     public function __construct() {
         parent::__construct(2);
-        $this->board = new Board();
+        $this->board = new Board;
         $this->attachObserver($this, ChessRecvMsg::MOVE_PIECE());
     }
 

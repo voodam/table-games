@@ -24,7 +24,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         $this->attachObserver($this, RecvMsg::CONNECT());
     }
 
-    protected function connect(?string $name, $_, ConnectionInterface $conn) {
+    public function connect(?string $name, $_, ConnectionInterface $conn) {
         $this->log('connect');
         $count = count($this->players);
         if ($this->players->contains($conn)) throw new \LogicException("Connection for player {$this->players->get($conn)} was added already");
