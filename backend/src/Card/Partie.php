@@ -66,7 +66,7 @@ abstract class Partie {
         $this->eldest = $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
         assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
-        $this->players->sendAbout($this->eldest, CardSendMsg::HE_ASKS_TRUMP());
+        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());
         $this->newTrick($this->eldest);
     }
 

@@ -22,7 +22,7 @@ class Trick {
         if (!$this->players->contain($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
         $this->constrainCard($player, $card);
         $player->putCard($card);
-        $this->players->sendOther($player, CardSendMsg::HE_PUTS_CARD(), ['player' => $player, 'card' => $card]);
+        $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), ['player' => $player, 'card' => $card]);
         $this->cards[$card] = $player;
     }
 
