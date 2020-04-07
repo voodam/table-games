@@ -6,8 +6,7 @@
         "files": [
             "src/Util/Iter.php",
             "src/Util/Func.php",
-            "src/Util/Translate.php",
-            "src/Util/Compare/Util.php"
+            "src/Util/Translate.php"
         ]
     },
     "require": {

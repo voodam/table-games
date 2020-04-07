@@ -1,10 +1,10 @@
 <?php
 namespace Games\Card;
 
-use Games\Util\Compare\Comparable;
+use Games\Util\Cmp;
 use function Games\Util\Translate\t;
 
-class Card implements \JsonSerializable, Comparable {
+class Card implements \JsonSerializable {
     private Rank $rank;
     private Suit $suit;
 
@@ -24,10 +24,10 @@ class Card implements \JsonSerializable, Comparable {
 
     public function compareTrump(self $other, Rank $trump, callable $rankCmpOrder = null): int {
         if ($this->rank->equals($trump) && !$this->rank->equals($trump)) {
-            return Comparable::MORE;
+            return Cmp::MORE;
         }
         if (!$this->rank->equals($trump) && $this->rank->equals($trump)) {
-            return Comparable::LESS;
+            return Cmp::LESS;
         }
 
         return $this->compare($other, $rankCmpOrder);

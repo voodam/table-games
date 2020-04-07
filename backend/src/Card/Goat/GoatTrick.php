@@ -4,6 +4,7 @@ namespace Games\Card\Goat;
 use Games\Card\Trick;
 use Games\Card\CardPlayer;
 use Games\Card\Card;
+use Games\Card\Rank;
 use function Games\Util\Translate\t;
 
 class GoatTrick extends Trick {

@@ -17,7 +17,6 @@ class ComposerStaticInit8fa9fae675b6e365f31eaa8a58f7d0a1
         '39b7a65400605a598b977fc167d85105' => __DIR__ . '/../..' . '/src/Util/Iter.php',
         '333fa91ae8cef458107cc453a24a0226' => __DIR__ . '/../..' . '/src/Util/Func.php',
         'f3ae8536cd078953baea49eee297ab2d' => __DIR__ . '/../..' . '/src/Util/Translate.php',
-        '46853abd98ce4d238434a00044c1dbd4' => __DIR__ . '/../..' . '/src/Util/Compare/Util.php',
     );
 
     public static $prefixLengthsPsr4 = array (

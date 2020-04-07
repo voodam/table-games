@@ -19,7 +19,7 @@ trait MsgObservable {
         $this->observers[$message->getValue()][] = $observer;
     }
 
-    protected function detachObserver(object $observer, Enum $message): void {
+    protected function detachObserver(?object $observer, Enum $message): void {
         $key = array_search($observer, $this->getObservers($message));
         if ($key !== false) {
             unset($this->observers[$message][$key]);

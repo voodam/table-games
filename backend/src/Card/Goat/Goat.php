@@ -9,12 +9,12 @@ use Games\Card\Team;
 use Games\Card\Partie;
 use Games\Card\CardRecvMsg;
 use Games\Card\CardException;
-use Games\Util\Loggable;
+use Games\Util\Logging;
 use function Games\Util\Iter\filter;
 
 class Goat implements MsgObservableInterface {
     use MsgObservable;
-    use Loggable;
+    use Logging;
     
     private CardPlayers $players;
     private \SplObjectStorage $scores; // Team -> int
@@ -68,7 +68,7 @@ class Goat implements MsgObservableInterface {
     }
 
     private function newPartie(): void {
-        $this->detachObserver($this->partie, CardRecvMsg::DETERM_TRUMP());
+        $this->detachObserver($this->partie ?? null, CardRecvMsg::DETERM_TRUMP());
         $this->partie = new GoatPartie($this->players);
         $this->attachObserver($this->partie, CardRecvMsg::DETERM_TRUMP());
     }
@@ -95,7 +95,7 @@ class Goat implements MsgObservableInterface {
     private ?array $teams;
 
     private function teams(): array {
-        if (!$this->teams) {
+        if (!isset($this->teams)) {
             $this->teams = [new Team('Команда 1'), new Team('Команда 2')];
         }
         return $this->teams;

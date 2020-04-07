@@ -13,11 +13,11 @@ class GameController {
 
     static createDefaultElems(parent, withNameInput = true) {
         const serverPath = location.pathname.slice(0, -1);
-        const elems = createElemsFromStr(
+        const elements = createElemsFromStr(
             `<div class="inputs">
                 <div class="input-elements">
                     <input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
-                    <input id="name" placeholder="Введите имя">
+                    <input id="name" placeholder="Введите имя" value="Вася">
                 </div>
                 <button id="play">Играть!</button>
                 <button id="abort" disabled="true">Закончить</button>
@@ -27,9 +27,7 @@ class GameController {
                 <div><div>Игровой счет</div><div id="score">0</div></div>
             </div>`);
         
-        for (const elem of elems) {
-            parent.appendChild(elem);
-        }
+        appendChildren(parent, elements);
         if (!withNameInput) {
             parent.querySelector('#name').remove();
         }
@@ -99,9 +97,7 @@ class GameController {
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
                 const elements = Object.keys(scores).map(name => createElement(`${name}: ${scores[name]}`));
                 this._scoreStatus.textContent = '';
-                for (const elem of elements) {
-                    this._scoreStatus.appendChild(elem);
-                }
+                appendChildren(this._scoreStatus, elements);
             });
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);

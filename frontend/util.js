@@ -37,6 +37,13 @@ const createElement = (textContent = '', tagName = 'div') => {
     return elem;
 };
 
+const appendChildren = (parent, children) => {
+    console.assert(parent instanceof Node);
+    for(const child of children) {
+        parent.appendChild(child);
+    }
+};
+
 const createElemsFromStr = (html) => {
       const div = document.createElement('div');
       div.innerHTML = html.trim();

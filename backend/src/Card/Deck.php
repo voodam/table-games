@@ -1,24 +1,24 @@
 <?php
 namespace Games\Card;
 
-use Games\Util\Compare\Comparable;
+use Games\Util\Cmp;
 use function Games\Util\Iter\filter;
 
 class Deck {
     private array $cards;
 
     public static function new32(): self {
-        $cards = filter(self::get52Cards(), fn(Card $card) => $card->rank()->compare(Rank::_6()) === Comparable::MORE);
-        return self($cards);
+        $cards = filter(self::get52Cards(), fn(Card $card) => $card->rank()->compare(Rank::_6()) === Cmp::MORE);
+        return new self($cards);
     }
 
     public static function new36(): self {
-        $cards = filter(self::get52Cards(), fn(Card $card) => $card->rank()->compare(Rank::_5()) === Comparable::MORE);
-        return self($cards);
+        $cards = filter(self::get52Cards(), fn(Card $card) => $card->rank()->compare(Rank::_5()) === Cmp::MORE);
+        return new self($cards);
     }
 
     public static function new52(): self {
-        return self(self::get52Cards());
+        return new self(self::get52Cards());
     }
 
     public function __construct(array $cards) {
@@ -29,7 +29,7 @@ class Deck {
         shuffle($this->cards);
     }
 
-    public function deal(array $players): void {
+    public function deal(iterable $players): void {
         $cardsNumber = count($this->cards);
         $playersNumber = count($players);
         if ($cardsNumber === 0) throw new CardException('No cards in deck');

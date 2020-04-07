@@ -2,9 +2,8 @@
 namespace Games\Card;
 
 use MyCLabs\Enum\Enum;
-use Games\Util\Compare\Comparable;
 
-class Rank extends Enum implements \JsonSerializable, Comparable {
+class Rank extends Enum implements \JsonSerializable {
     private const _2 = 'two';
     private const _3 = 'three';
     private const _4 = 'four';
@@ -21,7 +20,8 @@ class Rank extends Enum implements \JsonSerializable, Comparable {
 
     public function compare(self $other, callable $cmpOrder = null): int {
         $cmpOrder ??= [self::class, 'cmpOrder'];
-        return $cmpOrder[$this->getKey()] <=> $cmpOrder[$other->getKey()];
+        $order = $cmpOrder();
+        return $order[$this->getKey()] <=> $order[$other->getKey()];
     }
 
     public function compare10(self $other): int {

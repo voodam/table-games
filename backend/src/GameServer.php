@@ -17,7 +17,6 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     private array $payloadPreparers = [];
 
     abstract protected function startGame();
-    protected function createPlayers(): Players { return new Players; }
 
     public function __construct(int $numPlayers) {    
         $this->players = $this->createPlayers();
@@ -25,7 +24,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         $this->attachObserver($this, RecvMsg::CONNECT());
     }
 
-    private function connect(?string $name, $_, ConnectionInterface $conn) {
+    protected function connect(?string $name, $_, ConnectionInterface $conn) {
         $this->log('connect');
         $count = count($this->players);
         if ($this->players->contains($conn)) throw new \LogicException("Connection for player {$this->players->get($conn)} was added already");
@@ -77,6 +76,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         }
     }
     
+    protected function createPlayers(): Players { return new Players; }
     protected function preparePayload(Enum $message, callable $preparer) { $this->payloadPreparers[$message->getValue()] = $preparer; }
     public function onError(ConnectionInterface $conn, \Exception $e) { $this->log("error: {$e->getMessage()}"); }
     public function onOpen(ConnectionInterface $conn) {}

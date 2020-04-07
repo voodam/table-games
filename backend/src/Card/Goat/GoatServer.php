@@ -4,10 +4,19 @@ namespace Games\Card\Goat;
 use Games\GameServer;
 use Games\Card\CardRecvMsg;
 use Games\Card\Card;
+use Games\Card\Suit;
+use Games\Card\CardPlayers;
+use function Games\Util\Func\_new;
+
+use Games\Mock\Conn;
 
 class GoatServer extends GameServer {
     public function __construct() {
         parent::__construct(4);
+        $this->connect(null, null, new Conn());
+        $this->connect(null, null, new Conn());
+        $this->connect(null, null, new Conn());
+        $this->connect(null, null, new Conn());
     }
     
     protected function startGame() {
@@ -18,4 +27,6 @@ class GoatServer extends GameServer {
         $this->attachObserver($game, CardRecvMsg::PUT_CARD());
         $game->start();   
     }
+    
+    protected function createPlayers(): CardPlayers { return new CardPlayers; }
 }

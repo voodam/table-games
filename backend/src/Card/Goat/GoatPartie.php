@@ -6,6 +6,7 @@ use Games\Card\Card;
 use Games\Card\Team;
 use Games\Card\ScoreCalc;
 use Games\Card\Trick;
+use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
     protected function _score(Team $team): array {

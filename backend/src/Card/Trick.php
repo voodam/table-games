@@ -1,7 +1,7 @@
 <?php
 namespace Games\Card;
 
-use Games\Util\Compare\Comparable;
+use Games\Util\Cmp;
 use Games\Util\MyObjectStorage;
 use Games\Card\CardSendMsg;
 
@@ -28,7 +28,7 @@ class Trick {
 
     public function winner(): CardPlayer {
         if (!$this->ended()) throw new CardException('Trick is not over, so there is no winner');
-        $maxCard = array_reduce($this->cards, fn(Card $maxCard, Card $card) => $this->compareCards($maxCard, $card) === Comparable::LESS ? $card : $maxCard);
+        $maxCard = array_reduce($this->cards, fn(Card $maxCard, Card $card) => $this->compareCards($maxCard, $card) === Cmp::LESS ? $card : $maxCard);
         return $this->cards[$maxCard];
     }
 

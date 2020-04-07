@@ -5,9 +5,9 @@ const ctrl = new GameController(GameController.createDefaultElems(controls));
 ctrl.onPlay(conn => {
     conn.preparePayload({
         [RecvMsg.DEAL]: hand => hand.map(Card.fromDict),
-        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict({player: _new(Player)(), card: Card.fromDict}))
+        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict)({player: _new(Player)(), card: Card.fromDict})
     });
-    ctrl.messageOn(conn, {
+    ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
         [RecvMsg.ASK_TRUMP]: 'Выберите козырь',
         [RecvMsg.PLAYER_ASKS_TRUMP]: '{0} назначает козырь',

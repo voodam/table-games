@@ -14,14 +14,18 @@ const SendMsg = Object.freeze({
 });
 
 class CardTable extends GameTable {
-    constructor() {
-        super();    
+    constructor(handContainer, tableContainer) {
+        super();
+        this._handContainer = handContainer;
+        this._tableContainer = tableContainer;
     }
     
-    deal() {}
-    onPutCard() {}
-    askTrump() {}
-    playerPutsCard() {}
+    deal(hand) {
+        appendChildren(this._handContainer, hand.map(card => card.createImage()));
+    }
+    onPutCard(handler) {}
+    playerPutsCard(player, card) {}
+    askTrump(handler) {}
     _stopListenBrowserEvents() {}
     _listenBrowserEvents() {}
 }
@@ -33,6 +37,13 @@ class Card {
         this._rank = rank;
         this._suit = suit;
         
+    }
+    
+    createImage() {
+        const path = `img/${this._suit}_${this._rank}`;
+        const image = new Image();
+        image.src = path;
+        return image;
     }
 
     //get rank() { return this._rank; }
