@@ -9,6 +9,12 @@ use Games\Card\Trick;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
+    public function compareCards(Card $card1, Card $card2): int {
+        return $card1->compareTrump($card2, $this->trump, [Rank::class, 'cmpOrder10']);
+    }
+    
+    protected function createTrick(CardPlayer $eldest): Trick { return new GoatTrick($eldest, $this->players, [$this, 'compareCards']); }
+    
     protected function _score(Team $team): array {
         $cards = $this->cards[$team] ?? [];
         $partieScore = array_reduce($cards, fn(int $score, Card $card) => $score + ScoreCalc::tenAceAndFaceCards($card), 0);
@@ -26,6 +32,4 @@ class GoatPartie extends Partie {
         
         return [$gameScore, $partieScore];
     }
-    
-    protected function createTrick(CardPlayer $eldest): Trick { return new GoatTrick($eldest, $this->players, $this->trump); }
 }

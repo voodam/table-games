@@ -3,11 +3,10 @@
 namespace Games\Test;
 
 use Games\Chess\ChessServer;
-use Games\GameServer;
 use Games\Chess\ChessRecvMsg;
 use Games\Chess\Coords;
 
-class ChessTestServer extends TestServer {
+class ChessServerTest extends ServerTest {
     public function start(): void {
         $player1 = $this->newConn();
         $player2 = $this->newConn();
@@ -16,5 +15,5 @@ class ChessTestServer extends TestServer {
         $this->newConn();
     }
 
-    protected function createServer(): GameServer { return new ChessServer; }
+    protected function createServer(): ChessServer { return new ChessServer; }
 }

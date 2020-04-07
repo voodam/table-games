@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use Games\Test\ChessTestServer;
+use Games\Test\ChessServerTest;
+use Games\Test\GoatServerTest;
 
-$chessServer = new ChessTestServer;
+$chessServer = new GoatServerTest;
 $chessServer->start();

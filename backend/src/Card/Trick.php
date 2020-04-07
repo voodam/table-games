@@ -6,13 +6,13 @@ use Games\Util\MyObjectStorage;
 use Games\Card\CardSendMsg;
 
 class Trick {
-    private CardPlayers $players;
-    protected Suit $trump;
     protected MyObjectStorage $cards; // Card -> CardPlayer
- 
-    public function __construct(CardPlayer $eldest, CardPlayers $players, Suit $trump) {
+    private CardPlayers $players;
+    private $compareCards;
+
+    public function __construct(CardPlayer $eldest, CardPlayers $players, callable $compareCards) {
         $this->players = $players;
-        $this->trump = $trump;
+        $this->compareCards = $compareCards;
         $this->cards = new MyObjectStorage;
         $this->players->sendNext($eldest);
     }
@@ -39,10 +39,6 @@ class Trick {
 
     public function ended(): bool { 
         return count($this->cards) >= count($this->players);
-    }
-    
-    protected function compareCards(Card $card1, Card $card2): int {
-        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
     }
     
     protected function constrainCard(CardPlayer $player, Card $card): void {}

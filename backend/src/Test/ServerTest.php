@@ -5,7 +5,7 @@ namespace Games\Test;
 use Games\GameServer;
 use Ratchet\ConnectionInterface;
 
-abstract class TestServer {
+abstract class ServerTest {
     abstract public function start(): void;
     abstract protected function createServer(): GameServer;
     
@@ -14,7 +14,7 @@ abstract class TestServer {
     public function __construct() {
         $this->server = $this->createServer();
     }
-    
+
     protected function newConn(): ConnectionInterface {
         $conn = new Conn();
         $this->server->connect(null, null, $conn);

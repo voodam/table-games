@@ -2,6 +2,7 @@
 namespace Games\Card;
 
 use Games\Card\Trick;
+use Games\Card\Rank;
 use Games\Util\MyObjectStorage;
 use Games\Card\CardConstraintException;
 use Games\SendMsg;
@@ -57,7 +58,11 @@ abstract class Partie {
         }
     }
     
-    protected function createTrick(CardPlayer $eldest): Trick { return new Trick($eldest, $this->players, $this->trump); }
+    public function compareCards(Card $card1, Card $card2): int {
+        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
+    }
+    
+    protected function createTrick(CardPlayer $eldest): Trick { return new Trick($eldest, $this->players, [$this, 'compareCards']); }
     
     private function deal(): void {
         $deck = Deck::new32();
