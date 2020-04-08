@@ -13,6 +13,11 @@ class Card implements \JsonSerializable {
     public static function fromDict(array $dict): self {
         return new self(new Rank($dict['rank']), new Suit($dict['suit']));
     }
+    
+    public static function getSuit(object $cardOrSuit): Suit {
+        assert($cardOrSuit instanceof self || $cardOrSuit instanceof Suit);
+        return $cardOrSuit instanceof self ? $cardOrSuit->suit() : $cardOrSuit;
+    }
 
     public function __construct(Rank $rank, Suit $suit) {
         $this->rank = $rank;
@@ -20,23 +25,19 @@ class Card implements \JsonSerializable {
     }
 
     public function compare(self $other, callable $rankCmpOrder = null): int {
-        if (!$this->haveSameSuit()) throw new CardException("Cards have different suits: {$this->suit}, {$other->suit()}");
+        if (!$this->haveSameSuit($other)) return Cmp::MORE;
         return $this->rank->compare($other->rank(), $rankCmpOrder);
     }
 
-    public function compareTrump(self $other, Rank $trump, callable $rankCmpOrder = null): int {
-        if ($this->rank->equals($trump) && !$this->rank->equals($trump)) {
-            return Cmp::MORE;
-        }
-        if (!$this->rank->equals($trump) && $this->rank->equals($trump)) {
-            return Cmp::LESS;
-        }
-
+    public function compareTrump(self $other, Suit $trump, callable $rankCmpOrder = null): int {
+        if ($this->haveSameSuit($trump) && !$other->haveSameSuit($trump)) return Cmp::MORE;
+        if ($other->haveSameSuit($trump) && !$this->haveSameSuit($trump)) return Cmp::LESS;
         return $this->compare($other, $rankCmpOrder);
     }
 
-    public function haveSameSuit(self $other): bool {
-        return $this->suit->equals($other->suit());
+    public function haveSameSuit(object $cardOrSuit): bool {
+        $suit = self::getSuit($cardOrSuit);
+        return $this->suit->equals($suit);
     }
 
     public function jsonSerialize() { return ['rank' => $this->rank, 'suit' => $this->suit]; }

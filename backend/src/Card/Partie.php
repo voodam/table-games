@@ -4,8 +4,6 @@ namespace Games\Card;
 use Games\Card\Trick;
 use Games\Card\Rank;
 use Games\Util\MyObjectStorage;
-use Games\Card\CardConstraintException;
-use Games\SendMsg;
 use function Games\Util\Translate\t;
 
 abstract class Partie {
@@ -21,7 +19,17 @@ abstract class Partie {
     public function __construct(CardPlayers $players) {
         $this->players = $players;
         $this->cards = new MyObjectStorage;
-        $this->deal();
+    }
+    
+    public function deal(): void {
+        $deck = Deck::new32();
+        $deck->shuffle();
+        $deck->deal($this->players);
+        $this->eldest = $this->determEldest();
+        assert(isset($this->eldest));
+        $this->eldest->send(CardSendMsg::ASK_TRUMP());
+        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());
+        $this->newTrick($this->eldest);
     }
 
     public function putCard(CardPlayer $player, Card $card): void {
@@ -29,13 +37,7 @@ abstract class Partie {
         if ($this->ended()) throw new CardException('Party is over');
         assert(!$this->trick->ended());
     
-        try {
-            $this->trick->putCard($player, $card);
-        } catch (CardConstraintException $e) {
-            $player->send(SendMsg::WRONG_TURN(), $e->getMessage());
-            return;
-        }
-        
+        $this->trick->putCard($player, $card);
         if ($this->trick->ended()) {
             $this->getTrick();
         } else {
@@ -63,31 +65,24 @@ abstract class Partie {
         return $card1->compare($card2, [Rank::class, 'cmpOrder']);
     }
     
-    protected function createTrick(CardPlayer $eldest): Trick { return new Trick($eldest, $this->players, [$this, 'compareCards']); }
-    
-    private function deal(): void {
-        $deck = Deck::new32();
-        $deck->shuffle();
-        $deck->deal($this->players);
-        $this->eldest = $this->determEldest();
-        assert(isset($this->eldest));
-        $this->eldest->send(CardSendMsg::ASK_TRUMP());
-        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());
-        $this->newTrick($this->eldest);
-    }
+    protected function createTrick(CardPlayer $eldest): Trick { return new Trick($this->players, [$this, 'compareCards']); }
 
     private function getTrick(): void {
         $winner = $this->trick->winner();
-        $this->cards->updateInfo($winner->team(), function($cards) {
+        $this->cards->updateInfo($winner->team(), function(?array $cards) {
             $cards ??= [];
             $cards = array_merge($cards, $this->trick->collectCards());
             return $cards;
         });
-        $this->newTrick($winner);
+        
+        if (!$this->ended()) {
+            $this->newTrick($winner);
+        }
     }
 
     private function newTrick(CardPlayer $eldest): void {
         assert(!isset($this->trick) || $this->trick->ended());
         $this->trick = $this->createTrick($eldest);
+        $this->players->sendNext($eldest);
     }
 }

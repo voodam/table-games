@@ -1,4 +1,4 @@
 <?php
-namespace Games;
+namespace Games\Exception;
 
 class GameException extends \RuntimeException {}

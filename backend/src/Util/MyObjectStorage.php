@@ -5,7 +5,7 @@ use function Games\Util\Iter\filter;
 
 class MyObjectStorage extends \SplObjectStorage {
     public function updateInfo(object $object, callable $handler) {
-        $info = $this[$object];
+        $info = $this[$object] ?? null;
         $info = $handler($info);
         $this[$object] = $info;
     }

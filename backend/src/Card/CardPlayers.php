@@ -19,7 +19,7 @@ class CardPlayers extends Players {
     }
     
     public function sendTeam(Team $team, Enum $message, $payload): void {
-        $teamPlayers = filter($this, fn(CardPlayer $player) => $player->team->eq($team));
+        $teamPlayers = filter($this, fn(CardPlayer $player) => $player->team()->eq($team));
         self::sendTo($teamPlayers, $message, $payload);
     }
 

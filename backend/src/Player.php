@@ -12,6 +12,11 @@ class Player implements \JsonSerializable {
 
     private ConnectionInterface $conn;
     private string $name;
+    
+    public static function getConn(object $connOrPlayer): ConnectionInterface {
+        assert($connOrPlayer instanceof self || $connOrPlayer instanceof ConnectionInterface);
+        return $connOrPlayer instanceof self ? $connOrPlayer->conn() : $connOrPlayer;
+    }
 
     final public function __construct(ConnectionInterface $conn, string $name) {
         $this->conn = $conn;

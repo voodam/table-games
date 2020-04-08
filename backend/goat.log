@@ -1,0 +1,1162 @@
+connect
+set player: Игрок 1
+send message to Игрок 1: {"type":"waitPlayers"}
+connect
+set player: Игрок 2
+send message to Игрок 2: {"type":"waitPlayers"}
+connect
+set player: Игрок 3
+send message to Игрок 3: {"type":"waitPlayers"}
+connect
+set player: Игрок 4
+start game
+send message to Игрок 1: {"type":"yourTeam","payload":"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1"}
+send message to Игрок 2: {"type":"yourTeam","payload":"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2"}
+send message to Игрок 3: {"type":"yourTeam","payload":"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1"}
+send message to Игрок 4: {"type":"yourTeam","payload":"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2"}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"nine","suit":"clubs"},{"rank":"jack","suit":"clubs"},{"rank":"ten","suit":"diamonds"},{"rank":"eight","suit":"hearts"},{"rank":"seven","suit":"hearts"},{"rank":"eight","suit":"spades"},{"rank":"king","suit":"hearts"},{"rank":"seven","suit":"spades"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"queen","suit":"diamonds"},{"rank":"ace","suit":"diamonds"},{"rank":"queen","suit":"clubs"},{"rank":"queen","suit":"hearts"},{"rank":"nine","suit":"diamonds"},{"rank":"eight","suit":"clubs"},{"rank":"ace","suit":"hearts"},{"rank":"ace","suit":"clubs"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"nine","suit":"spades"},{"rank":"ten","suit":"hearts"},{"rank":"ten","suit":"spades"},{"rank":"jack","suit":"diamonds"},{"rank":"nine","suit":"hearts"},{"rank":"king","suit":"clubs"},{"rank":"eight","suit":"diamonds"},{"rank":"queen","suit":"spades"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"king","suit":"diamonds"},{"rank":"ace","suit":"spades"},{"rank":"king","suit":"spades"},{"rank":"seven","suit":"diamonds"},{"rank":"jack","suit":"hearts"},{"rank":"seven","suit":"clubs"},{"rank":"jack","suit":"spades"},{"rank":"ten","suit":"clubs"}]}
+message: {"type":"determTrump","payload":"diamonds"}
+send message to Игрок 2: {"type":"trumpIs","payload":"diamonds"}
+send message to Игрок 3: {"type":"trumpIs","payload":"diamonds"}
+send message to Игрок 4: {"type":"trumpIs","payload":"diamonds"}
+send message to Игрок 1: {"type":"askTrump"}
+send message to Игрок 2: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 1"}
+send message to Игрок 3: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 1"}
+send message to Игрок 4: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 1"}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":22}
+send message to Игрок 3: {"type":"yourPartieScore","payload":22}
+send message to Игрок 2: {"type":"yourPartieScore","payload":98}
+send message to Игрок 4: {"type":"yourPartieScore","payload":98}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":0,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":0,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":0,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":0,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"seven","suit":"hearts"},{"rank":"queen","suit":"clubs"},{"rank":"king","suit":"diamonds"},{"rank":"jack","suit":"diamonds"},{"rank":"seven","suit":"spades"},{"rank":"king","suit":"spades"},{"rank":"queen","suit":"hearts"},{"rank":"ace","suit":"diamonds"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"queen","suit":"diamonds"},{"rank":"ten","suit":"hearts"},{"rank":"nine","suit":"clubs"},{"rank":"nine","suit":"hearts"},{"rank":"eight","suit":"spades"},{"rank":"nine","suit":"spades"},{"rank":"jack","suit":"clubs"},{"rank":"ten","suit":"diamonds"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"jack","suit":"spades"},{"rank":"eight","suit":"hearts"},{"rank":"seven","suit":"diamonds"},{"rank":"ace","suit":"hearts"},{"rank":"king","suit":"clubs"},{"rank":"jack","suit":"hearts"},{"rank":"ace","suit":"clubs"},{"rank":"ten","suit":"spades"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"ten","suit":"clubs"},{"rank":"king","suit":"hearts"},{"rank":"eight","suit":"clubs"},{"rank":"ace","suit":"spades"},{"rank":"queen","suit":"spades"},{"rank":"seven","suit":"clubs"},{"rank":"nine","suit":"diamonds"},{"rank":"eight","suit":"diamonds"}]}
+message: {"type":"determTrump","payload":"clubs"}
+send message to Игрок 1: {"type":"trumpIs","payload":"clubs"}
+send message to Игрок 3: {"type":"trumpIs","payload":"clubs"}
+send message to Игрок 4: {"type":"trumpIs","payload":"clubs"}
+send message to Игрок 2: {"type":"askTrump"}
+send message to Игрок 1: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 3: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 4: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":76}
+send message to Игрок 3: {"type":"yourPartieScore","payload":76}
+send message to Игрок 2: {"type":"yourPartieScore","payload":44}
+send message to Игрок 4: {"type":"yourPartieScore","payload":44}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":4}}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"king","suit":"diamonds"},{"rank":"nine","suit":"clubs"},{"rank":"eight","suit":"spades"},{"rank":"seven","suit":"diamonds"},{"rank":"ace","suit":"hearts"},{"rank":"queen","suit":"spades"},{"rank":"ten","suit":"diamonds"},{"rank":"king","suit":"spades"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"ace","suit":"clubs"},{"rank":"seven","suit":"hearts"},{"rank":"king","suit":"clubs"},{"rank":"queen","suit":"diamonds"},{"rank":"ace","suit":"diamonds"},{"rank":"queen","suit":"clubs"},{"rank":"queen","suit":"hearts"},{"rank":"king","suit":"hearts"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"eight","suit":"hearts"},{"rank":"jack","suit":"hearts"},{"rank":"seven","suit":"spades"},{"rank":"ten","suit":"spades"},{"rank":"jack","suit":"diamonds"},{"rank":"eight","suit":"diamonds"},{"rank":"jack","suit":"clubs"},{"rank":"jack","suit":"spades"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"nine","suit":"diamonds"},{"rank":"nine","suit":"spades"},{"rank":"ten","suit":"hearts"},{"rank":"seven","suit":"clubs"},{"rank":"ace","suit":"spades"},{"rank":"nine","suit":"hearts"},{"rank":"ten","suit":"clubs"},{"rank":"eight","suit":"clubs"}]}
+message: {"type":"determTrump","payload":"hearts"}
+send message to Игрок 1: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 2: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 4: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 3: {"type":"askTrump"}
+send message to Игрок 1: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 3"}
+send message to Игрок 2: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 3"}
+send message to Игрок 4: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 3"}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":43}
+send message to Игрок 3: {"type":"yourPartieScore","payload":43}
+send message to Игрок 2: {"type":"yourPartieScore","payload":77}
+send message to Игрок 4: {"type":"yourPartieScore","payload":77}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":2,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"eight","suit":"spades"},{"rank":"seven","suit":"diamonds"},{"rank":"nine","suit":"diamonds"},{"rank":"ace","suit":"diamonds"},{"rank":"queen","suit":"spades"},{"rank":"nine","suit":"clubs"},{"rank":"jack","suit":"diamonds"},{"rank":"eight","suit":"hearts"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"eight","suit":"clubs"},{"rank":"jack","suit":"clubs"},{"rank":"king","suit":"hearts"},{"rank":"jack","suit":"hearts"},{"rank":"eight","suit":"diamonds"},{"rank":"jack","suit":"spades"},{"rank":"king","suit":"clubs"},{"rank":"ten","suit":"clubs"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"ace","suit":"hearts"},{"rank":"seven","suit":"clubs"},{"rank":"queen","suit":"clubs"},{"rank":"nine","suit":"hearts"},{"rank":"seven","suit":"spades"},{"rank":"ace","suit":"spades"},{"rank":"king","suit":"diamonds"},{"rank":"ten","suit":"spades"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"king","suit":"spades"},{"rank":"queen","suit":"diamonds"},{"rank":"ace","suit":"clubs"},{"rank":"ten","suit":"hearts"},{"rank":"queen","suit":"hearts"},{"rank":"ten","suit":"diamonds"},{"rank":"seven","suit":"hearts"},{"rank":"nine","suit":"spades"}]}
+message: {"type":"determTrump","payload":"hearts"}
+send message to Игрок 1: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 3: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 4: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 2: {"type":"askTrump"}
+send message to Игрок 1: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 3: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 4: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":97}
+send message to Игрок 3: {"type":"yourPartieScore","payload":97}
+send message to Игрок 2: {"type":"yourPartieScore","payload":23}
+send message to Игрок 4: {"type":"yourPartieScore","payload":23}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":6,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":6,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":6,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":6,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"eight","suit":"spades"},{"rank":"jack","suit":"hearts"},{"rank":"jack","suit":"diamonds"},{"rank":"ten","suit":"spades"},{"rank":"ace","suit":"hearts"},{"rank":"queen","suit":"hearts"},{"rank":"ten","suit":"hearts"},{"rank":"nine","suit":"diamonds"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"eight","suit":"diamonds"},{"rank":"jack","suit":"spades"},{"rank":"queen","suit":"clubs"},{"rank":"jack","suit":"clubs"},{"rank":"seven","suit":"clubs"},{"rank":"king","suit":"spades"},{"rank":"seven","suit":"spades"},{"rank":"nine","suit":"clubs"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"ace","suit":"spades"},{"rank":"ace","suit":"clubs"},{"rank":"eight","suit":"clubs"},{"rank":"ten","suit":"diamonds"},{"rank":"seven","suit":"diamonds"},{"rank":"ten","suit":"clubs"},{"rank":"queen","suit":"diamonds"},{"rank":"seven","suit":"hearts"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"eight","suit":"hearts"},{"rank":"king","suit":"diamonds"},{"rank":"ace","suit":"diamonds"},{"rank":"nine","suit":"spades"},{"rank":"king","suit":"clubs"},{"rank":"nine","suit":"hearts"},{"rank":"queen","suit":"spades"},{"rank":"king","suit":"hearts"}]}
+message: {"type":"determTrump","payload":"hearts"}
+send message to Игрок 1: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 3: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 4: {"type":"trumpIs","payload":"hearts"}
+send message to Игрок 2: {"type":"askTrump"}
+send message to Игрок 1: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 3: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+send message to Игрок 4: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 2"}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"queen","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"king","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":90}
+send message to Игрок 3: {"type":"yourPartieScore","payload":90}
+send message to Игрок 2: {"type":"yourPartieScore","payload":30}
+send message to Игрок 4: {"type":"yourPartieScore","payload":30}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":8,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":8,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":8,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":8,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 1: {"type":"deal","payload":[{"rank":"ace","suit":"diamonds"},{"rank":"king","suit":"diamonds"},{"rank":"ace","suit":"hearts"},{"rank":"queen","suit":"clubs"},{"rank":"ace","suit":"spades"},{"rank":"ace","suit":"clubs"},{"rank":"king","suit":"clubs"},{"rank":"king","suit":"spades"}]}
+send message to Игрок 2: {"type":"deal","payload":[{"rank":"seven","suit":"clubs"},{"rank":"queen","suit":"diamonds"},{"rank":"nine","suit":"spades"},{"rank":"nine","suit":"hearts"},{"rank":"seven","suit":"diamonds"},{"rank":"ten","suit":"hearts"},{"rank":"king","suit":"hearts"},{"rank":"eight","suit":"diamonds"}]}
+send message to Игрок 3: {"type":"deal","payload":[{"rank":"ten","suit":"spades"},{"rank":"jack","suit":"spades"},{"rank":"eight","suit":"hearts"},{"rank":"nine","suit":"clubs"},{"rank":"seven","suit":"hearts"},{"rank":"ten","suit":"diamonds"},{"rank":"jack","suit":"hearts"},{"rank":"jack","suit":"diamonds"}]}
+send message to Игрок 4: {"type":"deal","payload":[{"rank":"nine","suit":"diamonds"},{"rank":"eight","suit":"clubs"},{"rank":"seven","suit":"spades"},{"rank":"ten","suit":"clubs"},{"rank":"queen","suit":"hearts"},{"rank":"queen","suit":"spades"},{"rank":"jack","suit":"clubs"},{"rank":"eight","suit":"spades"}]}
+message: {"type":"determTrump","payload":"spades"}
+send message to Игрок 1: {"type":"trumpIs","payload":"spades"}
+send message to Игрок 2: {"type":"trumpIs","payload":"spades"}
+send message to Игрок 3: {"type":"trumpIs","payload":"spades"}
+send message to Игрок 4: {"type":"askTrump"}
+send message to Игрок 1: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 4"}
+send message to Игрок 2: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 4"}
+send message to Игрок 3: {"type":"playerAsksTrump","payload":"\u0418\u0433\u0440\u043e\u043a 4"}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"nine","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"queen","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"queen","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"jack","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"hearts"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"ten","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"seven","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"seven","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"jack","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"jack","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"nine","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"ace","suit":"diamonds"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"ace","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"diamonds"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"eight","suit":"diamonds"}}}
+message: {"type":"putCard","payload":{"rank":"seven","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"seven","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"queen","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"queen","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"clubs"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"ten","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"clubs"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"clubs"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"clubs"}}}
+message: {"type":"putCard","payload":{"rank":"nine","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"nine","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"ten","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"ten","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 3","card":{"rank":"eight","suit":"hearts"}}}
+message: {"type":"putCard","payload":{"rank":"eight","suit":"spades"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 4","card":{"rank":"eight","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"spades"}}
+send message to Игрок 2: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 1","card":{"rank":"king","suit":"spades"}}}
+message: {"type":"putCard","payload":{"rank":"king","suit":"hearts"}}
+send message to Игрок 1: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 3: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 4: {"type":"playerPutsTrump","payload":{"player":"\u0418\u0433\u0440\u043e\u043a 2","card":{"rank":"king","suit":"hearts"}}}
+send message to Игрок 1: {"type":"yourPartieScore","payload":106}
+send message to Игрок 3: {"type":"yourPartieScore","payload":106}
+send message to Игрок 2: {"type":"yourPartieScore","payload":14}
+send message to Игрок 4: {"type":"yourPartieScore","payload":14}
+send message to Игрок 1: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":12,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 2: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":12,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 3: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":12,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+send message to Игрок 4: {"type":"gameScore","payload":{"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 1":12,"\u041a\u043e\u043c\u0430\u043d\u0434\u0430 2":6}}
+Test ended!

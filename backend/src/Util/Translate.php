@@ -6,7 +6,7 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 function t(string $message, array $params = []): string {
     static $translator = null;
-    if (!$translator) {
+    if (!isset($translator)) {
         $translator = new Translator('ru_RU');
         $translator->addLoader('yaml', new YamlFileLoader());
         $translator->addResource('yaml', 'messages.ru.yaml', 'ru_RU');

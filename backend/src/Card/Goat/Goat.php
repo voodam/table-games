@@ -4,25 +4,24 @@ namespace Games\Card\Goat;
 use Games\MsgObservableInterface;
 use Games\MsgObservable;
 use Games\SendMsg;
-use Games\Card\CardPlayers;
-use Games\Card\CardPlayer;
 use Games\Card\Card;
 use Games\Card\Team;
 use Games\Card\Partie;
 use Games\Card\CardRecvMsg;
-use Games\Card\CardException;
+use Games\Exception\GameEndException;
 use Games\Util\Logging;
+use Games\Card\CardSendMsg;
 use function Games\Util\Iter\filter;
 
 class Goat implements MsgObservableInterface {
     use MsgObservable;
     use Logging;
     
-    private CardPlayers $players;
+    private GoatPlayers $players;
     private \SplObjectStorage $scores; // Team -> int
     private Partie $partie;
 
-    public function __construct(CardPlayers $players) {
+    public function __construct(GoatPlayers $players) {
         $this->players = $players;
         $this->scores = new \SplObjectStorage;
         foreach ($this->teams() as $team) {
@@ -35,9 +34,9 @@ class Goat implements MsgObservableInterface {
         $this->newPartie();
     }
 
-    public function putCard(Card $card, CardPlayer $player) {
-        if ($this->winner()) throw new CardException('Game was ended');
-        assert (!$this->partie->ended());
+    public function putCard(Card $card, GoatPlayer $player) {
+        if ($this->winner()) throw new GameEndException('Game was ended: we have a winner');
+        assert(!$this->partie->ended());
         
         $this->partie->putCard($player, $card);
         if (!$this->partie->ended()) {
@@ -76,6 +75,7 @@ class Goat implements MsgObservableInterface {
         $this->detachObserver($this->partie ?? null, CardRecvMsg::DETERM_TRUMP());
         $this->partie = new GoatPartie($this->players);
         $this->attachObserver($this->partie, CardRecvMsg::DETERM_TRUMP());
+        $this->partie->deal();
     }
 
     private function winner(): ?Team {

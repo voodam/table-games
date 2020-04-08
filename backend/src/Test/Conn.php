@@ -4,18 +4,16 @@ namespace Games\Test;
 use Ratchet\ConnectionInterface;
 
 class Conn implements ConnectionInterface {
-    public $last = array(
-        'send'  => ''
-      , 'close' => false
-    );
-
-    public $remoteAddress = '127.0.0.1';
-
+    private $msgHandler; 
+    
+    public function __construct(callable $msgHandler) {
+        $this->msgHandler = $msgHandler;
+    }
+    
     public function send($data) {
-        $this->last[__FUNCTION__] = $data;
+        $message = json_decode($data, true);
+        ($this->msgHandler)($this, $message['type'], $message['payload'] ?? null);
     }
 
-    public function close() {
-        $this->last[__FUNCTION__] = true;
-    }
+    public function close() {}
 }

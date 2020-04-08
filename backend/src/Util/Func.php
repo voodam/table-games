@@ -7,3 +7,7 @@ function _instanceof(string $class): callable { return fn($val) => $val instance
 function _new(string $class): callable { return [new \ReflectionClass($class), 'newInstance']; }
 function fst(array $arr) { return $arr[0]; }
 function compose(callable $f, callable $g): callable { return fn(...$args) => $f($g(...$args)); }
+
+function repeat(int $times, callable $cbk): void { 
+    for ($i = 0; $i < $times; $i++) $cbk(); 
+}

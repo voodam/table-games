@@ -23,7 +23,7 @@ trait MsgObservable {
     protected function detachObserver(?object $observer, Enum $message): void {
         $key = array_search($observer, $this->getObservers($message));
         if ($key !== false) {
-            unset($this->observers[$message][$key]);
+            unset($this->observers[$message->getValue()][$key]);
         }
     }
 

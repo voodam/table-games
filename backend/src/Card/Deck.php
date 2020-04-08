@@ -46,7 +46,7 @@ class Deck {
     private static function get52Cards(): array {
         static $cards = [];
 
-        if (!$cards) {
+        if (empty($cards)) {
             foreach (Rank::keys() as $h) {
                 foreach (Suit::keys() as $suit) {
                     $cards[] = new Card(Rank::$h(), Suit::$suit());

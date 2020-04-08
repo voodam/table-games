@@ -10,11 +10,10 @@ class Trick {
     private CardPlayers $players;
     private $compareCards;
 
-    public function __construct(CardPlayer $eldest, CardPlayers $players, callable $compareCards) {
+    public function __construct(CardPlayers $players, callable $compareCards) {
         $this->players = $players;
         $this->compareCards = $compareCards;
         $this->cards = new MyObjectStorage;
-        $this->players->sendNext($eldest);
     }
     
     public function putCard(CardPlayer $player, Card $card): void {
@@ -28,7 +27,12 @@ class Trick {
 
     public function winner(): CardPlayer {
         if (!$this->ended()) throw new CardException('Trick is not over, so there is no winner');
-        $maxCard = array_reduce($this->cards, fn(Card $maxCard, Card $card) => $this->compareCards($maxCard, $card) === Cmp::LESS ? $card : $maxCard);
+        
+        $selectMaxCard = function (?Card $maxCard, Card $card) {
+            if (!isset($maxCard)) return $card;
+            return ($this->compareCards)($maxCard, $card) === Cmp::LESS ? $card : $maxCard;
+        };
+        $maxCard = array_reduce(iterator_to_array($this->cards), $selectMaxCard);
         return $this->cards[$maxCard];
     }
 

@@ -3,13 +3,14 @@
 namespace Games\Test;
 
 use Games\GameServer;
-use Ratchet\ConnectionInterface;
-use Games\Players;
-use Games\GameServer;
+use Games\Player;
 use MyCLabs\Enum\Enum;
+use Games\SendMsg;
+use Ratchet\ConnectionInterface;
+use function Games\Util\Func\repeat;
 
 abstract class ServerTest {
-    abstract public function start(): void;
+    abstract protected function msgHandler(Player $player, string $type, $payload = null): void;
     abstract protected function createServer(): GameServer;
     
     protected GameServer $server;
@@ -17,16 +18,30 @@ abstract class ServerTest {
     public function __construct() {
         $this->server = $this->createServer();
     }
-
-    protected function newConn(): ConnectionInterface {
-        $conn = new Conn();
-        $this->server->connect(null, null, $conn);
-        return $conn;
+    
+    public function start(): void {
+        $connect = fn() => $this->server->connect(null, null, new Conn([$this, 'fullMsgHandler']));
+        repeat($this->server->needPlayersNumber(), $connect);
+    }
+    
+    public function fullMsgHandler(ConnectionInterface $conn, string $type, $payload = null) {
+        switch ($type) {
+            case SendMsg::WINNER_IS()->getValue():
+                echo "Test ended!\n";
+                exit();
+        }
+        
+        $player = $this->server->players()->get($conn);
+        $this->msgHandler($player, $type, $payload);
     }
     
     protected function onMessage($connOrPlayer, Enum $type, $payload = null): void {
-        $conn = Players::getConn($connOrPlayer);
+        $conn = Player::getConn($connOrPlayer);
         $json = GameServer::createJsonMsg($type, $payload);
-        $this->server->onMessage($conn, $json);
+        try {
+            $this->server->onMessage($conn, $json);
+        } catch (\Exception $e) {
+            $this->server->onError($conn, $e);
+        }
     }
 }

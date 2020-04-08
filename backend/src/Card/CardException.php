@@ -1,6 +1,6 @@
 <?php
 namespace Games\Card;
 
-use Games\GameException;
+use Games\Exception\GameException;
 
 class CardException extends GameException {}

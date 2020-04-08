@@ -3,6 +3,7 @@ namespace Games\Card;
 
 use Games\Player;
 use Games\Card\Card;
+use function Games\Util\Iter\randomValue;
 
 class CardPlayer extends Player {
     private Team $team;
@@ -33,10 +34,11 @@ class CardPlayer extends Player {
         return array_search($card, $this->hand) !== false;
     }
     
-    public function hasSuit(Suit $suit): bool {
-        return count(array_filter($this->hand, fn(Card $card) => $card->suit()->equals($suit))) > 0;
+    public function hasSuit(object $cardOrSuit): bool {
+        return !empty(array_filter($this->hand, fn(Card $card) => $card->haveSameSuit($cardOrSuit)));
     }
     
-    public function hasCards(): bool { return isset($this->hand); }
+    public function randomCard(): Card { return randomValue($this->hand); }
+    public function hasCards(): bool { return !empty($this->hand); }
     public function team(): Team { return $this->team; }
 }
