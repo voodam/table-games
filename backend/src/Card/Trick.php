@@ -4,8 +4,11 @@ namespace Games\Card;
 use Games\Util\Cmp;
 use Games\Util\MyObjectStorage;
 use Games\Card\CardSendMsg;
+use Games\Util\Logging;
 
 class Trick {
+    use Logging;
+    
     protected MyObjectStorage $cards; // Card -> CardPlayer
     private CardPlayers $players;
     private $compareCards;
@@ -21,7 +24,7 @@ class Trick {
         if (!$this->players->contains($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
         $this->constrainCard($player, $card);
         $player->putCard($card);
-        $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), ['card' => $card, 'player' => $player]);
+        $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), $card);
         $this->cards[$card] = $player;
     }
 

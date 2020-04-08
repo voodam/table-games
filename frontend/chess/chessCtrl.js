@@ -11,8 +11,7 @@ ctrl.onPlay(conn => {
     });
     
     const board = new Board(table);
-    ctrl.lockOnTurns(conn, board);
-    conn.onClose(board.clear.bind(board));
+    ctrl.initLocking(conn, board);
 
     board.onMove((from, to) => {
         conn.send(SendMsg.MOVE_PIECE, [from, to]);

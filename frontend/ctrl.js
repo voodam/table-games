@@ -7,7 +7,7 @@ class GameController {
         enterName: 'Введите имя',
         yourTurn: 'Ваш ход',
         turnOf: 'Ходит {0}',
-        wrongTurn: 'Неверный ход: {0}',
+        wrongTurn: '{0}',
         winnerIs: 'Победил(и) {0}!'
     };
 
@@ -17,7 +17,7 @@ class GameController {
             `<div class="inputs">
                 <div class="input-elements">
                     <input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
-                    <input id="name" placeholder="Введите имя" value="Вася">
+                    <input id="name" placeholder="Введите имя">
                 </div>
                 <div class="buttons">
                     <button id="play">Играть!</button>
@@ -63,17 +63,9 @@ class GameController {
                 this.message(this._messages.enterUrl);
                 return;
             }
-
-            let name;
-            if (this._nameInput) {
-                name = this._nameInput.value.trim();
-                if (!name) {
-                    this.message(this._messages.enterName);
-                    return;
-                }
-            }
-
+            
             this._toggleButtons();
+            const name = this._nameInput && this._nameInput.value.trim() || null;
             const conn = new WebsocketConn(serverUrl);
             conn.connect(name);
 
@@ -123,9 +115,11 @@ class GameController {
      * @param {WebsocketConn} conn
      * @param {GameTable} table
      */
-    lockOnTurns(conn, table) {
+    initLocking(conn, table) {
         conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.unlock.bind(table));
         conn.on(WebsocketConn.RecvMsg.TURN_OF, table.lock.bind(table));
+        conn.on(WebsocketConn.RecvMsg.WRONG_TURN, table.rollbackTurn.bind(table));
+        conn.onClose(table.clear.bind(table));
     }
     
     _toggleButtons() {

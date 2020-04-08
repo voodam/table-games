@@ -8,6 +8,8 @@ use Games\Card\Suit;
 use function Games\Util\Func\_new;
 
 class GoatServer extends GameServer {
+    private Goat $game;
+    
     public function __construct() {
         parent::__construct(4);
     }
@@ -16,9 +18,10 @@ class GoatServer extends GameServer {
         $this->preparePayload(CardRecvMsg::PUT_CARD(), [Card::class, 'fromPair']);
         $this->preparePayload(CardRecvMsg::DETERM_TRUMP(), _new(Suit::class));
         
-        $game = new Goat($this->players);
-        $this->attachObserver($game, CardRecvMsg::PUT_CARD());
-        $game->start();   
+        $this->detachObserver($this->game ?? null, CardRecvMsg::PUT_CARD());
+        $this->game = new Goat($this->players);
+        $this->attachObserver($this->game, CardRecvMsg::PUT_CARD());
+        $this->game->start();
     }
     
     protected function createPlayers(): GoatPlayers { return new GoatPlayers; }

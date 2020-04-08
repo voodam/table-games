@@ -5,6 +5,7 @@ const RecvMsg = Object.freeze({
     ASK_TRUMP: 'askTrump',
     PLAYER_ASKS_TRUMP: 'playerAsksTrump',
     TRUMP_IS: 'trumpIs',
+    TRICK_WINNER_IS: 'trickWinnerIs',
     YOUR_PARTIE_SCORE: 'yourPartieScore'
 });
 
@@ -15,46 +16,61 @@ const SendMsg = Object.freeze({
 
 class CardTable extends GameTable {
     constructor(playersNumber, handContainer, tableContainer) {
-        console.assert(handContainer.childElementCount === 0);
-        console.assert(tableContainer.childElementCount === 0);
+        clearElement(handContainer);
+        clearElement(tableContainer);
         
         super();
         this._playersNumber = playersNumber;
         this._hand = handContainer;
         this._table = tableContainer;
         this._listenBrowserEvents();
+        this._trumpSelecting = false;
     }
     
     deal(hand) {
         appendChildren(this._hand, hand.map(card => card.createImage()), true);
     }
     
-    playerPutsCard(player, card) {
-        if (this._playersNumber >= this._table.childElementCount) {
-            this._table.textContent = '';
-        }
-        
+    playerPutsCard(card) {
         this._table.appendChild(card.createImage());
+    }
+    
+    clearTable() {
+        if (!this._trumpSelecting && this._table.childElementCount >= this._playersNumber) {
+            clearElement(this._table);
+        }
+    }
+    
+    rollbackTurn() {
+        super.rollbackTurn();
+        const lastCard = this._table.lastChild;
+        lastCard.remove();
+        this._hand.appendChild(lastCard);
     }
     
     askTrump(handler) {
         const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
         appendChildren(this._table, suitCards.map(card => card.createImage()), true);
+        this._trumpSelecting = true;
         
         this._table.addEventListener('dblclick', ({target}) => {
             const card = Card.fromImage(target);
             handler(card.suit);
+            this._trumpSelecting = false;
+            this.clearTable();
         }, {once: true});
     }
     
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     
+    _lockingElement() { return this._hand; }
     _listenBrowserEvents() { this._hand.addEventListener('dblclick', this._cardClickHandler); }
     _stopListenBrowserEvents() { this._hand.removeEventListener('dblclick', this._cardClickHandler); }
     _cardClickHandler = ({target}) => {
         const card = Card.fromImage(target);
-        this.playerPutsCard('Вы', card);
+        this.playerPutsCard(card);
+        target.remove();
         this._onPutCard(card);
     }
 }

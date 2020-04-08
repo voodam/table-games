@@ -1,8 +1,8 @@
-'Player {0} must put a card with first card suit: {1}, given card: {2}': 'Необходимо класть в масть "{1}", игрок "{0}" положил: "{2}", имея карты этой масти'
-'diamonds': бубны
-'clubs': трефы
-'hearts': червы
-'spades': пики
+'Player {0} must put a card with first card suit: {1}, given card: {2}': 'Необходимо класть в масть 1, 0 положил 2, имея карты этой масти'
+diamonds: бубны
+clubs: трефы
+hearts: червы
+spades: пики
 two: двойка
 three: тройка
 four: четверка

@@ -41,12 +41,14 @@ const appendChildren = (parent, children, clearParent = false) => {
     console.assert(parent instanceof Node);
     
     if (clearParent) {
-        parent.textContent = '';
+        clearElement(parent);
     }
     for(const child of children) {
         parent.appendChild(child);
     }
 };
+
+const clearElement = (element) => element.textContent = '';
 
 const createElemsFromStr = (html) => {
       const div = document.createElement('div');

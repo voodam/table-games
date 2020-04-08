@@ -9,7 +9,7 @@ function t(string $message, array $params = []): string {
     if (!isset($translator)) {
         $translator = new Translator('ru_RU');
         $translator->addLoader('yaml', new YamlFileLoader());
-        $translator->addResource('yaml', 'messages.ru.yaml', 'ru_RU');
+        $translator->addResource('yaml', "messages.ru.yml", 'ru_RU');
     }
     
     return $translator->trans($message, $params);

@@ -4,9 +4,12 @@ namespace Games\Card;
 use Games\Card\Trick;
 use Games\Card\Rank;
 use Games\Util\MyObjectStorage;
+use Games\Util\Logging;
 use function Games\Util\Translate\t;
 
 abstract class Partie {
+    use Logging;
+
     protected CardPlayer $eldest;
     protected Suit $trump;
     protected MyObjectStorage $cards; // Team -> Card[]
@@ -57,6 +60,7 @@ abstract class Partie {
     public function determTrump(Suit $suit, CardPlayer $eldest = null) { 
         $this->trump = $suit;
         if ($eldest) {
+            $this->log("determTrump: send 'trump is' message");
             $this->players->sendOther($eldest, CardSendMsg::TRUMP_IS(), t($this->trump));
         }
     }
@@ -74,6 +78,7 @@ abstract class Partie {
             $cards = array_merge($cards, $this->trick->collectCards());
             return $cards;
         });
+        $this->players->sendAbout($winner, CardSendMsg::TRICK_WINNER_IS());
         
         if (!$this->ended()) {
             $this->newTrick($winner);
