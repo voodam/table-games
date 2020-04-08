@@ -19,6 +19,16 @@ class Players implements \IteratorAggregate, \Countable {
             $player->send($message, $payload($player));
         }
     }
+    
+    public static function getConn(object $object): ConnectionInterface {
+        if ($object instanceof Player) {
+            $conn = $object->conn();
+        } else {
+            assert($object instanceof ConnectionInterface);
+            $conn = $object;
+        }
+        return $conn;
+    }
 
     public function __construct() {
         $this->storage = new MyObjectStorage;
@@ -52,7 +62,7 @@ class Players implements \IteratorAggregate, \Countable {
     }
     
     public function getOther(object $connOrPlayer): array {
-        $connection = $this->getConn($connOrPlayer);
+        $connection = self::getConn($connOrPlayer);
         return $this->storage->getOtherInfo($connection);
     }
 
@@ -97,14 +107,4 @@ class Players implements \IteratorAggregate, \Countable {
     public function contains(ConnectionInterface $conn): bool { return isset($this->storage[$conn]); }
     
     protected function playerClass(): string { return Player::class; }
-
-    private function getConn(object $object): ConnectionInterface {
-        if ($object instanceof Player) {
-            $conn = $object->conn();
-        } else {
-            assert($object instanceof ConnectionInterface);
-            $conn = $object;
-        }
-        return $conn;
-    }
 }

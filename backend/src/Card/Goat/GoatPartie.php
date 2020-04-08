@@ -10,7 +10,6 @@ use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
     protected function determEldest(): CardPlayer {
-        return $this->players->getNext($this->players->getNext($this->players->getNext($this->players->getFirst()))); //!
         return $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
     }
     

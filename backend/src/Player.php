@@ -5,6 +5,7 @@ namespace Games;
 use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
+use Games\GameServer;
 
 class Player implements \JsonSerializable {
     use Logging;
@@ -18,12 +19,7 @@ class Player implements \JsonSerializable {
     }
 
     public function send(Enum $message, $payload = null) {
-        $message = ['type' => $message->getValue()];
-        if ($payload) {
-            $message['payload'] = $payload;
-        }
-        
-        $json = json_encode($message);
+        $json = GameServer::createJsonMsg($message, $payload);
         $this->conn->send($json);
         $this->log("send message to {$this->name}: $json");
     }

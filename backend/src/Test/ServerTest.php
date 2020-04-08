@@ -4,12 +4,15 @@ namespace Games\Test;
 
 use Games\GameServer;
 use Ratchet\ConnectionInterface;
+use Games\Players;
+use Games\GameServer;
+use MyCLabs\Enum\Enum;
 
 abstract class ServerTest {
     abstract public function start(): void;
     abstract protected function createServer(): GameServer;
     
-    private GameServer $server;
+    protected GameServer $server;
     
     public function __construct() {
         $this->server = $this->createServer();
@@ -21,8 +24,9 @@ abstract class ServerTest {
         return $conn;
     }
     
-    protected function onMessage(ConnectionInterface $conn, string $type, $payload = null): void {
-        $json = json_encode(['type' => $type, 'payload' => $payload]);
+    protected function onMessage($connOrPlayer, Enum $type, $payload = null): void {
+        $conn = Players::getConn($connOrPlayer);
+        $json = GameServer::createJsonMsg($type, $payload);
         $this->server->onMessage($conn, $json);
     }
 }
