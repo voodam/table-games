@@ -64,10 +64,9 @@ class Goat implements MsgObservableInterface {
     }
     
     private function restart(): void {
-        foreach ($this->teams() as $team) {
-            $newScore = $team->eq($this->winner()) ? $this->scores[$team] - 12 : 0;
-            $this->scores[$team] -= $newScore;
-        }
+        $this->changeScore(function(int $oldScore, Team $team) {
+            return $team->eq($this->winner()) ? $oldScore - 12 : 0;
+        });
         $this->newPartie();
     }
 
@@ -87,14 +86,20 @@ class Goat implements MsgObservableInterface {
     private function countScore(): void {
         assert ($this->winner() == null);
         
-        $msgPayload = [];
-        foreach ($this->teams() as $team) {
-            [$gameScore, $partieScore] = $this->partie->score($team);
-            $this->scores[$team] += $gameScore;
-            $msgPayload[(string)$team] = $this->scores[$team];
+        $this->changeScore(function(int $oldScore, Team $team) {
+            [$score, $partieScore] = $this->partie->score($team);
             $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $partieScore);
+            return $score + $oldScore;
+        });
+    }
+    
+    private function changeScore(callable $scoreCalc): void {
+        $newScorePayload = [];
+        foreach ($this->teams() as $team) {
+            $this->scores[$team] = $scoreCalc($this->scores[$team], $team);
+            $newScorePayload[(string)$team] = $this->scores[$team];
         }
-        $this->players->sendAll(SendMsg::GAME_SCORE(), $msgPayload);
+        $this->players->sendAll(SendMsg::GAME_SCORE(), $newScorePayload);
     }
 
     private ?array $teams;
