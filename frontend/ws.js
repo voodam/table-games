@@ -42,7 +42,9 @@ class WebsocketConn {
     }
 
     send(type, payload = undefined) {
-        const send = () => this._ws.send(JSON.stringify({type, payload}));
+        const message = JSON.stringify({type, payload});
+        console.log(`send message: ${message}`);
+        const send = () => this._ws.send(message);
 
         if (this._ws.readyState === 0) { // connecting
             this._ws.addEventListener('open', send);

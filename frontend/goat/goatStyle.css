@@ -1,8 +1,11 @@
-#hand img {
+.game-card {
     width: 12.5%;
     padding: 1%;
 }
 
+#table {
+    margin-top: 12%;
+}
 #hand {
     position: absolute;
     bottom: 0;

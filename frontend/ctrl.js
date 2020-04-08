@@ -98,8 +98,7 @@ class GameController {
             });
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
                 const elements = Object.keys(scores).map(name => createElement(`${name}: ${scores[name]}`));
-                this._scoreStatus.textContent = '';
-                appendChildren(this._scoreStatus, elements);
+                appendChildren(this._scoreStatus, elements, true);
             });
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);

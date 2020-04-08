@@ -37,8 +37,12 @@ const createElement = (textContent = '', tagName = 'div') => {
     return elem;
 };
 
-const appendChildren = (parent, children) => {
+const appendChildren = (parent, children, clearParent = false) => {
     console.assert(parent instanceof Node);
+    
+    if (clearParent) {
+        parent.textContent = '';
+    }
     for(const child of children) {
         parent.appendChild(child);
     }

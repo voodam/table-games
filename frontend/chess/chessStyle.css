@@ -10,10 +10,6 @@
     background-color: saddlebrown;
 }
 
-#board.locked {
-    filter: brightness(30%);
-}
-
 #board td {
     width: 12.5%;
     height: 12.5%;
