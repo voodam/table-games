@@ -16,6 +16,7 @@ abstract class Partie {
     private Trick $trick;
 
     abstract protected function _score(Team $team): array;
+    abstract protected function determEldest(): CardPlayer;
 
     public function __construct(CardPlayers $players) {
         $this->players = $players;
@@ -68,7 +69,7 @@ abstract class Partie {
         $deck = Deck::new32();
         $deck->shuffle();
         $deck->deal($this->players);
-        $this->eldest = $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
+        $this->eldest = $this->determEldest();
         assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());

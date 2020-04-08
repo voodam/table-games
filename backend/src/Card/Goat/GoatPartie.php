@@ -9,11 +9,10 @@ use Games\Card\Trick;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
-    public function compareCards(Card $card1, Card $card2): int {
-        return $card1->compareTrump($card2, $this->trump, [Rank::class, 'cmpOrder10']);
+    protected function determEldest(): CardPlayer {
+        return $this->players->getNext($this->players->getNext($this->players->getNext($this->players->getFirst()))); //!
+        return $this->players->havingCard( new Card(Rank::JACK(), Suit::CLUBS()) );
     }
-    
-    protected function createTrick(CardPlayer $eldest): Trick { return new GoatTrick($eldest, $this->players, [$this, 'compareCards']); }
     
     protected function _score(Team $team): array {
         $cards = $this->cards[$team] ?? [];
@@ -32,4 +31,10 @@ class GoatPartie extends Partie {
         
         return [$gameScore, $partieScore];
     }
+    
+    public function compareCards(Card $card1, Card $card2): int {
+        return $card1->compareTrump($card2, $this->trump, [Rank::class, 'cmpOrder10']);
+    }
+    
+    protected function createTrick(CardPlayer $eldest): Trick { return new GoatTrick($eldest, $this->players, [$this, 'compareCards']); }
 }

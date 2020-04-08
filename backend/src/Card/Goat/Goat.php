@@ -5,6 +5,8 @@ use Games\MsgObservableInterface;
 use Games\MsgObservable;
 use Games\SendMsg;
 use Games\Card\CardPlayers;
+use Games\Card\CardPlayer;
+use Games\Card\Card;
 use Games\Card\Team;
 use Games\Card\Partie;
 use Games\Card\CardRecvMsg;
@@ -23,6 +25,9 @@ class Goat implements MsgObservableInterface {
     public function __construct(CardPlayers $players) {
         $this->players = $players;
         $this->scores = new \SplObjectStorage;
+        foreach ($this->teams() as $team) {
+            $this->scores[$team] = 0;
+        }
     }
 
     public function start() {
@@ -75,7 +80,7 @@ class Goat implements MsgObservableInterface {
 
     private function winner(): ?Team {
         $winners = filter($this->teams(), fn($team) => $this->scores[$team] >= 12);
-        assert($winners <= 1);
+        assert(count($winners) <= 1);
         return $winners[0] ?? null;
     }
 

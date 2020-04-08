@@ -18,9 +18,14 @@ class Player implements \JsonSerializable {
     }
 
     public function send(Enum $message, $payload = null) {
-        $json = json_encode(['type' => $message->getValue(), 'payload' => $payload]);
+        $message = ['type' => $message->getValue()];
+        if ($payload) {
+            $message['payload'] = $payload;
+        }
+        
+        $json = json_encode($message);
         $this->conn->send($json);
-        $this->log("send message: $json");
+        $this->log("send message to {$this->name}: $json");
     }
 
     public function closeConn() {

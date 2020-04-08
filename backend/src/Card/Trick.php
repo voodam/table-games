@@ -19,7 +19,7 @@ class Trick {
     
     public function putCard(CardPlayer $player, Card $card): void {
         if ($this->ended()) throw new CardException('Trick is ended');
-        if (!$this->players->contain($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
+        if (!$this->players->contains($player)) throw new \OutOfBoundsException("Player '$player' not in company of this trick players :-(");
         $this->constrainCard($player, $card);
         $player->putCard($card);
         $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), ['player' => $player, 'card' => $card]);

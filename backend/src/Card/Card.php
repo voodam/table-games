@@ -2,6 +2,8 @@
 namespace Games\Card;
 
 use Games\Util\Cmp;
+use Games\Card\Rank;
+use Games\Card\Suit;
 use function Games\Util\Translate\t;
 
 class Card implements \JsonSerializable {
@@ -9,7 +11,7 @@ class Card implements \JsonSerializable {
     private Suit $suit;
 
     public static function fromDict(array $dict): self {
-        return new self($dict['rank'], $dict['suit']);
+        return new self(new Rank($dict['rank']), new Suit($dict['suit']));
     }
 
     public function __construct(Rank $rank, Suit $suit) {

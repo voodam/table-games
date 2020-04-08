@@ -14,6 +14,14 @@ function any(iterable $iterable, callable $predicate): bool {
     return false;
 }
 
+function flat(iterable $iterable): array {
+    $items = [];
+    foreach ($iterable as $arr) {
+        $items = array_merge($items, $arr);
+    }
+    return $items;
+}
+
 function getFirstKey(iterable $iterable, callable $predicate, $defaultValue = null) {
     foreach ($iterable as $key => $value) {
         if ($predicate($value, $key)) {

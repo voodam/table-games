@@ -78,6 +78,6 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     
     protected function createPlayers(): Players { return new Players; }
     protected function preparePayload(Enum $message, callable $preparer) { $this->payloadPreparers[$message->getValue()] = $preparer; }
-    public function onError(ConnectionInterface $conn, \Exception $e) { $this->log("error: {$e->getMessage()}"); }
+    public function onError(ConnectionInterface $conn, \Exception $e) { $this->log("error: $e"); }
     public function onOpen(ConnectionInterface $conn) {}
 }

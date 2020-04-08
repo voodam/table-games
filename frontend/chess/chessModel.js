@@ -72,29 +72,13 @@ class Board extends GameTable {
         this._highlightedCoords.forEach(this._resetColor.bind(this));
         this._highlightedCoords = [];
     }
-
-    onMove(hdl) {
-        this._onMove = hdl;
-    }
-
-    lock() {
-        super.lock();
-        this._table.classList.add('locked');
-    }
-
-    unlock() {
-        if (!super.unlock()) {
-            return false;
-        }
-        
-        this._table.classList.remove('locked');
-        return true;
-    }
+    
+    onMove(handler) { this._onMove = handler; }
+    _onMove() {}
 
     clear() {
-        this._table.classList.remove('locked');
+        super.clear();
         this._table.querySelectorAll('td').forEach(this._removePiece.bind(this));
-        this._stopListenBrowserEvents();
         this.clearHighlight();
     }
 
@@ -107,6 +91,8 @@ class Board extends GameTable {
         this._table.removeEventListener('mousedown', this._mousedownHdl);
         this._table.removeEventListener('mouseup', this._mouseupHdl);
     }
+    
+    _lockingElement() { return this._table; }
 
     _mousedownHdl = ({target}) => {
         const coords = this._getCoordsByCell(target);
@@ -145,8 +131,6 @@ class Board extends GameTable {
         Style.returnBack(cell, 'backgroundColor');
         delete this._curMoveFrom;
     }
-
-    _onMove() {}
 
     _setPiece(bgImage, coords) {
         const cell = this._getCellByCoords(coords);

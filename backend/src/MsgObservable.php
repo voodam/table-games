@@ -2,14 +2,15 @@
 namespace Games;
 
 use MyCLabs\Enum\Enum;
-use function Games\Util\Func\_instanceof;
+use function Games\Util\Iter\flat;
 
 trait MsgObservable {
     private array $observers = [];
 
     public function getObserversRec(string $message): array {
         $observers = $this->getObservers($message);
-        $observables = array_filter($this->observers, _instanceof(MsgObservableInterface::class));
+        $isObservable = fn(object $observer) => $observer !== $this && $observer instanceof MsgObservableInterface;
+        $observables = array_filter(flat($this->observers), $isObservable);
         $reducer = fn(array $observers, MsgObservableInterface $observable) => array_merge($observers, $observable->getObserversRec($message));
         return array_reduce($observables, $reducer, $observers);
     }
