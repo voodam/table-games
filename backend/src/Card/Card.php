@@ -47,7 +47,7 @@ class Card implements \JsonSerializable {
 
     public function jsonSerialize() { return [$this->rank, $this->suit]; }
     public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }
-    public function __toString(): string { return $this->rank . $this->suit; }
+    public function __toString(): string { return $this->rank . ' of ' . $this->suit; }
     public function rank(): Rank { return $this->rank; }
     public function suit(): Suit { return $this->suit; }
 }

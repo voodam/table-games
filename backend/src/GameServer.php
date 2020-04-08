@@ -70,7 +70,8 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     }
 
     public function onMessage(ConnectionInterface $conn, $json) {
-        $this->log("message: $json");
+        $player = $this->players->maybeGet($conn);
+        $this->log("msg from '$player': $json");
         $msg = json_decode($json, true);
         $type = $msg['type'] ?? null;
         if ($type === null) throw new \InvalidArgumentException("message $json has no type");
@@ -84,12 +85,13 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         $preparer = $this->payloadPreparers[$type] ?? id::class;
         foreach ($observers as $observer) {
             $payload = $preparer($msg['payload'] ?? null);
-            $observer->$type($payload, $this->players->maybeGet($conn), $conn);
+            $observer->$type($payload, $player, $conn);
         }
     }
     
     public function onError(ConnectionInterface $conn, \Exception $e) { 
         if ($e instanceof WrongTurnException) {
+            $this->log('wrong turn');
             $this->players->get($conn)->send(SendMsg::WRONG_TURN(), $e->getMessage());
         } else {
             $this->error("error: $e");

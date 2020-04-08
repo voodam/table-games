@@ -28,6 +28,7 @@ class CardPlayer extends Player {
         $key = array_search($card, $this->hand);
         if ($key === false) throw new CardException("No card '$card' in player's '$this' hand");
         unset($this->hand[$key]);
+        $this->log("'$this' has cards left: " . implode(', ', $this->hand));
     }
     
     public function hasCard(Card $card): bool {
