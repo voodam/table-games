@@ -35,8 +35,8 @@ class CardPlayer extends Player {
         return $this->getCardIndex($card) !== false;
     }
     
-    public function hasSuit(object $cardOrSuit, Trump $trump = null): bool {
-        return !empty(array_filter($this->hand, fn(Card $card) => $card->haveSameSuit($cardOrSuit, $trump)));
+    public function hasSuitOf(Card $card, Trump $trump = null): bool {
+        return !empty(array_filter($this->hand, fn(Card $c) => $card->haveSuitOf($c, $trump)));
     }
     
     public function randomCard(): Card { return randomValue($this->hand); }

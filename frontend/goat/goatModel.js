@@ -41,7 +41,7 @@ class CardTable extends GameTable {
     clear() {
         super.clear();
         clearElement(this._hand);
-        this.clearTable();
+        clearElement(this._table);
     }
     
     rollbackTurn() {

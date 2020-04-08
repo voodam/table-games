@@ -18,11 +18,6 @@ class Card implements \JsonSerializable {
         [$rank, $suit] = $pair;
         return new self(new Rank($rank), new Suit($suit));
     }
-    
-    public static function getSuit(object $cardOrSuit): Suit {
-        assert($cardOrSuit instanceof self || $cardOrSuit instanceof Suit);
-        return $cardOrSuit instanceof self ? $cardOrSuit->suit() : $cardOrSuit;
-    }
 
     public function __construct(Rank $rank, Suit $suit) {
         $this->rank = $rank;
@@ -30,7 +25,7 @@ class Card implements \JsonSerializable {
     }
 
     public function compare(self $other, callable $rankCmpOrder = null): int {
-        if (!$this->haveSameSuit($other)) return Cmp::MORE;
+        if (!$this->haveSuitOf($other)) return Cmp::MORE;
         return $this->rank->compare($other->rank(), $rankCmpOrder);
     }
 
@@ -40,19 +35,16 @@ class Card implements \JsonSerializable {
         return $this->compare($other, $rankCmpOrder);
     }
 
-    public function haveSameSuit(object $cardOrSuit, Trump $trump = null): bool {
-        if ($trump)
-            var_dump($trump->isTrump($this), $trump->isTrump($cardOrSuit));
-        
-        if ($cardOrSuit instanceof self && isset($trump)
-                && $trump->isTrump($this) && $trump->isTrump($cardOrSuit)) {
-            return true;
+    public function haveSuitOf(Card $card, Trump $trump = null): bool {
+        if ( !isset($trump) || (!$trump->isTrump($this) && !$trump->isTrump($card)) ) {
+            return $this->haveSuit($card->suit());
         }
         
-        $suit = self::getSuit($cardOrSuit);
-        return $this->suit->equals($suit);
+        return $trump->isTrump($this) && $trump->isTrump($card);
     }
-
+    
+    public function haveSuit(Suit $suit): bool { return $this->suit->equals($suit); }
+    public function haveRank(Rank $rank): bool { return $this->rank->equals($rank); }
     public function jsonSerialize() { return [$this->rank, $this->suit]; }
     public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }
     public function __toString(): string { return $this->rank . ' of ' . $this->suit; }

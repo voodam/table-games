@@ -21,7 +21,7 @@ class GoatTrick extends Trick {
         $firstCard = $this->cards->getFirstObject();
         assert($firstCard instanceof Card);
         
-        if (!$firstCard->haveSameSuit($putCard, $this->trump) && $player->hasSuit($firstCard, $this->trump)) {
+        if (!$firstCard->haveSuitOf($putCard, $this->trump) && $player->hasSuitOf($firstCard, $this->trump)) {
             $this->log('wrong turn: ' . implode(', ', iterator_to_array($this->cards)));
             throw new WrongTurnException(t("Player {0} must put a card with first card suit: {1}, given card: {2}", [$player, t($firstCard->suit()), $putCard->translate()]));
         }
