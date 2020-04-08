@@ -28,7 +28,7 @@ abstract class Partie {
         $this->eldest = $this->determEldest();
         assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
-        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());
+        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
 
     public function putCard(CardPlayer $player, Card $card): void {

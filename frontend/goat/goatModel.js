@@ -3,7 +3,7 @@ const RecvMsg = Object.freeze({
     DEAL: 'deal',
     PLAYER_PUTS_CARD: 'playerPutsCard',
     ASK_TRUMP: 'askTrump',
-    PLAYER_ASKS_TRUMP: 'playerAsksTrump',
+    PLAYER_DETERMS_TRUMP: 'playerDetermsTrump',
     TRUMP_IS: 'trumpIs',
     TRICK_WINNER_IS: 'trickWinnerIs',
     YOUR_PARTIE_SCORE: 'yourPartieScore'

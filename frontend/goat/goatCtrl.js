@@ -11,7 +11,7 @@ ctrl.onPlay(conn => {
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
         [RecvMsg.ASK_TRUMP]: 'Выберите козырь',
-        [RecvMsg.PLAYER_ASKS_TRUMP]: '{0} назначает козырь',
+        [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь',
         [RecvMsg.TRUMP_IS]: 'Назначен козырь: {0}',
         [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку', 
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'

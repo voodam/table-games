@@ -8,7 +8,7 @@ class CardSendMsg extends Enum {
     private const DEAL = 'deal';
     private const PLAYER_PUTS_CARD = 'playerPutsCard';
     private const ASK_TRUMP = 'askTrump';
-    private const PLAYER_ASKS_TRUMP = 'playerAsksTrump';
+    private const PLAYER_DETERMS_TRUMP = 'playerDetermsTrump';
     private const TRUMP_IS = 'trumpIs';
     private const TRICK_WINNER_IS = 'trickWinnerIs';
     private const YOUR_PARTIE_SCORE = 'yourPartieScore';
