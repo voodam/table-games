@@ -48,8 +48,8 @@ class GameController {
         this._play = elements.play;
         this._abort = elements.abort;
         this._serverUrlInput = elements.serverUrl;
-        this._messagesContainer = elements.messages;
         this._nameInput = elements.name;
+        this._messagesContainer = elements.messages;
         this._scoreStatus = elements.score;
         this._messages = messages;
     }
@@ -64,7 +64,7 @@ class GameController {
                 return;
             }
             
-            this._toggleButtons();
+            this._toggleControls();
             const name = this._nameInput && this._nameInput.value.trim() || null;
             const conn = new WebsocketConn(serverUrl);
             conn.connect(name);
@@ -94,7 +94,7 @@ class GameController {
             });
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);
-                this._toggleButtons();
+                this._toggleControls();
             });
 
             hdl(conn);
@@ -123,7 +123,8 @@ class GameController {
         conn.onClose(table.clear.bind(table));
     }
     
-    _toggleButtons() {
+    _toggleControls() {
         [this._play, this._abort].map(toggleDisabled);
+        [this._serverUrlInput, this._nameInput].map(toggleDisplay);
     }
 }

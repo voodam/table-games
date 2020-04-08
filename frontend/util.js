@@ -61,6 +61,11 @@ const toggleDisabled = elem => {
     elem.disabled = !elem.disabled;
 };
 
+const toggleDisplay = elem => 
+    elem.style.display = elem.style.display !== 'none' 
+        ? Style.replace(elem, 'display', 'none') 
+        : Style.returnBack(elem, 'display');
+
 const beforeUnload = () => {
     window.addEventListener('beforeunload', event => {
         event.preventDefault();

@@ -56,7 +56,7 @@ class CardTable extends GameTable {
         appendChildren(this._table, suitCards.map(card => card.createImage()), true);
         this._trumpSelecting = true;
         
-        this._table.addEventListener('dblclick', ({target}) => {
+        this._table.addEventListener('click', ({target}) => {
             const card = Card.fromImage(target);
             handler(card.suit);
             this._trumpSelecting = false;
@@ -68,8 +68,8 @@ class CardTable extends GameTable {
     _onPutCard() {}
     
     _lockingElement() { return this._hand; }
-    _listenBrowserEvents() { this._hand.addEventListener('dblclick', this._cardClickHandler); }
-    _stopListenBrowserEvents() { this._hand.removeEventListener('dblclick', this._cardClickHandler); }
+    _listenBrowserEvents() { this._hand.addEventListener('click', this._cardClickHandler); }
+    _stopListenBrowserEvents() { this._hand.removeEventListener('click', this._cardClickHandler); }
     _cardClickHandler = ({target}) => {
         const card = Card.fromImage(target);
         this.playerPutsCard(card);
