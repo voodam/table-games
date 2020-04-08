@@ -91,7 +91,6 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     
     public function onError(ConnectionInterface $conn, \Exception $e) { 
         if ($e instanceof WrongTurnException) {
-            $this->log('wrong turn');
             $this->players->get($conn)->send(SendMsg::WRONG_TURN(), $e->getMessage());
         } else {
             $this->error("error: $e");

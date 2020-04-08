@@ -25,21 +25,6 @@ class WebsocketConn {
         this.send(WebsocketConn.SendMsg.CONNECT, name);
         return this;
     }
-    
-    close() {
-        this._ws.close();
-    }
-
-    on(msgType, sub) {
-        if (!this._subscribers[msgType]) {
-            this._subscribers[msgType] = [];
-        }
-        this._subscribers[msgType].push(sub);
-    }
-
-    onClose(handler) {
-        this._ws.addEventListener('close', handler);
-    }
 
     send(type, payload = undefined) {
         const message = JSON.stringify({type, payload});
@@ -53,9 +38,17 @@ class WebsocketConn {
         }
     }
     
-    preparePayload(preparers) {
-        Object.assign(this._payloadPreparers, preparers);
-    }
+    on(msgType, sub) {
+        if (!this._subscribers[msgType]) {
+            this._subscribers[msgType] = [];
+        }
+        this._subscribers[msgType].push(sub);
+    }    
+    
+    preparePayload(preparers) { Object.assign(this._payloadPreparers, preparers); }
+    onOpen(handler) { this._ws.addEventListener('open', handler); }
+    onClose(handler) { this._ws.addEventListener('close', handler); }
+    close() { this._ws.close(); }
 
     _messageListener({data}) {
         console.log(`recv message: ${data}`);

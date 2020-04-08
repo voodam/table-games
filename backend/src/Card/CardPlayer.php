@@ -2,7 +2,7 @@
 namespace Games\Card;
 
 use Games\Player;
-use Games\Card\Card;
+use Games\Util\Cmp;
 use function Games\Util\Iter\randomValue;
 
 class CardPlayer extends Player {
@@ -25,21 +25,28 @@ class CardPlayer extends Player {
 
     public function putCard(Card $card): void {
         if (!$this->hasCards()) throw new CardException("No cards in player's '$this' hand");
-        $key = array_search($card, $this->hand);
+        $key = $this->getCardIndex($card);
         if ($key === false) throw new CardException("No card '$card' in player's '$this' hand");
         unset($this->hand[$key]);
         $this->log("'$this' has cards left: " . implode(', ', $this->hand));
     }
     
     public function hasCard(Card $card): bool {
-        return array_search($card, $this->hand) !== false;
+        return $this->getCardIndex($card) !== false;
     }
     
-    public function hasSuit(object $cardOrSuit): bool {
-        return !empty(array_filter($this->hand, fn(Card $card) => $card->haveSameSuit($cardOrSuit)));
+    public function hasSuit(object $cardOrSuit, Trump $trump = null): bool {
+        return !empty(array_filter($this->hand, fn(Card $card) => $card->haveSameSuit($cardOrSuit, $trump)));
     }
     
     public function randomCard(): Card { return randomValue($this->hand); }
     public function hasCards(): bool { return !empty($this->hand); }
     public function team(): Team { return $this->team; }
+    
+    private function getCardIndex(Card $card) {
+        foreach ($this->hand as $index => $c) {
+            if ($c->compare($card) === Cmp::EQ) return $index;
+        }
+        return false;
+    }
 }

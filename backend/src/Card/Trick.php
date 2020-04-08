@@ -3,7 +3,6 @@ namespace Games\Card;
 
 use Games\Util\Cmp;
 use Games\Util\MyObjectStorage;
-use Games\Card\CardSendMsg;
 use Games\Util\Logging;
 
 class Trick {
@@ -11,11 +10,17 @@ class Trick {
     
     protected MyObjectStorage $cards; // Card -> CardPlayer
     private CardPlayers $players;
-    private $compareCards;
-
-    public function __construct(CardPlayers $players, callable $compareCards) {
+    protected Trump $trump;
+    
+    protected function compareCards(Card $card1, Card $card2): int {
+        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
+    }
+    
+    protected function constrainCard(CardPlayer $player, Card $putCard): void {}
+    
+    public function __construct(CardPlayers $players, Trump $trump) {
         $this->players = $players;
-        $this->compareCards = $compareCards;
+        $this->trump = $trump;
         $this->cards = new MyObjectStorage;
     }
     
@@ -33,7 +38,7 @@ class Trick {
         
         $selectMaxCard = function (?Card $maxCard, Card $card) {
             if (!isset($maxCard)) return $card;
-            return ($this->compareCards)($maxCard, $card) === Cmp::LESS ? $card : $maxCard;
+            return $this->compareCards($maxCard, $card) === Cmp::LESS ? $card : $maxCard;
         };
         $maxCard = array_reduce(iterator_to_array($this->cards), $selectMaxCard);
         return $this->cards[$maxCard];
@@ -47,6 +52,4 @@ class Trick {
     public function ended(): bool { 
         return count($this->cards) >= count($this->players);
     }
-    
-    protected function constrainCard(CardPlayer $player, Card $card): void {}
 }

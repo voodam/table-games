@@ -16,9 +16,6 @@ const SendMsg = Object.freeze({
 
 class CardTable extends GameTable {
     constructor(playersNumber, handContainer, tableContainer) {
-        clearElement(handContainer);
-        clearElement(tableContainer);
-        
         super();
         this._playersNumber = playersNumber;
         this._hand = handContainer;
@@ -39,6 +36,12 @@ class CardTable extends GameTable {
         if (!this._trumpSelecting && this._table.childElementCount >= this._playersNumber) {
             clearElement(this._table);
         }
+    }
+    
+    clear() {
+        super.clear();
+        clearElement(this._hand);
+        this.clearTable();
     }
     
     rollbackTurn() {

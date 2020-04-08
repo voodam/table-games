@@ -1,7 +1,7 @@
 class GameController {
     static DEFAULT_MSGS = {
         waitPlayers: 'Ожидайте остальных игроков',
-        gameAborted: 'Игра прервана: слишком много игроков, игрок вышел или соединение оборвалось',
+        gameAborted: 'Игра прервана',
         sureAbort: 'Вы уверены?',
         enterUrl: 'Введите адрес сервера',
         enterName: 'Введите имя',
@@ -119,6 +119,7 @@ class GameController {
         conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.unlock.bind(table));
         conn.on(WebsocketConn.RecvMsg.TURN_OF, table.lock.bind(table));
         conn.on(WebsocketConn.RecvMsg.WRONG_TURN, table.rollbackTurn.bind(table));
+        conn.onOpen(table.lock.bind(table));
         conn.onClose(table.clear.bind(table));
     }
     

@@ -1,23 +1,20 @@
 <?php
 namespace Games\Card;
 
-use Games\Card\Trick;
-use Games\Card\Rank;
 use Games\Util\MyObjectStorage;
-use Games\Util\Logging;
 use function Games\Util\Translate\t;
 
 abstract class Partie {
-    use Logging;
-
     protected CardPlayer $eldest;
-    protected Suit $trump;
+    protected Trump $trump;
     protected MyObjectStorage $cards; // Team -> Card[]
     protected CardPlayers $players;
     private Trick $trick;
 
     abstract protected function _score(Team $team): array;
     abstract protected function determEldest(): CardPlayer;
+    protected function createTrump(Suit $suit): Trump { return new Trump($suit); }
+    protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
 
     public function __construct(CardPlayers $players) {
         $this->players = $players;
@@ -32,7 +29,6 @@ abstract class Partie {
         assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_ASKS_TRUMP());
-        $this->newTrick($this->eldest);
     }
 
     public function putCard(CardPlayer $player, Card $card): void {
@@ -57,19 +53,11 @@ abstract class Partie {
         return !$this->players->haveCards();
     }
     
-    public function determTrump(Suit $suit, CardPlayer $eldest = null) { 
-        $this->trump = $suit;
-        if ($eldest) {
-            $this->log("determTrump: send 'trump is' message");
-            $this->players->sendOther($eldest, CardSendMsg::TRUMP_IS(), t($this->trump));
-        }
+    public function determTrump(Suit $suit) { 
+        $this->trump = $this->createTrump($suit);
+        $this->players->sendOther($this->eldest, CardSendMsg::TRUMP_IS(), t($this->trump));
+        $this->newTrick($this->eldest);
     }
-    
-    public function compareCards(Card $card1, Card $card2): int {
-        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
-    }
-    
-    protected function createTrick(CardPlayer $eldest): Trick { return new Trick($this->players, [$this, 'compareCards']); }
 
     private function getTrick(): void {
         $winner = $this->trick->winner();
@@ -87,7 +75,7 @@ abstract class Partie {
 
     private function newTrick(CardPlayer $eldest): void {
         assert(!isset($this->trick) || $this->trick->ended());
-        $this->trick = $this->createTrick($eldest);
+        $this->trick = $this->createTrick();
         $this->players->sendNext($eldest);
     }
 }

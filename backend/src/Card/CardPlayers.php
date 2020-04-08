@@ -2,7 +2,6 @@
 namespace Games\Card;
 
 use Games\Players;
-use Games\Card\Team;
 use MyCLabs\Enum\Enum;
 use function Games\Util\Iter\filter;
 use function Games\Util\Iter\any;
