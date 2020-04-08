@@ -22,9 +22,9 @@ function flat(iterable $iterable): array {
     return $items;
 }
 
-function randomValue(array $array) {
-    if (empty($array)) throw new \UnderflowException('Array is empty');
-    return array_values($array)[mt_rand(0, count($array) - 1)];
+function randomValue(iterable $iterable) {
+    if (empty($iterable)) throw new \UnderflowException('Array is empty');
+    return array_values(toArray($iterable))[mt_rand(0, count($iterable) - 1)];
 }
 
 function getFirstKey(iterable $iterable, callable $predicate, $defaultValue = null) {
