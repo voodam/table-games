@@ -55,7 +55,7 @@ abstract class Partie {
     
     public function determTrump(Suit $suit) { 
         $this->trump = $this->createTrump($suit);
-        $this->players->sendOther($this->eldest, CardSendMsg::TRUMP_IS(), t($this->trump));
+        $this->players->sendAll(CardSendMsg::TRUMP_IS(), t($this->trump));
         $this->newTrick($this->eldest);
     }
 

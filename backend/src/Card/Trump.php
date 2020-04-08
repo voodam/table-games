@@ -12,5 +12,9 @@ class Trump {
         return $card->haveSuit($this->suit);
     }
     
+    public function rankCmpOrder(): array {
+        return Rank::cmpOrder();
+    }
+    
     public function __toString() { return (string) $this->suit; }   
 }
