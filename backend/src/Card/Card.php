@@ -40,14 +40,15 @@ class Card implements \JsonSerializable {
     }
 
     public function haveSuitOf(Card $other, Trump $trump = null): bool {
+        $haveSameSuits = $this->haveSuit($other->suit());
         if (!isset($trump)) {
-            return $this->haveSuit($other->suit());
+            return $haveSameSuits;
         }
         
         $thisIsTrump = $trump->isTrump($this);
         $otherIsTrump = $trump->isTrump($other);
         
-        if (!$thisIsTrump && !$otherIsTrump) return $this->haveSuit($other->suit());
+        if (!$thisIsTrump && !$otherIsTrump) return $haveSameSuits;
         return $thisIsTrump && $otherIsTrump;
     }
     
