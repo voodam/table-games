@@ -1,4 +1,4 @@
-'Player {0} must put a card with first card suit: {1}, given card: {2}': 'Необходимо класть в масть 1, 0 положил 2, имея карты этой масти'
+'Player {0} must put a card with first card suit: {1}, given card: {2}': Вы походили не в масть
 diamonds: бубны
 clubs: трефы
 hearts: червы
