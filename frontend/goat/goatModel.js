@@ -86,5 +86,5 @@ class Card {
     get rank() { return this._rank; }
     get suit() { return this._suit; }
     toString() { return this._rank . this._suit; }
-    toJSON() { return {rank: this._rank, suit: this._suit}; }
+    toJSON() { return [this._rank, this._suit]; }
 }

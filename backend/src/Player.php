@@ -26,7 +26,7 @@ class Player implements \JsonSerializable {
     public function send(Enum $message, $payload = null) {
         $json = GameServer::createJsonMsg($message, $payload);
         $this->conn->send($json);
-        $this->log("send message to {$this->name}: $json");
+        $this->log("msg to {$this->name}: $json");
     }
 
     public function closeConn() {

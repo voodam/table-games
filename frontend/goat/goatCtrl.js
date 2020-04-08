@@ -3,9 +3,10 @@ const controls = document.querySelector('#controls');
 const ctrl = new GameController(GameController.createDefaultElems(controls));
 
 ctrl.onPlay(conn => {
+    const cardPreparer = argsArrayToRest(_new(Card));
     conn.preparePayload({
-        [RecvMsg.DEAL]: hand => hand.map(Card.fromDict),
-        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict)({player: id, card: Card.fromDict})
+        [RecvMsg.DEAL]: hand => hand.map(cardPreparer),
+        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict)({player: id, card: cardPreparer})
     });
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',

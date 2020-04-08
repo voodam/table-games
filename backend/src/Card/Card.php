@@ -14,6 +14,11 @@ class Card implements \JsonSerializable {
         return new self(new Rank($dict['rank']), new Suit($dict['suit']));
     }
     
+    public static function fromPair(array $pair): self {
+        [$rank, $suit] = $pair;
+        return new self(new Rank($rank), new Suit($suit));
+    }
+    
     public static function getSuit(object $cardOrSuit): Suit {
         assert($cardOrSuit instanceof self || $cardOrSuit instanceof Suit);
         return $cardOrSuit instanceof self ? $cardOrSuit->suit() : $cardOrSuit;
@@ -40,7 +45,7 @@ class Card implements \JsonSerializable {
         return $this->suit->equals($suit);
     }
 
-    public function jsonSerialize() { return ['rank' => $this->rank, 'suit' => $this->suit]; }
+    public function jsonSerialize() { return [$this->rank, $this->suit]; }
     public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }
     public function __toString(): string { return $this->rank . $this->suit; }
     public function rank(): Rank { return $this->rank; }
