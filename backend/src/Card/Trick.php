@@ -13,10 +13,6 @@ class Trick {
     private CardPlayers $players;
     protected Trump $trump;
     
-    protected function compareCards(Card $card1, Card $card2): int {
-        return $card1->compare($card2);
-    }
-    
     protected function constrainCard(CardPlayer $player, Card $putCard): void {}
     
     public function __construct(CardPlayers $players, Trump $trump) {
@@ -44,7 +40,7 @@ class Trick {
         
         $selectMaxCard = function (?Card $maxCard, Card $card) {
             if (!isset($maxCard)) return $card;
-            return $this->compareCards($maxCard, $card) === Cmp::LESS ? $card : $maxCard;
+            return $this->trump->compare($maxCard, $card) === Cmp::LESS ? $card : $maxCard;
         };
         $maxCard = array_reduce(iterator_to_array($this->cards), $selectMaxCard);
         return $this->cards[$maxCard];

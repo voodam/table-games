@@ -50,9 +50,5 @@ class Rank extends Enum implements \JsonSerializable {
         return $order[$this->getKey()] <=> $order[$other->getKey()];
     }
 
-    public function compare10(self $other): int {
-        return $this->compare($other, [self::class, 'cmpOrder10']);
-    }
-
     public function jsonSerialize() { return $this->getValue(); }
 }

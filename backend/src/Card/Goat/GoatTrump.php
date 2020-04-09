@@ -8,12 +8,33 @@ use Games\Card\Suit;
 use Games\Util\Cmp;
 
 class GoatTrump extends Trump {
-    public function isTrump(Card $card): bool {
+    public function haveSameSuits(Card $first, Card $second): bool {
+        if ($this->isTrump($first) && $this->isTrump($second)) {
+            return true;
+        }
+        return parent::haveSameSuits($first, $second);
+    }
+    
+    public function compare(Card $first, Card $second): int {
+        $firstIsTrump = $this->isTrump($first);
+        $secondIsTrump = $this->isTrump($second);
+        
+       
+        if (!$firstIsTrump && !$secondIsTrump) return $this->compareDefault($first, $second);
+        if ($firstIsTrump && $secondIsTrump) return $this->compareTrumps($first, $second);
+        return parent::compare($first, $second);
+    }
+    
+    protected function isTrump(Card $card): bool {
         return parent::isTrump($card) || $card->haveRank(Rank::JACK());
     }
     
-    protected function _compareTrumps(Card $first, Card $second): int {
-        $specialCards = [
+    private function compareTrumps(Card $first, Card $second): int {
+        assert($this->isTrump($first));
+        assert($this->isTrump($second));
+        
+        static $specialCards = null;
+        $specialCards ??= [
             new Card(Rank::_7(), $this->suit), 
             new Card(Rank::JACK(), Suit::CLUBS()),
             new Card(Rank::JACK(), Suit::SPADES()),
@@ -30,21 +51,10 @@ class GoatTrump extends Trump {
             }
         }
         
-        return $first->compare($second);
+        return $this->compareDefault($first, $second);
     }
     
-    public function rankCmpOrder(): array {
-        static $order = null;
-        if (!isset($order)) {
-            $keys = Rank::keys();
-            $ten = $keys[8];
-            unset($keys[8]);
-            array_splice($keys, 11, 0, $ten);
-            $seven = $keys[5];
-            unset($keys[5]);
-            array_splice($keys, 12, 0, $seven);
-            $order = array_flip($keys);
-        }
-        return $order;
+    private function compareDefault(Card $first, Card $second): int {
+        return $first->compare($second, [Rank::class, 'cmpOrder10']);
     }
 }

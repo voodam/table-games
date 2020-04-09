@@ -25,38 +25,23 @@ class Card implements \JsonSerializable {
     }
 
     public function compare(self $other, callable $rankCmpOrder = Rank::DEFAULT_CMP_ORDER): int {
-        if (!$this->haveSuitOf($other)) return Cmp::MORE;
+        if (!$this->haveSuit($other)) return Cmp::MORE;
         return $this->rank->compare($other->rank(), $rankCmpOrder);
     }
-
-    public function compareTrump(self $other, Trump $trump, callable $rankCmpOrder = Rank::DEFAULT_CMP_ORDER): int {
-        $thisIsTrump = $trump->isTrump($this);
-        $otherIsTrump = $trump->isTrump($other);
-        
-        if ($thisIsTrump && !$otherIsTrump) return Cmp::MORE;
-        if ($otherIsTrump && !$thisIsTrump) return Cmp::LESS;
-        if ($thisIsTrump && $otherIsTrump) return $trump->compareTrumps($this, $other);
-        return $this->compare($other, $rankCmpOrder);
-    }
-
-    public function haveSuitOf(Card $other, Trump $trump = null): bool {
-        $haveSameSuits = $this->haveSuit($other->suit());
-        if (!isset($trump)) {
-            return $haveSameSuits;
-        }
-
-        $thisIsTrump = $trump->isTrump($this);
-        $otherIsTrump = $trump->isTrump($other);
-        
-        if (!$thisIsTrump && !$otherIsTrump) return $haveSameSuits;
-        return $thisIsTrump && $otherIsTrump;
+    
+    public function haveSuit(object $cardOrSuit): bool {
+        return $this->suit->equals(self::getSuit($cardOrSuit));   
     }
     
-    public function haveSuit(Suit $suit): bool { return $this->suit->equals($suit); }
     public function haveRank(Rank $rank): bool { return $this->rank->equals($rank); }
     public function jsonSerialize() { return [$this->rank, $this->suit]; }
     public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }
     public function __toString(): string { return $this->rank . ' of ' . $this->suit; }
     public function rank(): Rank { return $this->rank; }
     public function suit(): Suit { return $this->suit; }
+    
+    private static function getSuit(object $cardOrSuit): Suit {
+        assert($cardOrSuit instanceof self || $cardOrSuit instanceof Suit);
+        return $cardOrSuit instanceof self ? $cardOrSuit->suit() : $cardOrSuit;
+    }
 }
