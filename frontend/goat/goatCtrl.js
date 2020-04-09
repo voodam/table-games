@@ -14,7 +14,6 @@ const ctrlFactory = () => {
 const mpCtrl = new MultiplayerGameController({
     addPlayer: document.querySelector('.add-player')
 }, ctrlFactory);
-mpCtrl.displayOn(RecvMsg.ASK_TRUMP, WebsocketConn.RecvMsg.YOUR_TURN);
 
 mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const cardPreparer = argsArrayToRest(_new(Card));
@@ -24,7 +23,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     });
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
-        [RecvMsg.ASK_TRUMP]: 'Выберите козырь',
+        [RecvMsg.ASK_TRUMP]: 'Выберите козырь, {0}',
         [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь',
         [RecvMsg.TRUMP_IS]: 'Назначен козырь: {0}',
         [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку в {1} очков', 
@@ -35,10 +34,17 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
-    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.clearTable.bind(table));
+    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => {
+        table.hideHand();
+        table.clearTable();
+    });
     conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
     conn.on(RecvMsg.ASK_TRUMP, () => {
-        table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump));
+        table.lock();
+        table.askTrump(trump => {
+            conn.send(SendMsg.DETERMINE_TRUMP, trump);
+            table.unlock();
+        });
     });
     table.onPutCard(card => {
         conn.send(SendMsg.PUT_CARD, card);

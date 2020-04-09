@@ -30,14 +30,15 @@ abstract class Partie {
         $deck->deal($this->players);
         $this->eldest = $this->determineEldest();
         assert(isset($this->eldest));
-        $this->eldest->send(CardSendMsg::ASK_TRUMP());
+        $this->players->sendNext($this->eldest);
+        $this->eldest->send(CardSendMsg::ASK_TRUMP(), $this->eldest);
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
     
     public function determineTrump(Suit $suit) { 
         $this->trump = $this->createTrump($suit);
         $this->players->sendAll(CardSendMsg::TRUMP_IS(), t($this->trump));
-        $this->newTrick($this->eldest);
+        $this->newTrick();
     }
 
     public function putCard(CardPlayer $player, Card $card): void {
@@ -74,13 +75,13 @@ abstract class Partie {
         $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$winner, $trickScore]);
         
         if (!$this->ended()) {
+            $this->players->sendNext($winner);
             $this->newTrick($winner);
         }
     }
 
-    private function newTrick(CardPlayer $eldest): void {
+    private function newTrick(): void {
         assert(!isset($this->trick) || $this->trick->ended());
         $this->trick = $this->createTrick();
-        $this->players->sendNext($eldest);
     }
 }

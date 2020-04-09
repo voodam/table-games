@@ -4,7 +4,7 @@ class GameController {
         gameAborted: 'Игра прервана',
         enterUrl: 'Введите адрес сервера',
         enterName: 'Введите имя',
-        yourTurn: 'Ваш ход',
+        yourTurn: 'Ваш ход, {0}',
         turnOf: 'Ходит {0}',
         wrongTurn: '{0}',
         winnerIs: 'Победил(и) {0}!'
@@ -143,13 +143,11 @@ class InputManager {
         const abortHdl = () => {
             const sure = confirm(this._messages.sureAbort);
             if (!sure) {
-                return;
+                return false;
             }
-
             handler();
-            this._abort.removeEventListener('click', abortHdl);
         };
-        this._abort.addEventListener('click', abortHdl);
+        listenOnce(this._abort, 'click', abortHdl);
     }
     
     onClose() {
@@ -186,7 +184,6 @@ class MultiplayerGameController {
     constructor(mpElements, ctrlFactory) {
         this._ctrlFactory = ctrlFactory;
         this._addPlayer = mpElements.addPlayer;
-        this._displayOnMessages = [];
     }
     
     onPlay(hdl) {
@@ -194,17 +191,11 @@ class MultiplayerGameController {
         this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
     }
     
-    displayOn(...msgTypes) {
-        this._displayOnMessages = this._displayOnMessages.concat(msgTypes);
-    }
-    
     _initCtrl(hdl) {
         const [ctrl, wrapper] = this._ctrlFactory();
         ctrl.onPlay(conn => {
             conn.on(WebsocketConn.RecvMsg.START_GAME, () => hide(this._addPlayer));
-            for (const msgType of this._displayOnMessages) {
-                conn.on(msgType, () => displayBetweenSiblings(wrapper));
-            }
+            conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => displayBetweenSiblings(wrapper));
             hdl(conn, ctrl, wrapper);
         });
     }

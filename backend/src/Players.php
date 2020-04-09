@@ -31,7 +31,7 @@ class Players implements \IteratorAggregate, \Countable {
     }
 
     public function sendNext(Player $player): void {
-        $player->send(SendMsg::YOUR_TURN());
+        $player->send(SendMsg::YOUR_TURN(), $player);
         $this->sendAbout($player, SendMsg::TURN_OF());
     }
     

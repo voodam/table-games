@@ -74,6 +74,17 @@ const displayBetweenSiblings = elem => {
     elem.style.display = 'block';
 };
 
+const listenOnce = (element, eventType, handler) => {
+    const fullHandler = (...args) => {
+        const remove = handler(...args);
+        if (remove === false) {
+            return;
+        }
+        element.removeEventListener(eventType, fullHandler);
+    };
+    element.addEventListener(eventType, fullHandler);
+};
+
 const beforeUnload = () => {
     window.addEventListener('beforeunload', event => {
         event.preventDefault();

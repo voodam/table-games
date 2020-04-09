@@ -32,6 +32,25 @@ class CardTable extends GameTable {
         this._table.appendChild(card.createImage());
     }
     
+    hideHand() {
+        for (const cardImage of this._hand.children) {
+            cardImage.dataset.src = cardImage.src;
+            cardImage.src = 'img/back_green.png';
+        }
+        
+        this._stopListenBrowserEvents();
+        const handler = () => {
+            for (const cardImage of this._hand.children) {
+                cardImage.src = cardImage.dataset.src;
+            }
+            if (this._locked) {
+                return false;
+            }
+            this._listenBrowserEvents();
+        };
+        listenOnce(this._hand, 'click', handler);
+    }
+    
     clearTable() {
         if (!this._trumpSelecting && this._table.childElementCount >= this._playersNumber) {
             clearElement(this._table);
