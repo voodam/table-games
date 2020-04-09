@@ -24,18 +24,18 @@ class Card implements \JsonSerializable {
         $this->suit = $suit;
     }
 
-    public function compare(self $other, callable $rankCmpOrder = null): int {
+    public function compare(self $other, callable $rankCmpOrder = Rank::DEFAULT_CMP_ORDER): int {
         if (!$this->haveSuitOf($other)) return Cmp::MORE;
         return $this->rank->compare($other->rank(), $rankCmpOrder);
     }
 
-    public function compareTrump(self $other, Trump $trump, callable $rankCmpOrder = null): int {
+    public function compareTrump(self $other, Trump $trump, callable $rankCmpOrder = Rank::DEFAULT_CMP_ORDER): int {
         $thisIsTrump = $trump->isTrump($this);
         $otherIsTrump = $trump->isTrump($other);
         
         if ($thisIsTrump && !$otherIsTrump) return Cmp::MORE;
         if ($otherIsTrump && !$thisIsTrump) return Cmp::LESS;
-        if ($thisIsTrump && $otherIsTrump) return $this->compare($other, [$trump, 'rankCmpOrder']);
+        if ($thisIsTrump && $otherIsTrump) return $trump->compareTrumps($this, $other);
         return $this->compare($other, $rankCmpOrder);
     }
 
@@ -44,7 +44,7 @@ class Card implements \JsonSerializable {
         if (!isset($trump)) {
             return $haveSameSuits;
         }
-        
+
         $thisIsTrump = $trump->isTrump($this);
         $otherIsTrump = $trump->isTrump($other);
         

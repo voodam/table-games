@@ -24,7 +24,9 @@ ctrl.onPlay(conn => {
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
     conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.clearTable.bind(table));
     conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
-    conn.on(RecvMsg.ASK_TRUMP, () => table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump)));
+    conn.on(RecvMsg.ASK_TRUMP, () => {
+        table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump));
+    });
     table.onPutCard(card => {
         conn.send(SendMsg.PUT_CARD, card);
         table.lock();

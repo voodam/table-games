@@ -18,6 +18,15 @@ class Rank extends Enum implements \JsonSerializable {
     private const KING = 'king';
     private const ACE = 'ace';
     
+    public const DEFAULT_CMP_ORDER = [self::class, 'cmpOrder'];
+    
+    public static function keys() {
+        $keys = parent::keys();
+        $index = array_search('DEFAULT_CMP_ORDER', $keys);
+        unset($keys[$index]);
+        return $keys;
+    }
+
     public static function cmpOrder(): array {
         static $order = null;
         $order ??= array_flip(self::keys());
@@ -36,8 +45,7 @@ class Rank extends Enum implements \JsonSerializable {
         return $order;
     }
 
-    public function compare(self $other, callable $cmpOrder = null): int {
-        $cmpOrder ??= [self::class, 'cmpOrder'];
+    public function compare(self $other, callable $cmpOrder = self::DEFAULT_CMP_ORDER): int {
         $order = $cmpOrder();
         return $order[$this->getKey()] <=> $order[$other->getKey()];
     }

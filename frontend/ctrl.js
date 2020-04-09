@@ -80,7 +80,6 @@ class GameController {
                 conn.close();
                 this._abort.removeEventListener('click', abortHdl);
             };
-
             this._abort.addEventListener('click', abortHdl);
 
             this.messagesOn(conn, {

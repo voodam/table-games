@@ -99,6 +99,5 @@ class Players implements \IteratorAggregate, \Countable {
     public function clear(): void { $this->storage->detachAll(); }
     public function count(): int { return count($this->storage); }
     
-    
     protected function playerClass(): string { return Player::class; }
 }

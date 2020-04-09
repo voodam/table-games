@@ -14,7 +14,7 @@ class Trick {
     protected Trump $trump;
     
     protected function compareCards(Card $card1, Card $card2): int {
-        return $card1->compare($card2, [Rank::class, 'cmpOrder']);
+        return $card1->compare($card2);
     }
     
     protected function constrainCard(CardPlayer $player, Card $putCard): void {}
