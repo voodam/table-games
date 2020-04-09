@@ -16,7 +16,7 @@ class GameController {
         const elements = createElemsFromStr(
             `<div class="inputs">
                 <div class="input-elements">
-                    <input id="server-url" placeholder="Адрес сервера" value="ws://192.168.1.36:8080${serverPath}">
+                    <input id="server-url" placeholder="Адрес сервера" value="ws://91.191.245.9:8080${serverPath}">
                     <input id="name" placeholder="Введите имя">
                 </div>
                 <div class="buttons">
