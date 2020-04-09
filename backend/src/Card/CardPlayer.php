@@ -44,8 +44,8 @@ class CardPlayer extends Player {
     public function team(): Team { return $this->team; }
     
     private function getCardIndex(Card $card) {
-        foreach ($this->hand as $index => $c) {
-            if ($c->compare($card) === Cmp::EQ) return $index;
+        foreach ($this->hand as $index => $ownCard) {
+            if ($ownCard->eq($card)) return $index;
         }
         return false;
     }

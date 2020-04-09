@@ -17,6 +17,14 @@ class Player implements \JsonSerializable {
         assert($connOrPlayer instanceof self || $connOrPlayer instanceof ConnectionInterface);
         return $connOrPlayer instanceof self ? $connOrPlayer->conn() : $connOrPlayer;
     }
+    
+    public static function createJsonMsg(Enum $type, $payload = null): string {
+        $message = ['type' => $type->getValue()];
+        if ($payload) {
+            $message['payload'] = $payload;
+        }
+        return json_encode($message);
+    }
 
     final public function __construct(ConnectionInterface $conn, string $name) {
         $this->conn = $conn;
@@ -24,7 +32,7 @@ class Player implements \JsonSerializable {
     }
 
     public function send(Enum $message, $payload = null) {
-        $json = GameServer::createJsonMsg($message, $payload);
+        $json = self::createJsonMsg($message, $payload);
         $this->conn->send($json);
         $this->log("msg to '$this': $json");
     }

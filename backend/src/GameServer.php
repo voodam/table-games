@@ -18,14 +18,6 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     private array $payloadPreparers = [];
 
     abstract protected function startGame();
-    
-    public static function createJsonMsg(Enum $type, $payload = null): string {
-        $message = ['type' => $type->getValue()];
-        if ($payload) {
-            $message['payload'] = $payload;
-        }
-        return json_encode($message);
-    }
 
     public function __construct(int $needPlayersNumber) {    
         $this->players = $this->createPlayers();

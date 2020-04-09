@@ -33,6 +33,7 @@ class Card implements \JsonSerializable {
         return $this->suit->equals(self::getSuit($cardOrSuit));   
     }
     
+    public function eq(self $other): bool { return $this->compare($other) === Cmp::EQ; }
     public function haveRank(Rank $rank): bool { return $this->rank->equals($rank); }
     public function jsonSerialize() { return [$this->rank, $this->suit]; }
     public function translate(): string { return t($this->rank) . ' ' . t($this->suit); }

@@ -37,7 +37,7 @@ abstract class ServerTest {
     
     protected function onMessage($connOrPlayer, Enum $type, $payload = null): void {
         $conn = Player::getConn($connOrPlayer);
-        $json = GameServer::createJsonMsg($type, $payload);
+        $json = Player::createJsonMsg($type, $payload);
         try {
             $this->server->onMessage($conn, $json);
         } catch (\Exception $e) {
