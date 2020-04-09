@@ -55,7 +55,9 @@ class GameController {
     }
 
     onPlay(hdl) {
-        //beforeUnload();
+        if (!Debug.enabled()) {
+            beforeUnload();
+        }
 
         this._play.addEventListener('click', () => {
             const serverUrl = this._serverUrlInput.value.trim();

@@ -1,4 +1,5 @@
 (() => {
+Debug.init();
 const controls = document.querySelector('#controls');
 const ctrl = new GameController(GameController.createDefaultElems(controls));
 

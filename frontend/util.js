@@ -139,6 +139,7 @@ const mapPairs = (fstCb, sndCb, arr) => arr.map(([fst, snd]) => [fstCb(fst), snd
 const id = val => val;
 const _new = (cls) => (...args) => new cls(...args);
 const argsArrayToRest = (f) => (args) => f(...args);
+const noop = () => {};
 
 const mapDict = (callbacks, dict) => {
     const newDict = {};
@@ -162,3 +163,17 @@ const curry = (func) => {
     
     return curried;
 };
+
+class Debug {
+    static init() {
+        if (!Debug.enabled()) {
+            console.log('silent mode');
+            console.log = noop;
+            console.assert = noop;
+        }
+    }
+    
+    static enabled() {
+        return new URL(location).searchParams.has('debug');
+    }
+}
