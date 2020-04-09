@@ -1,9 +1,22 @@
 (() => {
 Debug.init();
-const controls = document.querySelector('.controls');
-const ctrl = new GameController(GameController.createDefaultElems(controls));
 
-ctrl.onPlay(conn => {
+const ctrlFactory = () => {
+    const template = document.querySelector('.controller-template .controller');
+    const ctrlWrapper = template.cloneNode(true);
+    document.querySelector('.controllers-container').appendChild(ctrlWrapper);
+    
+    const controls = ctrlWrapper.querySelector('.controls');
+    const ctrl = new GameController(new PromptInputManager, GameController.createDefaultControls(controls));
+    return [ctrl, ctrlWrapper];
+};
+
+const mpCtrl = new MultiplayerGameController({
+    addPlayer: document.querySelector('.add-player')
+}, ctrlFactory);
+mpCtrl.displayOn(RecvMsg.ASK_TRUMP, WebsocketConn.RecvMsg.YOUR_TURN);
+
+mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const cardPreparer = argsArrayToRest(_new(Card));
     conn.preparePayload({
         [RecvMsg.DEAL]: hand => hand.map(cardPreparer),
@@ -18,7 +31,7 @@ ctrl.onPlay(conn => {
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'
     });
     
-    const table = new CardTable(4, document.querySelector('.hand'), document.querySelector('.table'));
+    const table = new CardTable(4, ctrlWrapper.querySelector('.hand'), ctrlWrapper.querySelector('.table'));
     GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));

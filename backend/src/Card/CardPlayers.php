@@ -17,7 +17,7 @@ class CardPlayers extends Players {
         return any($this, fn(CardPlayer $player) => $player->hasCards());
     }
     
-    public function sendTeam(Team $team, Enum $message, $payload): void {
+    public function sendTeam(Team $team, Enum $message, $payload = null): void {
         $teamPlayers = filter($this, fn(CardPlayer $player) => $player->team()->eq($team));
         self::sendTo($teamPlayers, $message, $payload);
     }

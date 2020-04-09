@@ -4,6 +4,7 @@ namespace Games;
 use MyCLabs\Enum\Enum;
 
 class SendMsg extends Enum {
+    private const START_GAME = 'startGame';
     private const YOUR_TURN = 'yourTurn';
     private const WAIT_PLAYERS ='waitPlayers';
     private const TURN_OF = 'turnOf';

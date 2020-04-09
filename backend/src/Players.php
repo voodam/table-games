@@ -11,7 +11,7 @@ class Players implements \IteratorAggregate, \Countable {
 
     private MyObjectStorage $storage; // ConnectionInterface -> Player
     
-    public static function sendTo(iterable $players, Enum $message, $payload): void {
+    public static function sendTo(iterable $players, Enum $message, $payload = null): void {
         if (!is_callable($payload)) {
             $payload = fn() => $payload;
         }
@@ -39,11 +39,11 @@ class Players implements \IteratorAggregate, \Countable {
         $this->sendOther($player, $message, $player);
     }
     
-    public function sendOther(object $connOrPlayer, Enum $message, $payload): void {
+    public function sendOther(object $connOrPlayer, Enum $message, $payload = null): void {
         self::sendTo($this->getOther($connOrPlayer), $message, $payload);
     }
     
-    public function sendAll(Enum $message, $payload): void {
+    public function sendAll(Enum $message, $payload = null): void {
         self::sendTo($this, $message, $payload);
     }
     

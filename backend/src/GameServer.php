@@ -47,6 +47,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
             $player->send(SendMsg::WAIT_PLAYERS());
         } else {
             $this->log('start game');
+            $this->players->sendAll(SendMsg::START_GAME());
             $this->startGame();
         }
     }

@@ -49,7 +49,7 @@ class GameController {
 
         this._inputManager.onCredentials((name, serverUrl) => {
             const conn = new WebsocketConn(serverUrl);
-            conn.connect(name);
+            conn.connect(name || null);
             this._inputManager.onAbort(conn.close.bind(conn));
             conn.onClose(() => {
                 this.message(this._messages.gameAborted);
@@ -117,7 +117,7 @@ class InputManager {
         };
     }
     
-    constructor(controls, messages = GameController.DEFAULT_MSGS) {
+    constructor(controls, messages = InputManager.DEFAULT_MSGS) {
         this._play = controls.play;
         this._abort = controls.abort;
         this._serverUrlInput = controls.serverUrl;
@@ -159,5 +159,53 @@ class InputManager {
     _toggleControls() {
         [this._play, this._abort].map(toggleDisabled);
         [this._serverUrlInput, this._nameInput].filter(id).map(toggleDisplay);
+    }
+}
+
+class PromptInputManager {
+    static DEFAULT_MSGS = {
+        enterName: 'Введите имя'
+    };
+    
+    constructor(messages = PromptInputManager.DEFAULT_MSGS) {
+        this._messages = messages;
+    }
+    
+    onCredentials(handler) {
+        const serverPath = location.pathname.slice(0, -1);
+        const name = prompt(this._messages.enterName);
+        handler(name, `ws://91.191.245.9:8080${serverPath}`);
+    }
+    
+    onAbort(handler) {}
+    
+    onClose() {}
+}
+
+class MultiplayerGameController {
+    constructor(mpElements, ctrlFactory) {
+        this._ctrlFactory = ctrlFactory;
+        this._addPlayer = mpElements.addPlayer;
+        this._displayOnMessages = [];
+    }
+    
+    onPlay(hdl) {
+        this._initCtrl(hdl);
+        this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
+    }
+    
+    displayOn(...msgTypes) {
+        this._displayOnMessages = this._displayOnMessages.concat(msgTypes);
+    }
+    
+    _initCtrl(hdl) {
+        const [ctrl, wrapper] = this._ctrlFactory();
+        ctrl.onPlay(conn => {
+            conn.on(WebsocketConn.RecvMsg.START_GAME, () => hide(this._addPlayer));
+            for (const msgType of this._displayOnMessages) {
+                conn.on(msgType, () => displayBetweenSiblings(wrapper));
+            }
+            hdl(conn, ctrl, wrapper);
+        });
     }
 }

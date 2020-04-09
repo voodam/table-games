@@ -61,10 +61,18 @@ const toggleDisabled = elem => {
     elem.disabled = !elem.disabled;
 };
 
-const toggleDisplay = elem => 
-    elem.style.display = elem.style.display !== 'none' 
-        ? Style.replace(elem, 'display', 'none') 
-        : Style.returnBack(elem, 'display');
+const toggleDisplay = elem => {
+    if (Style.getComputed(elem, 'display') !== 'none') hide(elem);
+    else show(elem);
+};
+
+const hide = elem => Style.replace(elem, 'display', 'none');
+const show = elem => Style.returnBack(elem, 'display') || (elem.style.display = 'block');
+
+const displayBetweenSiblings = elem => {
+    Array.from(elem.parentNode.children).forEach(sibling => sibling.style.display = 'none');
+    elem.style.display = 'block';
+};
 
 const beforeUnload = () => {
     window.addEventListener('beforeunload', event => {
@@ -94,11 +102,12 @@ class Style {
     static returnBack(elem, attr) {
         const data = elem.dataset[this._getDataKey(attr)]
         if (!data) {
-            return;
+            return false;
         }
 
         elem.style[attr] = data;
         delete elem.dataset[this._getDataKey(attr)];
+        return true;
     }
 
     static eq(elem, attr, value) {
@@ -112,7 +121,7 @@ class Style {
     }
 
     static getComputed(elem, attr) {
-        return getComputedStyle(elem)[camelCasetoHyphen(attr)];        
+        return getComputedStyle(elem)[camelCasetoHyphen(attr)] || elem.style[attr];
     }
 
     static _getWrapper(id = 'style-helper-wrapper') {

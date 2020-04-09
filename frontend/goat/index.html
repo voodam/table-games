@@ -6,14 +6,21 @@
     <link rel="stylesheet" href="goatStyle.css">
 </head>
 <body>
-    <div class="table"></div>
-    <div class="hand"></div>
-    <div class="controls"></div>
+    <button class="add-player">Добавить игрока</button>
+    <div class="controllers-container"></div>
+    
+    <div class="controller-template">
+        <div class="controller" style="display: none">
+            <div class="table"></div>
+            <div class="hand"></div>
+            <div class="controls"></div>
+        </div>
+    </div>
     <script src="/util.js"></script>
     <script src="/ws.js"></script>
     <script src="/model.js"></script>
     <script src="/ctrl.js"></script>
-    <script src="goatCtrl.js"></script>
     <script src="goatModel.js"></script>
+    <script src="goatCtrl.js"></script>
 </body>
 </html>
