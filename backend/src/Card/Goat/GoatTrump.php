@@ -19,7 +19,6 @@ class GoatTrump extends Trump {
         $firstIsTrump = $this->isTrump($first);
         $secondIsTrump = $this->isTrump($second);
         
-       
         if (!$firstIsTrump && !$secondIsTrump) return $this->compareDefault($first, $second);
         if ($firstIsTrump && $secondIsTrump) return $this->compareTrumps($first, $second);
         return parent::compare($first, $second);
@@ -33,16 +32,7 @@ class GoatTrump extends Trump {
         assert($this->isTrump($first));
         assert($this->isTrump($second));
         
-        static $specialCards = null;
-        $specialCards ??= [
-            new Card(Rank::_7(), $this->suit), 
-            new Card(Rank::JACK(), Suit::CLUBS()),
-            new Card(Rank::JACK(), Suit::SPADES()),
-            new Card(Rank::JACK(), Suit::HEARTS()),
-            new Card(Rank::JACK(), Suit::DIAMONDS()),
-        ];
-        
-        foreach ($specialCards as $card) {
+        foreach ($this->specialTrumps() as $card) {
             if ($first->compare($card) == Cmp::EQ) {
                 return Cmp::MORE;
             }
@@ -52,6 +42,17 @@ class GoatTrump extends Trump {
         }
         
         return $this->compareDefault($first, $second);
+    }
+    
+    private $specialTrumps;
+    private function specialTrumps(): array {
+        return $this->specialTrumps ??= [
+            new Card(Rank::_7(), $this->suit), 
+            new Card(Rank::JACK(), Suit::CLUBS()),
+            new Card(Rank::JACK(), Suit::SPADES()),
+            new Card(Rank::JACK(), Suit::HEARTS()),
+            new Card(Rank::JACK(), Suit::DIAMONDS()),
+        ];
     }
     
     private function compareDefault(Card $first, Card $second): int {
