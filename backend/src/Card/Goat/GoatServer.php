@@ -6,6 +6,7 @@ use Games\Card\CardRecvMsg;
 use Games\Card\Card;
 use Games\Card\Suit;
 use function Games\Util\Func\_new;
+use Games\Card\CardPlayers;
 
 class GoatServer extends GameServer {
     private Goat $game;
@@ -24,5 +25,5 @@ class GoatServer extends GameServer {
         $this->game->start();
     }
     
-    protected function createPlayers(): GoatPlayers { return new GoatPlayers; }
+    protected function createPlayers(): CardPlayers { return new CardPlayers; }
 }

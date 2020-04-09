@@ -5,11 +5,16 @@ use Games\Card\Partie;
 use Games\Card\Team;
 use Games\Card\Trick;
 use Games\Card\Suit;
+use Games\Card\Rank;
+use Games\Card\Card;
 use Games\Card\Trump;
+use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
-    protected function determEldest(): GoatPlayer {
-        return $this->players->eldest();
+    protected function determEldest(): CardPlayer {
+        $eldest = $this->players->havingCard(new Card(Rank::JACK(), Suit::CLUBS()));
+        if (!isset($eldest)) throw new CardException('Can not to determine eldest (probably some cards are out of hands)');
+        return $eldest;
     }
     
     protected function gameScore(int $partieScore, Team $team): int {

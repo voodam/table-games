@@ -11,17 +11,19 @@ use Games\Card\CardRecvMsg;
 use Games\Exception\GameEndException;
 use Games\Util\Logging;
 use Games\Card\CardSendMsg;
+use Games\Card\CardPlayers;
+use Games\Card\CardPlayer;
 use function Games\Util\Iter\filter;
 
 class Goat implements MsgObservableInterface {
     use MsgObservable;
     use Logging;
     
-    private GoatPlayers $players;
+    private CardPlayers $players;
     private \SplObjectStorage $score; // Team -> int
     private Partie $partie;
 
-    public function __construct(GoatPlayers $players) {
+    public function __construct(CardPlayers $players) {
         $this->players = $players;
         $this->score = new \SplObjectStorage;
         $this->changeScore(fn() => 0);
@@ -32,7 +34,7 @@ class Goat implements MsgObservableInterface {
         $this->newPartie();
     }
 
-    public function putCard(Card $card, GoatPlayer $player) {
+    public function putCard(Card $card, CardPlayer $player) {
         if ($this->winner()) throw new GameEndException('Game was ended: we have a winner');
         assert(!$this->partie->ended());
         

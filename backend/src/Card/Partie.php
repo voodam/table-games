@@ -33,6 +33,12 @@ abstract class Partie {
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
+    
+    public function determTrump(Suit $suit) { 
+        $this->trump = $this->createTrump($suit);
+        $this->players->sendAll(CardSendMsg::TRUMP_IS(), t($this->trump));
+        $this->newTrick($this->eldest);
+    }
 
     public function putCard(CardPlayer $player, Card $card): void {
         if (!isset($this->trump)) throw new CardException('Can not make turn while trump is not set');
@@ -55,12 +61,6 @@ abstract class Partie {
 
     public function ended(): bool {
         return !$this->players->haveCards();
-    }
-    
-    public function determTrump(Suit $suit) { 
-        $this->trump = $this->createTrump($suit);
-        $this->players->sendAll(CardSendMsg::TRUMP_IS(), t($this->trump));
-        $this->newTrick($this->eldest);
     }
 
     private function getTrick(): void {

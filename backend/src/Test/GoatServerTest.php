@@ -7,7 +7,7 @@ use Games\Card\Suit;
 use Games\Player;
 use Games\SendMsg;
 use Games\Card\CardSendMsg;
-use Games\Card\Goat\GoatPlayer;
+use Games\Card\CardPlayer;
 
 class GoatServerTest extends ServerTest {
     protected function msgHandler(Player $player, string $type, $payload = null): void {
@@ -24,7 +24,7 @@ class GoatServerTest extends ServerTest {
         }
     }
     
-    private function putRandomCard(GoatPlayer $player): void {
+    private function putRandomCard(CardPlayer $player): void {
         $this->onMessage($player, CardRecvMsg::PUT_CARD(), $player->randomCard());
     }
     
