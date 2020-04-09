@@ -4,7 +4,7 @@ namespace Games\Card;
 use Games\Util\Cmp;
 use Games\Card\Rank;
 
-class Trump {
+class Trump implements \JsonSerializable {
     protected Suit $suit;
     
     public function __construct(Suit $suit) {
@@ -25,6 +25,7 @@ class Trump {
     }
     
     public function __toString() { return (string) $this->suit; }
+    public function jsonSerialize() { return $this->suit; }
     
     protected function isTrump(Card $card): bool {
         return $card->haveSuit($this->suit);

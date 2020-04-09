@@ -7,3 +7,9 @@
     position: absolute;
     bottom: 0;
 }
+
+.trump {
+    position: absolute;
+    right: 250px;
+    top: 0;
+}

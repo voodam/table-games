@@ -15,11 +15,12 @@ const SendMsg = Object.freeze({
 });
 
 class CardTable extends GameTable {
-    constructor(playersNumber, handContainer, tableContainer) {
+    constructor(playersNumber, handContainer, tableContainer, trumpImage) {
         super();
         this._playersNumber = playersNumber;
         this._hand = handContainer;
         this._table = tableContainer;
+        this._trump = trumpImage;
         this._listenBrowserEvents();
         this._trumpSelecting = false;
         this._hiddenHand = false;
@@ -84,6 +85,11 @@ class CardTable extends GameTable {
             this._trumpSelecting = false;
             this.clearTable();
         }, {once: true});
+    }
+    
+    displayTrump(trump) {
+        const card = new Card('ace', trump);
+        this._trump.src = card.createImage().src;
     }
     
     onPutCard(handler) { this._onPutCard = handler; }
