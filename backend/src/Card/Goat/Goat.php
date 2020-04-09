@@ -26,7 +26,7 @@ class Goat implements MsgObservableInterface {
     public function __construct(CardPlayers $players) {
         $this->players = $players;
         $this->score = new \SplObjectStorage;
-        $this->changeScore(fn() => 0);
+        $this->changeEachTeamScore(fn() => 0);
     }
 
     public function start() {
@@ -43,7 +43,7 @@ class Goat implements MsgObservableInterface {
             return;
         }
         
-        $this->countScore();
+        $this->updateScore();
         $winner = $this->winner();
         if ($winner) {
             $this->players->sendWinner($winner);
@@ -64,16 +64,16 @@ class Goat implements MsgObservableInterface {
     }
     
     private function restart(): void {
-        $this->changeScore(function(int $oldScore, Team $team) {
+        $this->changeEachTeamScore(function(int $oldScore, Team $team) {
             return $team->eq($this->winner()) ? $oldScore - 12 : 0;
         });
         $this->newPartie();
     }
 
     private function newPartie(): void {
-        $this->detachObserver($this->partie ?? null, CardRecvMsg::DETERM_TRUMP());
+        $this->detachObserver($this->partie ?? null, CardRecvMsg::DETERMINE_TRUMP());
         $this->partie = new GoatPartie($this->players);
-        $this->attachObserver($this->partie, CardRecvMsg::DETERM_TRUMP());
+        $this->attachObserver($this->partie, CardRecvMsg::DETERMINE_TRUMP());
         $this->partie->deal();
     }
 
@@ -83,17 +83,18 @@ class Goat implements MsgObservableInterface {
         return $winners[0] ?? null;
     }
 
-    private function countScore(): void {
+    private function updateScore(): void {
         assert ($this->winner() === null);
         
-        $this->changeScore(function(int $oldScore, Team $team) {
-            [$score, $partieScore] = $this->partie->score($team);
-            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $partieScore);
-            return $score + $oldScore;
+        $this->changeEachTeamScore(function(int $oldScore, Team $team) {
+            $gameScore = $this->partie->gameScore($team);
+            $cardsScore = $this->partie->cardsScore($team);
+            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $cardsScore);
+            return $gameScore + $oldScore;
         });
     }
     
-    private function changeScore(callable $scoreCalc): void {
+    private function changeEachTeamScore(callable $scoreCalc): void {
         $newScorePayload = [];
         foreach ($this->teams() as $team) {
             $this->score[$team] = $scoreCalc($this->score[$team] ?? null, $team);

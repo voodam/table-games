@@ -11,19 +11,19 @@ use Games\Card\Trump;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
-    protected function determEldest(): CardPlayer {
+    protected function determineEldest(): CardPlayer {
         $eldest = $this->players->havingCard(new Card(Rank::JACK(), Suit::CLUBS()));
         if (!isset($eldest)) throw new CardException('Can not to determine eldest (probably some cards are out of hands)');
         return $eldest;
     }
     
-    protected function gameScore(int $partieScore, Team $team): int {
-        if ($partieScore === 120) {
+    protected function calculateGameScore(int $cardsScore, Team $team): int {
+        if ($cardsScore === 120) {
             $gameScore = 4;
-        } elseif ($partieScore <= 60) {
+        } elseif ($cardsScore <= 60) {
             $gameScore = 0;
         } else {
-            $gameScore = $partieScore > 90 ? 2 : 1;
+            $gameScore = $cardsScore > 90 ? 2 : 1;
             if (!$this->eldest->team()->eq($team)) {
                 $gameScore *= 2;
             }

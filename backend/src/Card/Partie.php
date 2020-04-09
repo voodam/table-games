@@ -7,20 +7,20 @@ use function Games\Util\Translate\t;
 abstract class Partie {
     protected CardPlayer $eldest;
     protected Trump $trump;
-    private MyObjectStorage $score; // Team -> int
+    private MyObjectStorage $cardsScore; // Team -> int
     protected CardPlayers $players;
     private Trick $trick;
 
-    abstract protected function gameScore(int $partieScore, Team $team): int;
-    abstract protected function determEldest(): CardPlayer;
+    abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
+    abstract protected function determineEldest(): CardPlayer;
     protected function createTrump(Suit $suit): Trump { return new Trump($suit); }
     protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
 
     public function __construct(CardPlayers $players) {
         $this->players = $players;
-        $this->score = new MyObjectStorage;
+        $this->cardsScore = new MyObjectStorage;
         foreach ($this->players->teams() as $team) {
-            $this->score[$team] = 0;
+            $this->cardsScore[$team] = 0;
         }
     }
     
@@ -28,13 +28,13 @@ abstract class Partie {
         $deck = Deck::new32();
         $deck->shuffle();
         $deck->deal($this->players);
-        $this->eldest = $this->determEldest();
+        $this->eldest = $this->determineEldest();
         assert(isset($this->eldest));
         $this->eldest->send(CardSendMsg::ASK_TRUMP());
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
     
-    public function determTrump(Suit $suit) { 
+    public function determineTrump(Suit $suit) { 
         $this->trump = $this->createTrump($suit);
         $this->players->sendAll(CardSendMsg::TRUMP_IS(), t($this->trump));
         $this->newTrick($this->eldest);
@@ -53,10 +53,14 @@ abstract class Partie {
         }
     }
 
-    public function score(Team $team): array {
+    public function gameScore(Team $team): int {
         if (!$this->ended()) throw new CardException('Party is not over');
-        $partieScore = $this->score[$team];
-        return [$this->gameScore($partieScore, $team), $partieScore];
+        return $this->calculateGameScore($this->cardsScore[$team], $team);
+    }
+    
+    public function cardsScore(Team $team): int {
+        if (!$this->ended()) throw new CardException('Party is not over');
+        return $this->cardsScore[$team];
     }
 
     public function ended(): bool {
@@ -65,8 +69,8 @@ abstract class Partie {
 
     private function getTrick(): void {
         $winner = $this->trick->winner();
-        $trickScore = $this->trick->score();
-        $this->score[$winner->team()] += $trickScore;
+        $trickScore = $this->trick->calculateScore();
+        $this->cardsScore[$winner->team()] += $trickScore;
         $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$winner, $trickScore]);
         
         if (!$this->ended()) {

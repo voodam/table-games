@@ -10,7 +10,7 @@ const RecvMsg = Object.freeze({
 });
 
 const SendMsg = Object.freeze({
-    DETERM_TRUMP: 'determTrump',
+    DETERMINE_TRUMP: 'determineTrump',
     PUT_CARD: 'putCard'
 });
 

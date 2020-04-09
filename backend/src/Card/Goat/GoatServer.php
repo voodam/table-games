@@ -17,7 +17,7 @@ class GoatServer extends GameServer {
     
     protected function startGame() {
         $this->preparePayload(CardRecvMsg::PUT_CARD(), [Card::class, 'fromPair']);
-        $this->preparePayload(CardRecvMsg::DETERM_TRUMP(), _new(Suit::class));
+        $this->preparePayload(CardRecvMsg::DETERMINE_TRUMP(), _new(Suit::class));
         
         $this->detachObserver($this->game ?? null, CardRecvMsg::PUT_CARD());
         $this->game = new Goat($this->players);

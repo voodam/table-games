@@ -13,7 +13,7 @@ class GoatServerTest extends ServerTest {
     protected function msgHandler(Player $player, string $type, $payload = null): void {
         switch($type) {
             case CardSendMsg::ASK_TRUMP()->getValue(): 
-                $this->onMessage($player, CardRecvMsg::DETERM_TRUMP(), Suit::random());
+                $this->onMessage($player, CardRecvMsg::DETERMINE_TRUMP(), Suit::random());
                 break;
             case SendMsg::YOUR_TURN()->getValue():
                 $this->putRandomCard($player);

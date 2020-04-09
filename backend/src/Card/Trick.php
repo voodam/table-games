@@ -34,7 +34,7 @@ class Trick {
         $this->cards[$card] = $player;
     }
     
-    public function score(): int {
+    public function calculateScore(): int {
         if (!$this->ended()) throw new CardException('Can not collect cards: trick is not over');
         return array_reduce(iterator_to_array($this->cards), fn(int $score, Card $card) => $score + ScoreCalc::tenAceAndFaceCards($card), 0);
     }
