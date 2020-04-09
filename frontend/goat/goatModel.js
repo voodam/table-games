@@ -22,6 +22,7 @@ class CardTable extends GameTable {
         this._table = tableContainer;
         this._listenBrowserEvents();
         this._trumpSelecting = false;
+        this._hiddenHand = false;
     }
     
     deal(hand) {
@@ -46,9 +47,11 @@ class CardTable extends GameTable {
             if (this._locked) {
                 return false;
             }
+            this._hiddenHand = false;
             this._listenBrowserEvents();
         };
         listenOnce(this._hand, 'click', handler);
+        this._hiddenHand = true;
     }
     
     clearTable() {
@@ -86,15 +89,21 @@ class CardTable extends GameTable {
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     
-    _lockingElement() { return this._hand; }
-    _listenBrowserEvents() { this._hand.addEventListener('click', this._cardClickHandler); }
-    _stopListenBrowserEvents() { this._hand.removeEventListener('click', this._cardClickHandler); }
     _cardClickHandler = ({target}) => {
         const card = Card.fromImage(target);
         this.playerPutsCard(card);
         target.remove();
         this._onPutCard(card);
     }
+    
+    _listenBrowserEvents() {
+        if (!this._hiddenHand) {
+            this._hand.addEventListener('click', this._cardClickHandler); 
+        }
+    }
+    
+    _stopListenBrowserEvents() { this._hand.removeEventListener('click', this._cardClickHandler); }
+    _lockingElement() { return this._hand; }
 }
 
 class Card {
