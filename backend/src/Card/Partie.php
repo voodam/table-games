@@ -7,18 +7,21 @@ use function Games\Util\Translate\t;
 abstract class Partie {
     protected CardPlayer $eldest;
     protected Trump $trump;
-    protected MyObjectStorage $cards; // Team -> Card[]
+    private MyObjectStorage $score; // Team -> int
     protected CardPlayers $players;
     private Trick $trick;
 
-    abstract protected function _score(Team $team): array;
+    abstract protected function gameScore(int $partieScore, Team $team): int;
     abstract protected function determEldest(): CardPlayer;
     protected function createTrump(Suit $suit): Trump { return new Trump($suit); }
     protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
 
     public function __construct(CardPlayers $players) {
         $this->players = $players;
-        $this->cards = new MyObjectStorage;
+        $this->score = new MyObjectStorage;
+        foreach ($this->players->teams() as $team) {
+            $this->score[$team] = 0;
+        }
     }
     
     public function deal(): void {
@@ -46,7 +49,8 @@ abstract class Partie {
 
     public function score(Team $team): array {
         if (!$this->ended()) throw new CardException('Party is not over');
-        return $this->_score($team);
+        $partieScore = $this->score[$team];
+        return [$this->gameScore($partieScore, $team), $partieScore];
     }
 
     public function ended(): bool {
@@ -61,12 +65,9 @@ abstract class Partie {
 
     private function getTrick(): void {
         $winner = $this->trick->winner();
-        $this->cards->updateInfo($winner->team(), function(?array $cards) {
-            $cards ??= [];
-            $cards = array_merge($cards, $this->trick->collectCards());
-            return $cards;
-        });
-        $this->players->sendAbout($winner, CardSendMsg::TRICK_WINNER_IS());
+        $trickScore = $this->trick->score();
+        $this->score[$winner->team()] += $trickScore;
+        $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$winner, $trickScore]);
         
         if (!$this->ended()) {
             $this->newTrick($winner);

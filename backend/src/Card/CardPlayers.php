@@ -21,6 +21,20 @@ class CardPlayers extends Players {
         $teamPlayers = filter($this, fn(CardPlayer $player) => $player->team()->eq($team));
         self::sendTo($teamPlayers, $message, $payload);
     }
+    
+    public function teams(): array {
+        $teams = [];
+        foreach ($this as $player) {
+            foreach ($teams as $team) {
+                if ($player->team()->eq($team)) {
+                    continue 2;
+                }
+            }
+            
+            $teams[] = $player->team();
+        }
+        return $teams;
+    }
 
     protected function playerClass(): string { return CardPlayer::class; }
 }

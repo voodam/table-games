@@ -25,7 +25,7 @@ class GameController {
                 </div>
             </div>
             <div class="info">
-                <div><div>Игровой счет</div><div id="score">0</div></div>
+                <div><div>Игровой счет</div><div id="score"></div></div>
                 <div id="messages"></div>
             </div>`);
         
@@ -88,8 +88,8 @@ class GameController {
                 [WebsocketConn.RecvMsg.WRONG_TURN]: this._messages.wrongTurn,
                 [WebsocketConn.RecvMsg.WINNER_IS]: this._messages.winnerIs
             });
-            conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (scores) => {
-                const elements = Object.keys(scores).map(name => createElement(`${name}: ${scores[name]}`));
+            conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (score) => {
+                const elements = Object.keys(score).map(name => createElement(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
             });
             conn.onClose(() => {
@@ -107,7 +107,12 @@ class GameController {
 
     messagesOn(conn, messages) {
         for (const [type, msg] of Object.entries(messages)) {
-            conn.on( type, payload => this.message(format(msg, payload)) );
+            conn.on(type, payload => {
+                if (!Array.isArray(payload)) {
+                    payload = [payload];
+                }
+                this.message(format(msg, ...payload));
+            });
         }
     }
     

@@ -4,6 +4,7 @@ namespace Games\Card;
 use Games\Util\Cmp;
 use Games\Util\MyObjectStorage;
 use Games\Util\Logging;
+use Games\Card\ScoreCalc;
 
 class Trick {
     use Logging;
@@ -32,6 +33,11 @@ class Trick {
         $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), $card);
         $this->cards[$card] = $player;
     }
+    
+    public function score(): int {
+        if (!$this->ended()) throw new CardException('Can not collect cards: trick is not over');
+        return array_reduce(iterator_to_array($this->cards), fn(int $score, Card $card) => $score + ScoreCalc::tenAceAndFaceCards($card), 0);
+    }
 
     public function winner(): CardPlayer {
         if (!$this->ended()) throw new CardException('Trick is not over, so there is no winner');
@@ -42,11 +48,6 @@ class Trick {
         };
         $maxCard = array_reduce(iterator_to_array($this->cards), $selectMaxCard);
         return $this->cards[$maxCard];
-    }
-
-    public function collectCards(): array { 
-        if (!$this->ended()) throw new CardException('Can not collect cards: trick is not over');
-        return iterator_to_array($this->cards);
     }
 
     public function ended(): bool { 

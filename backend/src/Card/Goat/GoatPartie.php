@@ -2,9 +2,7 @@
 namespace Games\Card\Goat;
 
 use Games\Card\Partie;
-use Games\Card\Card;
 use Games\Card\Team;
-use Games\Card\ScoreCalc;
 use Games\Card\Trick;
 use Games\Card\Suit;
 use Games\Card\Trump;
@@ -14,10 +12,7 @@ class GoatPartie extends Partie {
         return $this->players->eldest();
     }
     
-    protected function _score(Team $team): array {
-        $cards = $this->cards[$team] ?? [];
-        $partieScore = array_reduce($cards, fn(int $score, Card $card) => $score + ScoreCalc::tenAceAndFaceCards($card), 0);
-
+    protected function gameScore(int $partieScore, Team $team): int {
         if ($partieScore === 120) {
             $gameScore = 4;
         } elseif ($partieScore <= 60) {
@@ -29,7 +24,7 @@ class GoatPartie extends Partie {
             }
         }
         
-        return [$gameScore, $partieScore];
+        return $gameScore;
     }
     
     protected function createTrump(Suit $suit): Trump { return new GoatTrump($suit); }

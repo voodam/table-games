@@ -13,7 +13,7 @@ ctrl.onPlay(conn => {
         [RecvMsg.ASK_TRUMP]: 'Выберите козырь',
         [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь',
         [RecvMsg.TRUMP_IS]: 'Назначен козырь: {0}',
-        [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку', 
+        [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку в {1} очков', 
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'
     });
     

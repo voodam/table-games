@@ -18,15 +18,13 @@ class Goat implements MsgObservableInterface {
     use Logging;
     
     private GoatPlayers $players;
-    private \SplObjectStorage $scores; // Team -> int
+    private \SplObjectStorage $score; // Team -> int
     private Partie $partie;
 
     public function __construct(GoatPlayers $players) {
         $this->players = $players;
-        $this->scores = new \SplObjectStorage;
-        foreach ($this->teams() as $team) {
-            $this->scores[$team] = 0;
-        }
+        $this->score = new \SplObjectStorage;
+        $this->changeScore(fn() => 0);
     }
 
     public function start() {
@@ -78,13 +76,13 @@ class Goat implements MsgObservableInterface {
     }
 
     private function winner(): ?Team {
-        $winners = filter($this->teams(), fn($team) => $this->scores[$team] >= 12);
+        $winners = filter($this->teams(), fn($team) => $this->score[$team] >= 12);
         assert(count($winners) <= 1);
         return $winners[0] ?? null;
     }
 
     private function countScore(): void {
-        assert ($this->winner() == null);
+        assert ($this->winner() === null);
         
         $this->changeScore(function(int $oldScore, Team $team) {
             [$score, $partieScore] = $this->partie->score($team);
@@ -96,8 +94,8 @@ class Goat implements MsgObservableInterface {
     private function changeScore(callable $scoreCalc): void {
         $newScorePayload = [];
         foreach ($this->teams() as $team) {
-            $this->scores[$team] = $scoreCalc($this->scores[$team], $team);
-            $newScorePayload[(string)$team] = $this->scores[$team];
+            $this->score[$team] = $scoreCalc($this->score[$team] ?? null, $team);
+            $newScorePayload[(string)$team] = $this->score[$team];
         }
         $this->players->sendAll(SendMsg::GAME_SCORE(), $newScorePayload);
     }
