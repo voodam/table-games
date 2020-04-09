@@ -184,6 +184,7 @@ class MultiplayerGameController {
     constructor(mpElements, ctrlFactory) {
         this._ctrlFactory = ctrlFactory;
         this._addPlayer = mpElements.addPlayer;
+        this._playersNumber = 0;
     }
     
     onPlay(hdl) {
@@ -191,11 +192,19 @@ class MultiplayerGameController {
         this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
     }
     
+    get playersNumber() { return this._playersNumber; }
+    
     _initCtrl(hdl) {
         const [ctrl, wrapper] = this._ctrlFactory();
+        this._playersNumber++;
         ctrl.onPlay(conn => {
+            console.assert(this._playersNumber > 0);
+            
+            const displayTime = this._playersNumber === 1 ? WebsocketConn.RecvMsg.START_GAME : WebsocketConn.RecvMsg.YOUR_TURN;
+            conn.on(displayTime, () => displayBetweenSiblings(wrapper));
+            
             conn.on(WebsocketConn.RecvMsg.START_GAME, () => hide(this._addPlayer));
-            conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => displayBetweenSiblings(wrapper));
+            conn.onClose(() => show(this._addPlayer));
             hdl(conn, ctrl, wrapper);
         });
     }

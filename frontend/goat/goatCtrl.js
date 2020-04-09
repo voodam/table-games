@@ -35,7 +35,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
     conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => {
-        table.hideHand();
+        if (mpCtrl.playersNumber > 1) table.hideHand();
         table.clearTable();
     });
     conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
