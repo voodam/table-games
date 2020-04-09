@@ -3,7 +3,7 @@
     padding: 1%;
 }
 
-#hand {
+.hand {
     position: absolute;
     bottom: 0;
 }

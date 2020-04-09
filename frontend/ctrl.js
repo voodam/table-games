@@ -16,32 +16,44 @@ class GameController {
         const elements = createElemsFromStr(
             `<div class="inputs">
                 <div class="input-elements">
-                    <input id="server-url" placeholder="Адрес сервера" value="ws://91.191.245.9:8080${serverPath}">
-                    <input id="name" placeholder="Введите имя">
+                    <input class="server-url" placeholder="Адрес сервера" value="ws://91.191.245.9:8080${serverPath}">
+                    <input class="name" placeholder="Введите имя">
                 </div>
                 <div class="buttons">
-                    <button id="play">Играть!</button>
-                    <button id="abort" disabled="true">Закончить</button>
+                    <button class="play">Играть!</button>
+                    <button class="abort" disabled="true">Закончить</button>
                 </div>
             </div>
             <div class="info">
-                <div><div>Игровой счет</div><div id="score"></div></div>
-                <div id="messages"></div>
+                <div><div>Игровой счет</div><div class="score"></div></div>
+                <div class="messages"></div>
             </div>`);
         
         appendChildren(parent, elements);
         if (!withNameInput) {
-            parent.querySelector('#name').remove();
+            parent.querySelector('.inputs .name').remove();
         }
 
         return {
-            play: parent.querySelector('#play'),
-            abort: parent.querySelector('#abort'),
-            serverUrl: parent.querySelector('#server-url'),
-            messages: parent.querySelector('#messages'),
-            name: withNameInput ? parent.querySelector('#name') : undefined,
-            score: parent.querySelector('#score')
+            play: parent.querySelector('.inputs .play'),
+            abort: parent.querySelector('.inputs .abort'),
+            serverUrl: parent.querySelector('.inputs .server-url'),
+            messages: parent.querySelector('.info .messages'),
+            name: withNameInput ? parent.querySelector('.inputs .name') : undefined,
+            score: parent.querySelector('.info .score')
         };
+    }
+    
+    /**
+     * @param {WebsocketConn} conn
+     * @param {GameTable} table
+     */
+    static initLocking(conn, table) {
+        conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.unlock.bind(table));
+        conn.on(WebsocketConn.RecvMsg.TURN_OF, table.lock.bind(table));
+        conn.on(WebsocketConn.RecvMsg.WRONG_TURN, table.rollbackTurn.bind(table));
+        conn.onOpen(table.lock.bind(table));
+        conn.onClose(table.clear.bind(table));
     }
 
     constructor(elements, messages = GameController.DEFAULT_MSGS) {
@@ -117,20 +129,8 @@ class GameController {
         }
     }
     
-    /**
-     * @param {WebsocketConn} conn
-     * @param {GameTable} table
-     */
-    initLocking(conn, table) {
-        conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.unlock.bind(table));
-        conn.on(WebsocketConn.RecvMsg.TURN_OF, table.lock.bind(table));
-        conn.on(WebsocketConn.RecvMsg.WRONG_TURN, table.rollbackTurn.bind(table));
-        conn.onOpen(table.lock.bind(table));
-        conn.onClose(table.clear.bind(table));
-    }
-    
     _toggleControls() {
         [this._play, this._abort].map(toggleDisabled);
-        [this._serverUrlInput, this._nameInput].map(toggleDisplay);
+        [this._serverUrlInput, this._nameInput].filter(id).map(toggleDisplay);
     }
 }

@@ -1,6 +1,6 @@
 (() => {
 Debug.init();
-const controls = document.querySelector('#controls');
+const controls = document.querySelector('.controls');
 const ctrl = new GameController(GameController.createDefaultElems(controls));
 
 ctrl.onPlay(conn => {
@@ -18,8 +18,8 @@ ctrl.onPlay(conn => {
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'
     });
     
-    const table = new CardTable(4, document.getElementById('hand'), document.getElementById('table'));
-    ctrl.initLocking(conn, table);
+    const table = new CardTable(4, document.querySelector('.hand'), document.querySelector('.table'));
+    GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
     conn.on(WebsocketConn.RecvMsg.YOUR_TURN, table.clearTable.bind(table));

@@ -1,8 +1,8 @@
 (() => {
 Debug.init();
-const controls = document.getElementById('controls');
+const controls = document.querySelector('.controls');
 const ctrl = new GameController(GameController.createDefaultElems(controls, false));
-const table = createTable([8, 8], document.getElementById('board'));
+const table = createTable([8, 8], document.querySelector('.board'));
 
 ctrl.onPlay(conn => {
     conn.preparePayload({
@@ -12,7 +12,7 @@ ctrl.onPlay(conn => {
     });
     
     const board = new Board(table);
-    ctrl.initLocking(conn, board);
+    GameController.initLocking(conn, board);
 
     board.onMove((from, to) => {
         conn.send(SendMsg.MOVE_PIECE, [from, to]);

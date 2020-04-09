@@ -7,27 +7,27 @@
     height: 40px;
 }
 
-#messages {
+.info .messages {
     overflow-y: scroll;
     height: 80px;
 }
-#messages > *:first-child {
+.info .messages > *:first-child {
     font-weight: bold;
 }
-#messages > *:not(:first-child) {
+.info .messages > *:not(:first-child) {
     opacity: 0.5;
 }
 
-#controls .inputs > *,
-#controls .info > *:not(:last-child) {
+.controls .inputs > *,
+.controls .info > *:not(:last-child) {
     margin-bottom: 20px;
 }
-#controls .inputs input {
+.controls .inputs input {
     display: block;
     margin-bottom: 10px;
 }
 @media (min-width: 767px) {
-    #controls {
+    .controls {
         position: absolute;
         right: 0;
         top: 0;
