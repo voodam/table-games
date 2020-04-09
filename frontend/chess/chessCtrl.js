@@ -1,7 +1,8 @@
 (() => {
 Debug.init();
 const controls = document.querySelector('.controls');
-const ctrl = new GameController(GameController.createDefaultElems(controls, false));
+const input = new InputManager(InputManager.createDefaultControls(controls, false));
+const ctrl = new GameController(input, GameController.createDefaultControls(controls));
 const table = createTable([8, 8], document.querySelector('.board'));
 
 ctrl.onPlay(conn => {

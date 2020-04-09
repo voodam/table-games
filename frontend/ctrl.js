@@ -2,7 +2,6 @@ class GameController {
     static DEFAULT_MSGS = {
         waitPlayers: 'Ожидайте остальных игроков',
         gameAborted: 'Игра прервана',
-        sureAbort: 'Вы уверены?',
         enterUrl: 'Введите адрес сервера',
         enterName: 'Введите имя',
         yourTurn: 'Ваш ход',
@@ -11,35 +10,15 @@ class GameController {
         winnerIs: 'Победил(и) {0}!'
     };
 
-    static createDefaultElems(parent, withNameInput = true) {
-        const serverPath = location.pathname.slice(0, -1);
+    static createDefaultControls(parent) {
         const elements = createElemsFromStr(
-            `<div class="inputs">
-                <div class="input-elements">
-                    <input class="server-url" placeholder="Адрес сервера" value="ws://91.191.245.9:8080${serverPath}">
-                    <input class="name" placeholder="Введите имя">
-                </div>
-                <div class="buttons">
-                    <button class="play">Играть!</button>
-                    <button class="abort" disabled="true">Закончить</button>
-                </div>
-            </div>
-            <div class="info">
+            `<div class="info">
                 <div><div>Игровой счет</div><div class="score"></div></div>
                 <div class="messages"></div>
             </div>`);
-        
         appendChildren(parent, elements);
-        if (!withNameInput) {
-            parent.querySelector('.inputs .name').remove();
-        }
-
         return {
-            play: parent.querySelector('.inputs .play'),
-            abort: parent.querySelector('.inputs .abort'),
-            serverUrl: parent.querySelector('.inputs .server-url'),
             messages: parent.querySelector('.info .messages'),
-            name: withNameInput ? parent.querySelector('.inputs .name') : undefined,
             score: parent.querySelector('.info .score')
         };
     }
@@ -56,13 +35,10 @@ class GameController {
         conn.onClose(table.clear.bind(table));
     }
 
-    constructor(elements, messages = GameController.DEFAULT_MSGS) {
-        this._play = elements.play;
-        this._abort = elements.abort;
-        this._serverUrlInput = elements.serverUrl;
-        this._nameInput = elements.name;
-        this._messagesContainer = elements.messages;
-        this._scoreStatus = elements.score;
+    constructor(inputManager, info, messages = GameController.DEFAULT_MSGS) {
+        this._inputManager = inputManager;
+        this._messagesContainer = info.messages;
+        this._scoreStatus = info.score;
         this._messages = messages;
     }
 
@@ -71,28 +47,14 @@ class GameController {
             beforeUnload();
         }
 
-        this._play.addEventListener('click', () => {
-            const serverUrl = this._serverUrlInput.value.trim();
-            if (!serverUrl) {
-                this.message(this._messages.enterUrl);
-                return;
-            }
-            
-            this._toggleControls();
-            const name = this._nameInput && this._nameInput.value.trim() || null;
+        this._inputManager.onCredentials((name, serverUrl) => {
             const conn = new WebsocketConn(serverUrl);
             conn.connect(name);
-
-            const abortHdl = () => {
-                const sure = confirm(this._messages.sureAbort);
-                if (!sure) {
-                    return;
-                }
-
-                conn.close();
-                this._abort.removeEventListener('click', abortHdl);
-            };
-            this._abort.addEventListener('click', abortHdl);
+            this._inputManager.onAbort(conn.close.bind(conn));
+            conn.onClose(() => {
+                this.message(this._messages.gameAborted);
+                this._inputManager.onClose();
+            });
 
             this.messagesOn(conn, {
                 [WebsocketConn.RecvMsg.WAIT_PLAYERS]: this._messages.waitPlayers,
@@ -105,11 +67,6 @@ class GameController {
                 const elements = Object.keys(score).map(name => createElement(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
             });
-            conn.onClose(() => {
-                this.message(this._messages.gameAborted);
-                this._toggleControls();
-            });
-
             hdl(conn);
         });
     }
@@ -127,6 +84,76 @@ class GameController {
                 this.message(format(msg, ...payload));
             });
         }
+    }
+}
+
+class InputManager {
+    static DEFAULT_MSGS = {
+        sureAbort: 'Вы уверены?'
+    };
+    
+    static createDefaultControls(parent, withNameInput = true) {
+        const serverPath = location.pathname.slice(0, -1);
+        const elements = createElemsFromStr(
+            `<div class="inputs">
+                <div class="input-elements">
+                    <input class="server-url" placeholder="Адрес сервера" value="ws://91.191.245.9:8080${serverPath}">
+                    <input class="name" placeholder="Введите имя">
+                </div>
+                <div class="buttons">
+                    <button class="play">Играть!</button>
+                    <button class="abort" disabled="true">Закончить</button>
+                </div>
+            </div>`);
+        appendChildren(parent, elements);
+        if (!withNameInput) {
+            parent.querySelector('.inputs .name').remove();
+        }
+        return {
+            play: parent.querySelector('.inputs .play'),
+            abort: parent.querySelector('.inputs .abort'),
+            serverUrl: parent.querySelector('.inputs .server-url'),
+            name: withNameInput ? parent.querySelector('.inputs .name') : undefined
+        };
+    }
+    
+    constructor(controls, messages = GameController.DEFAULT_MSGS) {
+        this._play = controls.play;
+        this._abort = controls.abort;
+        this._serverUrlInput = controls.serverUrl;
+        this._nameInput = controls.name;
+        this._messages = messages;
+    }
+    
+    onCredentials(handler) {
+        this._play.addEventListener('click', () => {
+            const serverUrl = this._serverUrlInput.value.trim();
+            if (!serverUrl) {
+                this.message(this._messages.enterUrl);
+                return;
+            }
+            
+            this._toggleControls();
+            const name = this._nameInput && this._nameInput.value.trim() || null;
+            handler(name, serverUrl);
+        });
+    }
+    
+    onAbort(handler) {
+        const abortHdl = () => {
+            const sure = confirm(this._messages.sureAbort);
+            if (!sure) {
+                return;
+            }
+
+            handler();
+            this._abort.removeEventListener('click', abortHdl);
+        };
+        this._abort.addEventListener('click', abortHdl);
+    }
+    
+    onClose() {
+        this._toggleControls();
     }
     
     _toggleControls() {
