@@ -9,9 +9,11 @@ use Games\Util\Cmp;
 
 class GoatTrump extends Trump {
     public function haveSameSuits(Card $first, Card $second): bool {
-        if ($this->isTrump($first) && $this->isTrump($second)) {
-            return true;
-        }
+        $firstIsTrump = $this->isTrump($first);
+        $secondIsTrump = $this->isTrump($second);
+        
+        if ($firstIsTrump && $secondIsTrump) return true;
+        if ($firstIsTrump && !$secondIsTrump || !$firstIsTrump && $secondIsTrump) return false;
         return parent::haveSameSuits($first, $second);
     }
     
@@ -33,10 +35,10 @@ class GoatTrump extends Trump {
         assert($this->isTrump($second));
         
         foreach ($this->specialTrumps() as $card) {
-            if ($first->compare($card) == Cmp::EQ) {
+            if ($first->eq($card)) {
                 return Cmp::MORE;
             }
-            if ($second->compare($card) == Cmp::EQ) {
+            if ($second->eq($card)) {
                 return Cmp::LESS;
             }
         }
