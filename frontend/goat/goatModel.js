@@ -37,6 +37,9 @@ class CardTable extends GameTable {
     }
     
     hideHand() {
+        if (this._hiddenHand) {
+            return;
+        }
         if (this._trumpSelectedAndNoTurns) {
             this._trumpSelectedAndNoTurns = false;
             return;
@@ -49,7 +52,18 @@ class CardTable extends GameTable {
         this._stopListenBrowserEvents();
         this._hiddenHand = true;
         
-        listenOnce(this._hand, 'click', this._showHand.bind(this));
+        this._hand.addEventListener('click', () => {
+            if (this._hiddenHand) {
+                for (const cardImage of this._hand.children) {
+                    cardImage.src = cardImage.dataset.src;
+                }
+                this._hiddenHand = false;
+            }
+
+            if (!this._locked) {
+                this._listenBrowserEvents();
+            }
+        }, {once: true});
     }
     
     clear() {
@@ -82,19 +96,6 @@ class CardTable extends GameTable {
     displayTrump(trump) {
         const card = new Card('ace', trump);
         this._trump.src = card.createImage().src;
-    }
-    
-    _showHand() {
-        if (this._hiddenHand) {
-            for (const cardImage of this._hand.children) {
-                cardImage.src = cardImage.dataset.src;
-            }
-            this._hiddenHand = false;
-        }
-
-        if (!this._locked) {
-            this._listenBrowserEvents();
-        }
     }
     
     _clearTable() {

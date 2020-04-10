@@ -40,7 +40,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const hideHand = () => {
         if (mpCtrl.playersNumber > 1 && !Debug.enabled()) table.hideHand();
     };
-    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, hideHand);
+    conn.on([WebsocketConn.RecvMsg.YOUR_TURN, WebsocketConn.RecvMsg.TURN_OF], hideHand);
     conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));
     conn.on(RecvMsg.ASK_TRUMP, () => {
         hideHand();

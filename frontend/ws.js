@@ -39,11 +39,13 @@ class WebsocketConn {
         }
     }
     
-    on(msgType, sub) {
-        if (!this._subscribers[msgType]) {
-            this._subscribers[msgType] = [];
+    on(msgTypes, sub) {
+        for (const msgType of toArray(msgTypes)) {
+            if (!this._subscribers[msgType]) {
+                this._subscribers[msgType] = [];
+            }
+            this._subscribers[msgType].push(sub);
         }
-        this._subscribers[msgType].push(sub);
     }    
     
     preparePayload(preparers) { Object.assign(this._payloadPreparers, preparers); }
