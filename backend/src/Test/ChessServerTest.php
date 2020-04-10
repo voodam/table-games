@@ -1,5 +1,4 @@
 <?php
-
 namespace Games\Test;
 
 use Games\Chess\ChessServer;
@@ -13,4 +12,7 @@ class ChessServerTest extends ServerTest {
     }
 
     protected function createServer(): ChessServer { return new ChessServer; }
+
+    protected function msgHandler(\Games\Player $player, string $type, $payload = null): void {   
+    }
 }
