@@ -188,6 +188,7 @@ class MultiplayerGameController {
     onPlay(hdl) {
         this._initCtrl(hdl);
         this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
+        this._firstCtrl = null;
     }
     
     displayOn(...msgTypes) {
@@ -198,6 +199,7 @@ class MultiplayerGameController {
     
     _initCtrl(hdl) {
         const [ctrl, wrapper] = this._ctrlFactory();
+        this._firstCtrl = this._firstCtrl || ctrl;
         this._playersNumber++;
         ctrl.onPlay(conn => {
             console.assert(this._playersNumber > 0);
@@ -207,6 +209,9 @@ class MultiplayerGameController {
                 if (this._playersNumber === 1) {
                     displayCtrl();
                 } else {
+                    if (ctrl === this._firstCtrl) {
+                        displayCtrl();
+                    }
                     for (const msgType of this._displayOnMessages.concat(WebsocketConn.RecvMsg.YOUR_TURN)) {
                         conn.on(msgType, displayCtrl);
                     }
