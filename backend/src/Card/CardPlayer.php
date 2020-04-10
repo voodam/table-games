@@ -2,7 +2,6 @@
 namespace Games\Card;
 
 use Games\Player;
-use Games\Util\Cmp;
 use function Games\Util\Iter\randomValue;
 
 class CardPlayer extends Player {

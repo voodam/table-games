@@ -12,7 +12,6 @@ class GoatTrick extends Trick {
         if (count($this->cards) === 0) {
             return;
         }
-        
         $firstCard = $this->cards->getFirstObject();
         assert($firstCard instanceof Card);
         

@@ -211,9 +211,8 @@ class MultiplayerGameController {
                         conn.on(msgType, displayCtrl);
                     }
                 }
+                hide(this._addPlayer);
             });
-            
-            conn.on(WebsocketConn.RecvMsg.START_GAME, () => hide(this._addPlayer));
             conn.onClose(() => show(this._addPlayer));
             hdl(conn, ctrl, wrapper);
         });

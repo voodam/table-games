@@ -5,7 +5,6 @@ namespace Games;
 use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
-use Games\GameServer;
 
 class Player implements \JsonSerializable {
     use Logging;
