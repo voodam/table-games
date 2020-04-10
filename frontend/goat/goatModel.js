@@ -92,6 +92,10 @@ class CardTable extends GameTable {
         this._trump.src = card.createImage().src;
     }
     
+    clearTrump() {
+        this._trump.src = '';
+    }
+    
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     

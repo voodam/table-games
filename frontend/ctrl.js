@@ -200,8 +200,14 @@ class MultiplayerGameController {
         ctrl.onPlay(conn => {
             console.assert(this._playersNumber > 0);
             
-            const displayTime = this._playersNumber === 1 ? WebsocketConn.RecvMsg.START_GAME : WebsocketConn.RecvMsg.YOUR_TURN;
-            conn.on(displayTime, () => displayBetweenSiblings(wrapper));
+            conn.on(WebsocketConn.RecvMsg.START_GAME, () => {
+                const displayCtrl = () => displayBetweenSiblings(wrapper);
+                if (this._playersNumber === 1) {
+                    displayCtrl();
+                } else {
+                    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, displayCtrl);
+                }
+            });
             
             conn.on(WebsocketConn.RecvMsg.START_GAME, () => hide(this._addPlayer));
             conn.onClose(() => show(this._addPlayer));

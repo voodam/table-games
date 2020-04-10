@@ -39,6 +39,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     });
     conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
     conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));
+    conn.on(RecvMsg.DEAL, table.clearTrump.bind(table));
     conn.on(RecvMsg.ASK_TRUMP, () => {
         table.lock();
         table.askTrump(trump => {
