@@ -12,8 +12,10 @@ use function Games\Util\Func\repeat;
 abstract class ServerTest {
     abstract protected function msgHandler(Player $player, string $type, $payload = null): void;
     abstract protected function createServer(): GameServer;
+    protected function gamesNumber(): int { return 1; }
     
     protected GameServer $server;
+    private int $currentGamesNumber = 0;
     
     public function __construct() {
         $this->server = $this->createServer();
@@ -25,10 +27,12 @@ abstract class ServerTest {
     }
     
     public function fullMsgHandler(ConnectionInterface $conn, string $type, $payload = null) {
-        switch ($type) {
-            case SendMsg::WINNER_IS()->getValue():
-                echo "Test ended!\n";
+        if ($type === SendMsg::WINNER_IS()->getValue()) {
+            $this->currentGamesNumber++;
+            if ($this->currentGamesNumber === $this->gamesNumber()) {
+                echo "Test ended! Number of games: $this->currentGamesNumber\n";
                 exit();
+            }
         }
         
         $player = $this->server->players()->get($conn);

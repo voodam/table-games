@@ -28,5 +28,6 @@ class GoatServerTest extends ServerTest {
         $this->onMessage($player, CardRecvMsg::PUT_CARD(), $player->randomCard());
     }
     
+    protected function gamesNumber(): int { return 2; }
     protected function createServer(): GoatServer { return new GoatServer; }
 }
