@@ -228,7 +228,10 @@ class MultiplayerGameController {
                 }
                 hide(this._addPlayer);
             });
-            conn.onClose(() => show(this._addPlayer));
+            conn.onClose(() => {
+                show(this._addPlayer);
+                this._playersNumber--;
+            });
             hdl(conn, ctrl, wrapper);
         });
     }
