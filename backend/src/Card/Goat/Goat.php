@@ -46,8 +46,7 @@ class Goat implements MsgObservableInterface {
         $this->updateScore();
         $winner = $this->winner();
         if ($winner) {
-            $this->players->sendWinner($winner);
-            $this->restart();
+            $this->restart($winner);
         } else {
             $this->newPartie();
         }
@@ -63,10 +62,9 @@ class Goat implements MsgObservableInterface {
         }
     }
     
-    private function restart(): void {
-        $this->changeEachTeamScore(function(int $oldScore, Team $team) {
-            return $team->eq($this->winner()) ? $oldScore - 12 : 0;
-        });
+    private function restart(Team $winner): void {
+        $this->players->sendWinner($winner);
+        $this->changeEachTeamScore(fn(int $oldScore, Team $team) => $team->eq($winner) ? $oldScore - 12 : 0);
         $this->newPartie();
     }
 
