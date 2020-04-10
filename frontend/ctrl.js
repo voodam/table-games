@@ -10,7 +10,7 @@ class GameController {
         winnerIs: 'Победил(и) {0}!'
     };
 
-    static createDefaultControls(parent) {
+    static createDefaultElements(parent) {
         const elements = createElemsFromStr(
             `<div class="info">
                 <div><div>Игровой счет</div><div class="score"></div></div>
@@ -35,10 +35,11 @@ class GameController {
         conn.onClose(table.clear.bind(table));
     }
 
-    constructor(inputManager, info, messages = GameController.DEFAULT_MSGS) {
+    constructor(inputManager, elements, messages = GameController.DEFAULT_MSGS) {
         this._inputManager = inputManager;
-        this._messagesContainer = info.messages;
-        this._scoreStatus = info.score;
+        this._messagesContainer = elements.messages;
+        this._scoreStatus = elements.score;
+        this._turnOfMessage = elements.turnOf;
         this._messages = messages;
     }
 
@@ -58,15 +59,20 @@ class GameController {
 
             this.messagesOn(conn, {
                 [WebsocketConn.RecvMsg.WAIT_PLAYERS]: this._messages.waitPlayers,
-                [WebsocketConn.RecvMsg.YOUR_TURN]: this._messages.yourTurn,
-                [WebsocketConn.RecvMsg.TURN_OF]: this._messages.turnOf,
                 [WebsocketConn.RecvMsg.WRONG_TURN]: this._messages.wrongTurn,
                 [WebsocketConn.RecvMsg.WINNER_IS]: this._messages.winnerIs
+            });
+            conn.on(WebsocketConn.RecvMsg.TURN_OF, player => {
+                this._turnOfMessage.textContent = format(this._messages.turnOf, player);
+            });
+            conn.on(WebsocketConn.RecvMsg.YOUR_TURN, player => {
+                this._turnOfMessage.textContent = format(this._messages.yourTurn, player);
             });
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (score) => {
                 const elements = Object.keys(score).map(name => createElement(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
             });
+            
             hdl(conn);
         });
     }
@@ -74,12 +80,16 @@ class GameController {
     message(msg) {
         this._messagesContainer.prepend(createElement(msg));
     }
+    
+    messageOn(conn, msgType, msg) {
+        conn.on(msgType, payload => {
+            this.message(format(msg, ...toArray(payload)));
+        });
+    }
 
     messagesOn(conn, messages) {
         for (const [type, msg] of Object.entries(messages)) {
-            conn.on(type, payload => {
-                this.message(format(msg, ...toArray(payload)));
-            });
+            this.messageOn(conn, type, msg);
         }
     }
 }

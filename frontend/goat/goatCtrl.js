@@ -6,8 +6,10 @@ const ctrlFactory = () => {
     const ctrlWrapper = template.cloneNode(true);
     document.querySelector('.controllers-container').appendChild(ctrlWrapper);
     
-    const controls = ctrlWrapper.querySelector('.controls');
-    const ctrl = new GameController(new PromptInputManager, GameController.createDefaultControls(controls));
+    const controlsWrapper = ctrlWrapper.querySelector('.controls');
+    const elements = GameController.createDefaultElements(controlsWrapper);
+    elements.turnOf = ctrlWrapper.querySelector('.turn-of');
+    const ctrl = new GameController(new PromptInputManager, elements);
     return [ctrl, ctrlWrapper];
 };
 

@@ -11,5 +11,10 @@
 .trump {
     position: absolute;
     right: 250px;
-    top: 0;
+    top: 20px;
+}
+
+.table {
+    position: relative;
+    top: 20px;
 }
