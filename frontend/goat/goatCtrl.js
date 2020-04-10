@@ -14,6 +14,7 @@ const ctrlFactory = () => {
 const mpCtrl = new MultiplayerGameController({
     addPlayer: document.querySelector('.add-player')
 }, ctrlFactory);
+mpCtrl.displayOn(RecvMsg.ASK_TRUMP);
 
 mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const cardPreparer = argsArrayToRest(_new(Card));
@@ -33,19 +34,20 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
+    
+    const hideHand = () => {
+        if (mpCtrl.playersNumber > 1 && !Debug.enabled()) table.hideHand();
+    };
     conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => {
-        if (mpCtrl.playersNumber > 1) table.hideHand();
+        hideHand();
         table.clearTable();
     });
     conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
     conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));
     conn.on(RecvMsg.DEAL, table.clearTrump.bind(table));
     conn.on(RecvMsg.ASK_TRUMP, () => {
-        table.lock();
-        table.askTrump(trump => {
-            conn.send(SendMsg.DETERMINE_TRUMP, trump);
-            table.unlock();
-        });
+        hideHand();
+        table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump));
     });
     table.onPutCard(card => {
         conn.send(SendMsg.PUT_CARD, card);

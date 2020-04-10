@@ -2,7 +2,6 @@
 namespace Games\Card;
 
 use Games\Util\MyObjectStorage;
-use function Games\Util\Translate\t;
 
 abstract class Partie {
     protected CardPlayer $eldest;
@@ -13,7 +12,6 @@ abstract class Partie {
 
     abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
     abstract protected function determineEldest(): CardPlayer;
-    protected function createTrump(Suit $suit): Trump { return new Trump($suit); }
     protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
 
     public function __construct(CardPlayers $players) {
@@ -30,15 +28,14 @@ abstract class Partie {
         $deck->deal($this->players);
         $this->eldest = $this->determineEldest();
         assert(isset($this->eldest));
-        $this->players->sendNext($this->eldest);
         $this->eldest->send(CardSendMsg::ASK_TRUMP(), $this->eldest);
         $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
     
-    public function determineTrump(Suit $suit) { 
-        $this->trump = $this->createTrump($suit);
+    public function determineTrump(Trump $trump) { 
+        $this->trump = $trump;
         $this->players->sendAll(CardSendMsg::TRUMP_IS(), $this->trump);
-        $this->newTrick();
+        $this->newTrick($this->eldest);
     }
 
     public function putCard(CardPlayer $player, Card $card): void {
@@ -75,13 +72,13 @@ abstract class Partie {
         $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$winner, $trickScore]);
         
         if (!$this->ended()) {
-            $this->players->sendNext($winner);
             $this->newTrick($winner);
         }
     }
 
-    private function newTrick(): void {
+    private function newTrick(CardPlayer $eldest): void {
         assert(!isset($this->trick) || $this->trick->ended());
         $this->trick = $this->createTrick();
+        $this->players->sendNext($eldest);
     }
 }

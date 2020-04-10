@@ -7,7 +7,6 @@ use Games\Card\Trick;
 use Games\Card\Suit;
 use Games\Card\Rank;
 use Games\Card\Card;
-use Games\Card\Trump;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
@@ -32,6 +31,5 @@ class GoatPartie extends Partie {
         return $gameScore;
     }
     
-    protected function createTrump(Suit $suit): Trump { return new GoatTrump($suit); }
     protected function createTrick(): Trick { return new GoatTrick($this->players, $this->trump); }
 }

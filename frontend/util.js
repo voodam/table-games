@@ -62,16 +62,19 @@ const toggleDisabled = elem => {
 };
 
 const toggleDisplay = elem => {
-    if (Style.getComputed(elem, 'display') !== 'none') hide(elem);
-    else show(elem);
+    if (Style.getComputed(elem, 'display') !== 'none') {
+        Style.replace(elem, 'display', 'none');
+    } else {
+        Style.returnBack(elem, 'display') || show(elem);
+    };
 };
 
-const hide = elem => Style.replace(elem, 'display', 'none');
-const show = elem => Style.returnBack(elem, 'display') || (elem.style.display = 'block');
+const hide = elem => elem.style.display = 'none';
+const show = elem => elem.style.display = 'block';
 
 const displayBetweenSiblings = elem => {
-    Array.from(elem.parentNode.children).forEach(sibling => sibling.style.display = 'none');
-    elem.style.display = 'block';
+    Array.from(elem.parentNode.children).forEach(hide);
+    show(elem);
 };
 
 const listenOnce = (element, eventType, handler) => {
@@ -140,7 +143,7 @@ class Style {
         if (!wrapper) {
             wrapper = document.createElement('div');
             wrapper.id = id;
-            wrapper.style.display = 'none';
+            hide(wrapper);
             document.documentElement.appendChild(wrapper);
         }
 
@@ -183,6 +186,8 @@ const curry = (func) => {
     
     return curried;
 };
+
+const toArray = value => Array.isArray(value) ? value : [value];
 
 class Debug {
     static init() {

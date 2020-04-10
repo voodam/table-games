@@ -78,10 +78,7 @@ class GameController {
     messagesOn(conn, messages) {
         for (const [type, msg] of Object.entries(messages)) {
             conn.on(type, payload => {
-                if (!Array.isArray(payload)) {
-                    payload = [payload];
-                }
-                this.message(format(msg, ...payload));
+                this.message(format(msg, ...toArray(payload)));
             });
         }
     }
@@ -185,11 +182,16 @@ class MultiplayerGameController {
         this._ctrlFactory = ctrlFactory;
         this._addPlayer = mpElements.addPlayer;
         this._playersNumber = 0;
+        this._displayOnMessages = [];
     }
     
     onPlay(hdl) {
         this._initCtrl(hdl);
         this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
+    }
+    
+    displayOn(...msgTypes) {
+        this._displayOnMessages = this._displayOnMessages.concat(msgTypes);
     }
     
     get playersNumber() { return this._playersNumber; }
@@ -205,7 +207,9 @@ class MultiplayerGameController {
                 if (this._playersNumber === 1) {
                     displayCtrl();
                 } else {
-                    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, displayCtrl);
+                    for (const msgType of this._displayOnMessages.concat(WebsocketConn.RecvMsg.YOUR_TURN)) {
+                        conn.on(msgType, displayCtrl);
+                    }
                 }
             });
             
