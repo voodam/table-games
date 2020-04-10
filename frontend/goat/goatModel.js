@@ -22,16 +22,17 @@ class CardTable extends GameTable {
         this._table = tableContainer;
         this._trump = trumpImage;
         this._listenBrowserEvents();
-        this._trumpSelecting = false;
         this._hiddenHand = false;
         this._trumpSelectedAndNoTurns = false;
     }
     
     deal(hand) {
         appendChildren(this._hand, hand.map(card => card.createImage()), true);
+        this._trump.src = '';
     }
     
     playerPutsCard(card) {
+        this._clearTable();
         this._table.appendChild(card.createImage());
     }
     
@@ -48,24 +49,7 @@ class CardTable extends GameTable {
         this._stopListenBrowserEvents();
         this._hiddenHand = true;
         
-        listenOnce(this._hand, 'click', () => {
-            if (this._hiddenHand) {
-                for (const cardImage of this._hand.children) {
-                    cardImage.src = cardImage.dataset.src;
-                }
-                this._hiddenHand = false;
-            }
-            
-            if (!this._locked) {
-                this._listenBrowserEvents();
-            }
-        });
-    }
-    
-    clearTable() {
-        if (!this._trumpSelecting && this._table.childElementCount >= this._playersNumber) {
-            clearElement(this._table);
-        }
+        listenOnce(this._hand, 'click', this._showHand.bind(this));
     }
     
     clear() {
@@ -82,17 +66,17 @@ class CardTable extends GameTable {
     }
     
     askTrump(handler) {
-        const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
-        appendChildren(this._table, suitCards.map(card => card.createImage()), true);
-        this._trumpSelecting = true;
-        
-        this._table.addEventListener('click', ({target}) => {
-            const card = Card.fromImage(target);
-            handler(card.suit);
-            this._trumpSelecting = false;
-            this._trumpSelectedAndNoTurns = true;
-            this.clearTable();
-        }, {once: true});
+        setTimeout(() => {
+            const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
+            appendChildren(this._table, suitCards.map(card => card.createImage()), true);
+
+            this._table.addEventListener('click', ({target}) => {
+                const card = Card.fromImage(target);
+                handler(card.suit);
+                this._trumpSelectedAndNoTurns = true;
+                this._clearTable();
+            }, {once: true});
+        }, 1000);
     }
     
     displayTrump(trump) {
@@ -100,8 +84,23 @@ class CardTable extends GameTable {
         this._trump.src = card.createImage().src;
     }
     
-    clearTrump() {
-        this._trump.src = '';
+    _showHand() {
+        if (this._hiddenHand) {
+            for (const cardImage of this._hand.children) {
+                cardImage.src = cardImage.dataset.src;
+            }
+            this._hiddenHand = false;
+        }
+
+        if (!this._locked) {
+            this._listenBrowserEvents();
+        }
+    }
+    
+    _clearTable() {
+        if (this._table.childElementCount >= this._playersNumber) {
+            clearElement(this._table);
+        }
     }
     
     onPutCard(handler) { this._onPutCard = handler; }

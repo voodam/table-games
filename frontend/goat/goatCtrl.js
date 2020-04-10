@@ -38,13 +38,8 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const hideHand = () => {
         if (mpCtrl.playersNumber > 1 && !Debug.enabled()) table.hideHand();
     };
-    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, () => {
-        hideHand();
-        table.clearTable();
-    });
-    conn.on(WebsocketConn.RecvMsg.TURN_OF, table.clearTable.bind(table));
+    conn.on(WebsocketConn.RecvMsg.YOUR_TURN, hideHand);
     conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));
-    conn.on(RecvMsg.DEAL, table.clearTrump.bind(table));
     conn.on(RecvMsg.ASK_TRUMP, () => {
         hideHand();
         table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump));
