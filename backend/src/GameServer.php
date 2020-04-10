@@ -18,6 +18,11 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     private array $payloadPreparers = [];
 
     abstract protected function startGame();
+    
+    protected function defaultPlayerName(): string {
+        echo '!';
+        return 'Игрок ' . (count($this->players) + 1);
+    }
 
     public function __construct(int $needPlayersNumber) {    
         $this->players = $this->createPlayers();
@@ -40,10 +45,9 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
             return;
         }
 
-        $count++;
-        $player = $this->players->create($conn, $name ?? "Игрок $count");
-
-        if ($count < $this->needPlayersNumber) {
+        $player = $this->players->create($conn, $name ?? $this->defaultPlayerName());
+        
+        if (count($this->players) < $this->needPlayersNumber) {
             $player->send(SendMsg::WAIT_PLAYERS());
         } else {
             $this->log('start game');
