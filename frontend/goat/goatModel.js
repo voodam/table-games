@@ -48,14 +48,16 @@ class CardTable extends GameTable {
         
         this._stopListenBrowserEvents();
         const handler = () => {
-            for (const cardImage of this._hand.children) {
-                cardImage.src = cardImage.dataset.src;
+            if (this._hiddenHand) {
+                for (const cardImage of this._hand.children) {
+                    cardImage.src = cardImage.dataset.src;
+                }
+                this._hiddenHand = false;
             }
-            if (this._locked) {
-                return false;
+            
+            if (!this._locked) {
+                this._listenBrowserEvents();
             }
-            this._hiddenHand = false;
-            this._listenBrowserEvents();
         };
         listenOnce(this._hand, 'click', handler);
         this._hiddenHand = true;
