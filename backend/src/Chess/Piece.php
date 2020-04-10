@@ -1,7 +1,7 @@
 <?php
 namespace Games\Chess;
 
-class Piece implements \JsonSerializable {
+final class Piece implements \JsonSerializable {
     private PieceType $type;
     private Color $color;
 

@@ -6,7 +6,7 @@ use Games\Card\Rank;
 use Games\Card\Suit;
 use function Games\Util\Translate\t;
 
-class Card implements \JsonSerializable {
+final class Card implements \JsonSerializable {
     private Rank $rank;
     private Suit $suit;
 

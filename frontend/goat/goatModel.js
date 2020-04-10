@@ -45,9 +45,10 @@ class CardTable extends GameTable {
             cardImage.dataset.src = cardImage.src;
             cardImage.src = 'img/back_green.png';
         }
-        
         this._stopListenBrowserEvents();
-        const handler = () => {
+        this._hiddenHand = true;
+        
+        listenOnce(this._hand, 'click', () => {
             if (this._hiddenHand) {
                 for (const cardImage of this._hand.children) {
                     cardImage.src = cardImage.dataset.src;
@@ -58,9 +59,7 @@ class CardTable extends GameTable {
             if (!this._locked) {
                 this._listenBrowserEvents();
             }
-        };
-        listenOnce(this._hand, 'click', handler);
-        this._hiddenHand = true;
+        });
     }
     
     clearTable() {
@@ -141,7 +140,7 @@ class Card {
     
     createImage() {
         const path = `img/${this._suit}_${this._rank}.png`;
-        const image = new Image();
+        const image = new Image;
         image.dataset.rank = this._rank;
         image.dataset.suit = this._suit;
         image.classList.add('game-card');

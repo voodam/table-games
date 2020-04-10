@@ -3,7 +3,7 @@ namespace Games\Card;
 
 use MyCLabs\Enum\Enum;
 
-class Rank extends Enum implements \JsonSerializable {
+final class Rank extends Enum implements \JsonSerializable {
     private const _2 = 'two';
     private const _3 = 'three';
     private const _4 = 'four';

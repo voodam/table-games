@@ -3,7 +3,7 @@ namespace Games\Chess;
 
 use MyCLabs\Enum\Enum;
 
-class PieceType extends Enum {
+final class PieceType extends Enum {
     private const BISHOP = 'bishop';
     private const HORSE = 'horse';
     private const KING = 'king';

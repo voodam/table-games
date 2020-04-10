@@ -1,7 +1,7 @@
 <?php
 namespace Games\Chess;
 
-class Board {
+final class Board {
     private array $pieces = [];
 
     public function __construct() {

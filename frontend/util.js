@@ -1,20 +1,68 @@
+/*
+ * Primitives and functional programming
+ */
+
+const mapPairs = (fstCb, sndCb, arr) => arr.map(([fst, snd]) => [fstCb(fst), sndCb(snd)]);
+const id = val => val;
+const _new = (cls) => (...args) => new cls(...args);
+const argsArrayToRest = (f) => (args) => f(...args);
+const noop = () => {};
+const toArray = value => Array.isArray(value) ? value : [value];
+class NotImplemented extends Error {}
+
+const mapDict = (callbacks, dict) => {
+    const newDict = {};
+    for (const [key, value] of Object.entries(dict)) {
+        const cbk = callbacks[key] || id;
+        newDict[key] = cbk(value);
+    }
+    return newDict;
+};
+
+const curry = (func) => {
+    const curried = (...args) => {
+        if (args.length >= func.length) {
+            return func.apply(this, args);
+        } else {
+            return (...args2) => {
+                return curried.apply(this, args.concat(args2));
+            };
+        }
+    };
+    
+    return curried;
+};
+
 const repeat = (times, cbk) => {
     for (let i = 0; i < times; i++) {
         cbk();
     }
 };
 
+/*
+ * Strings
+ */
+
 const nextChar = (c) => {
     return String.fromCharCode(c.charCodeAt(0) + 1);
 };
 
-/**
- * Creates rows and cells in passed table element.
- *
- * @param {[number, number]} [numRows, numCells] Size of the table
- * @param {?HTMLTableElement} table If undefined, new table element will be created
- * @returns {HTMLTableElement} Passed or created table element
+const camelCasetoHyphen = str => str.replace(/[A-Z]/g, match => '-' + match.toLowerCase());
+
+const format = (str, ...args) => {
+    const replacer = (match, number) => typeof args[number] !== 'undefined' ? args[number] : match;
+    return str.replace(/{(\d+)}/g, replacer);
+};
+
+const ucfirst = str => {
+    const firstChar = str[0].toUpperCase();
+    return firstChar + str.substring(1);
+};
+
+/*
+ * DOM and HTML
  */
+
 const createTable = ([numRows, numCells], table = undefined) => {
     if (!table) {
         table = document.createElement('table');
@@ -48,8 +96,6 @@ const appendChildren = (parent, children, clearParent = false) => {
     }
 };
 
-const clearElement = (element) => element.textContent = '';
-
 const createElemsFromStr = (html) => {
       const div = document.createElement('div');
       div.innerHTML = html.trim();
@@ -69,23 +115,20 @@ const toggleDisplay = elem => {
     };
 };
 
-const hide = elem => elem.style.display = 'none';
-const show = elem => elem.style.display = 'block';
-
 const displayBetweenSiblings = elem => {
     Array.from(elem.parentNode.children).forEach(hide);
     show(elem);
 };
 
-const listenOnce = (element, eventType, handler) => {
+const listenOnce = (elem, eventType, handler) => {
     const fullHandler = (...args) => {
         const remove = handler(...args);
         if (remove === false) {
             return;
         }
-        element.removeEventListener(eventType, fullHandler);
+        elem.removeEventListener(eventType, fullHandler);
     };
-    element.addEventListener(eventType, fullHandler);
+    elem.addEventListener(eventType, fullHandler);
 };
 
 const beforeUnload = () => {
@@ -95,18 +138,6 @@ const beforeUnload = () => {
     });
 };
 
-const camelCasetoHyphen = str => str.replace(/[A-Z]/g, match => '-' + match.toLowerCase());
-
-const format = (str, ...args) => {
-    const replacer = (match, number) => typeof args[number] != 'undefined' ? args[number] : match;
-    return str.replace(/{(\d+)}/g, replacer);
-};
-
-const ucfirst = str => {
-    const firstChar = str[0].toUpperCase();
-    return firstChar + str.substring(1);
-};
-
 class Style {
     static replace(elem, attr, newVal) {
         elem.dataset[this._getDataKey(attr)] = this.getComputed(elem, attr);
@@ -114,7 +145,7 @@ class Style {
     }
 
     static returnBack(elem, attr) {
-        const data = elem.dataset[this._getDataKey(attr)]
+        const data = elem.dataset[this._getDataKey(attr)];
         if (!data) {
             return false;
         }
@@ -156,38 +187,14 @@ class Style {
 }
 
 class StyleReplaceException extends Error {}
-class NotImplemented extends Error {}
 
-const mapPairs = (fstCb, sndCb, arr) => arr.map(([fst, snd]) => [fstCb(fst), sndCb(snd)]);
-const id = val => val;
-const _new = (cls) => (...args) => new cls(...args);
-const argsArrayToRest = (f) => (args) => f(...args);
-const noop = () => {};
+const show = elem => elem.style.display = 'block';
+const hide = elem => elem.style.display = 'none';
+const clearElement = (element) => element.textContent = '';
 
-const mapDict = (callbacks, dict) => {
-    const newDict = {};
-    for (const [key, value] of Object.entries(dict)) {
-        const cbk = callbacks[key] || id;
-        newDict[key] = cbk(value);
-    }
-    return newDict;
-};
-
-const curry = (func) => {
-    const curried = (...args) => {
-        if (args.length >= func.length) {
-            return func.apply(this, args);
-        } else {
-            return (...args2) => {
-                return curried.apply(this, args.concat(args2));
-            };
-        }
-    };
-    
-    return curried;
-};
-
-const toArray = value => Array.isArray(value) ? value : [value];
+/*
+ * Misc
+ */
 
 class Debug {
     static init() {

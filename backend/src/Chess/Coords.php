@@ -1,7 +1,7 @@
 <?php
 namespace Games\Chess;
 
-class Coords implements \JsonSerializable {
+final class Coords implements \JsonSerializable {
     private string $letter;
     private int $number;
 

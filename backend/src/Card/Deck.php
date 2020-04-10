@@ -4,7 +4,7 @@ namespace Games\Card;
 use Games\Util\Cmp;
 use function Games\Util\Iter\filter;
 
-class Deck {
+final class Deck {
     private array $cards;
 
     public static function new32(): self {
