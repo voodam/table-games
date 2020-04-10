@@ -108,6 +108,9 @@ class CardTable extends GameTable {
     _onPutCard() {}
     
     _cardClickHandler = ({target}) => {
+        if (!(target instanceof Image) || !target.dataset.rank || !target.dataset.suit) {
+            return; // strange mama's bug
+        }
         const card = Card.fromImage(target);
         this.playerPutsCard(card);
         target.remove();
@@ -128,7 +131,8 @@ class Card {
     static fromDict({rank, suit}) { return new Card(rank, suit); }
     
     static fromImage(image) {
-        console.assert(image instanceof Image);
+        console.assert(image.dataset.rank);
+        console.assert(image.dataset.suit);
         return Card.fromDict(image.dataset);
     }
     
