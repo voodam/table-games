@@ -69,8 +69,12 @@ class Goat implements MsgObservableInterface {
     }
 
     private function newPartie(): void {
-        $this->detachObserver($this->partie ?? null, CardRecvMsg::DETERMINE_TRUMP());
-        $this->partie = new GoatPartie($this->players);
+        if (!isset($this->partie)) {
+            $this->partie = new GoatPartie($this->players, $this->players->random());
+        } else {
+            $this->detachObserver($this->partie, CardRecvMsg::DETERMINE_TRUMP());
+            $this->partie = $this->partie->next();
+        }
         $this->attachObserver($this->partie, CardRecvMsg::DETERMINE_TRUMP());
         $this->partie->deal();
     }

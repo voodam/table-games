@@ -2,20 +2,27 @@
 namespace Games\Card;
 
 use Games\Util\MyObjectStorage;
+use Games\Util\Logging;
 
 abstract class Partie {
+    use Logging;
+    
+    protected CardPlayer $trumpPlayer;
     protected CardPlayer $eldest;
     protected Trump $trump;
     private MyObjectStorage $cardsScore; // Team -> int
     protected CardPlayers $players;
     private Trick $trick;
 
+    abstract public function next(): self;
     abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
-    abstract protected function determineEldest(): CardPlayer;
+    abstract protected function trumpPlayer(): CardPlayer;
     protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
 
-    public function __construct(CardPlayers $players) {
+    public function __construct(CardPlayers $players, CardPlayer $eldest) {
         $this->players = $players;
+        $this->eldest = $eldest;
+        $this->log("Partie eldest is '$this->eldest'");
         $this->cardsScore = new MyObjectStorage;
         foreach ($this->players->teams() as $team) {
             $this->cardsScore[$team] = 0;
@@ -26,10 +33,11 @@ abstract class Partie {
         $deck = Deck::new32();
         $deck->shuffle();
         $deck->deal($this->players);
-        $this->eldest = $this->determineEldest();
-        assert(isset($this->eldest));
-        $this->eldest->send(CardSendMsg::ASK_TRUMP(), $this->eldest);
-        $this->players->sendAbout($this->eldest, CardSendMsg::PLAYER_DETERMS_TRUMP());
+        $this->trumpPlayer = $this->trumpPlayer();
+        $this->log("Partie trump player is '$this->trumpPlayer'");
+        assert(isset($this->trumpPlayer));
+        $this->trumpPlayer->send(CardSendMsg::ASK_TRUMP(), $this->trumpPlayer);
+        $this->players->sendAbout($this->trumpPlayer, CardSendMsg::PLAYER_DETERMS_TRUMP());
     }
     
     public function determineTrump(Trump $trump) { 
@@ -60,7 +68,7 @@ abstract class Partie {
         if (!$this->ended()) throw new CardException('Party is not over');
         return $this->cardsScore[$team];
     }
-
+    
     public function ended(): bool {
         return !$this->players->haveCards();
     }

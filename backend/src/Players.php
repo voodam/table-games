@@ -71,6 +71,10 @@ class Players implements \IteratorAggregate, \Countable {
         if (!$found) throw new \OutOfBoundsException('Player was not found');
         return $this->getFirst();
     }
+    
+    public function random(): Player {
+        return $this->storage->randomInfo();
+    }
 
     public function create(ConnectionInterface $conn, string $name): Player {
         $class = $this->playerClass();

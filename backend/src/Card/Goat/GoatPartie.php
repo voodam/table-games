@@ -10,10 +10,14 @@ use Games\Card\Card;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
-    protected function determineEldest(): CardPlayer {
-        $eldest = $this->players->havingCard(new Card(Rank::JACK(), Suit::CLUBS()));
-        if (!isset($eldest)) throw new CardException('Can not to determine eldest (probably some cards are out of hands)');
-        return $eldest;
+    public function next(): self {
+        return new self($this->players, $this->players->getNext($this->eldest));
+    }
+    
+    protected function trumpPlayer(): CardPlayer {
+        $trumpPlayer = $this->players->havingCard(new Card(Rank::JACK(), Suit::CLUBS()));
+        if (!isset($trumpPlayer)) throw new CardException('Can not to determine trump player (probably some cards are out of hands)');
+        return $trumpPlayer;
     }
     
     protected function calculateGameScore(int $cardsScore, Team $team): int {
@@ -23,7 +27,7 @@ class GoatPartie extends Partie {
             $gameScore = 0;
         } else {
             $gameScore = $cardsScore > 90 ? 2 : 1;
-            if (!$this->eldest->team()->eq($team)) {
+            if (!$this->trumpPlayer->team()->eq($team)) {
                 $gameScore *= 2;
             }
         }

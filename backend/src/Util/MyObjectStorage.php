@@ -2,6 +2,7 @@
 namespace Games\Util;
 
 use function Games\Util\Iter\filter;
+use function Games\Util\Iter\randomValue;
 
 class MyObjectStorage extends \SplObjectStorage {
     public function updateInfo(object $object, callable $handler) {
@@ -26,6 +27,11 @@ class MyObjectStorage extends \SplObjectStorage {
     public function getFirstInfo() {
         foreach ($this as $object)
             return $this[$object];
+    }
+    
+    public function randomInfo() {
+        $randomItem = randomValue($this);
+        return $this[$randomItem];
     }
 
     public function getFirstObject(): object {
