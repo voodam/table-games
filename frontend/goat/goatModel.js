@@ -23,6 +23,7 @@ class CardTable extends GameTable {
         this._trump = trumpContainer;
         this._listenBrowserEvents();
         this._hiddenHand = false;
+        this._trumpSelecting = false;
         this._trumpSelectedAndNoTurns = false;
     }
     
@@ -52,16 +53,19 @@ class CardTable extends GameTable {
         this._stopListenBrowserEvents();
         this._hiddenHand = true;
         
-        this._hand.addEventListener('click', () => {
+        listenOnce(this._hand, 'click', () => {
+            if (this._locked && !this._trumpSelecting) {
+                return false;
+            }
+            
             if (this._hiddenHand) {
                 this._forEachHandCard(card => card.src = card.dataset.src);
                 this._hiddenHand = false;
             }
-
             if (!this._locked) {
                 this._listenBrowserEvents();
             }
-        }, {once: true});
+        });
     }
     
     clear() {
@@ -79,6 +83,7 @@ class CardTable extends GameTable {
     }
     
     askTrump(handler) {
+        this._trumpSelecting = true;
         setTimeout(() => {
             const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
             appendChildren(this._table, suitCards.map(card => card.createImage('Выберите козырь')), true);
@@ -87,6 +92,7 @@ class CardTable extends GameTable {
                 const card = Card.fromImage(target);
                 handler(card.suit);
                 this._trumpSelectedAndNoTurns = true;
+                this._trumpSelecting = false;
                 this._clearTable();
             }));
         }, 1000);
