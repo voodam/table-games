@@ -34,12 +34,12 @@ button {
     display: block;
     margin-bottom: 10px;
 }
-@media (min-width: 767px) {
+@media (min-width: 767px), (orientation: landscape) {
     .controls {
         position: absolute;
         right: 0;
         top: 0;
-        width: 220px;
+        width: 25%;
     }
 }
 
