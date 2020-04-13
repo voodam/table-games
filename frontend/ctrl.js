@@ -53,7 +53,7 @@ class GameController {
             conn.connect(name || null);
             this._inputManager.onAbort(conn.close.bind(conn));
             conn.onClose(() => {
-                this.logMessage(this._messages.gameAborted);
+                this.headerMessage(this._messages.gameAborted);
                 this._inputManager.onClose();
             });
 
@@ -67,7 +67,7 @@ class GameController {
                 [WebsocketConn.RecvMsg.YOUR_TURN]: this._messages.yourTurn
             }, this.headerMessage.bind(this));
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (score) => {
-                const elements = Object.keys(score).map(name => createElement('div', `${name}: ${score[name]}`));
+                const elements = Object.keys(score).map(name => div(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
             });
             
@@ -80,7 +80,7 @@ class GameController {
     }
 
     logMessage(msg) {
-        this._logMessages.prepend(createElement('div', msg));
+        this._logMessages.prepend(div(msg));
     }
     
     messageOn(conn, msgType, msg, messager = this.logMessage.bind(this)) {

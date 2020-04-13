@@ -32,9 +32,12 @@ class CardTable extends GameTable {
         clearElement(this._trump);
     }
     
-    playerPutsCard(player, card) {
+    playerPutsCard({name, team}, card) {
+        const tooltip = span(name);
+        tooltip.style.backgroundColor = team;
+        
         this._clearTable();
-        this._table.appendChild(card.createImage(player));
+        this._table.appendChild(card.createImage(tooltip));
         if (this._isTrickFull()) {
             this._table.classList.add('full-trick');
         }
@@ -70,8 +73,9 @@ class CardTable extends GameTable {
     
     clear() {
         super.clear();
-        clearElement(this._hand);
         this._clearTable(true);
+        clearElement(this._hand);
+        clearElement(this._trump);
     }
     
     rollbackTurn() {
@@ -87,7 +91,7 @@ class CardTable extends GameTable {
         setTimeout(() => {
             const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
             this._clearTable();
-            appendChildren(this._table, suitCards.map(card => card.createImage('Выберите козырь')));
+            appendChildren(this._table, suitCards.map(card => card.createImage(span('Выберите козырь'))));
 
             listenOnce(this._table, 'click', this._createImageHandler(({target}) => {
                 const card = Card.fromImage(target);
@@ -100,7 +104,7 @@ class CardTable extends GameTable {
     }
     
     displayTrump(trump, player) {
-        assignElement(this._trump, new Card('ace', trump).createImage(player));
+        assignElement(this._trump, new Card('ace', trump).createImage(span(player)));
     }
     
     haveCards() {
@@ -133,7 +137,7 @@ class CardTable extends GameTable {
     
     _cardClickHandler = this._createImageHandler(({target}) => {
         const card = Card.fromImage(target);
-        this.playerPutsCard('Вы', card);
+        this.playerPutsCard({name: 'Вы'}, card);
         this._removeHandCard(target);
         this._onPutCard(card);
     });
@@ -166,7 +170,7 @@ class Card {
         this._suit = suit;
     }
     
-    createImage(tooltipMsg = undefined) {
+    createImage(tooltip = undefined) {
         const path = `img/${this._suit}_${this._rank}.png`;
         const image = new Image;
         image.dataset.rank = this._rank;
@@ -175,10 +179,11 @@ class Card {
         image.src = path;
         image.dataset.src = path;
         
-        const wrapper = createElement('div', '', ['game-card-wrap', 'tooltip-object']);
+        const wrapper = div('', ['game-card-wrap']);
         wrapper.appendChild(image);
-        if (tooltipMsg) {
-            const tooltip = createElement('span', tooltipMsg, 'tooltip-message');
+        if (tooltip) {
+            tooltip.classList.add('tooltip-message');
+            wrapper.classList.add('tooltip-object');
             wrapper.appendChild(tooltip);
         }
         return wrapper;

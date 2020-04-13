@@ -1,15 +1,17 @@
 <?php
 namespace Games\Card;
 
-class Team implements \JsonSerializable {
-    private string $name;
+use Games\Color;
 
-    public function __construct(string $name) {
-        $this->name = $name;
+class Team implements \JsonSerializable {
+    private Color $color;
+
+    public function __construct(Color $color) {
+        $this->color = $color;
     }
     
-    public function eq(self $other): bool { return $this->name === $other->name(); }
-    public function name(): string { return $this->name; }
-    public function jsonSerialize() { return $this->name; }
-    public function __toString(): string { return $this->name; }
+    public function name(): string { return $this->color->getValue(); }
+    public function eq(self $other): bool { return $this->name() === $other->name(); }
+    public function jsonSerialize() { return $this->name(); }
+    public function __toString(): string { return $this->name(); }
 }

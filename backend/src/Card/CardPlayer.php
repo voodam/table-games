@@ -4,6 +4,7 @@ namespace Games\Card;
 use Games\Player;
 use function Games\Util\Iter\randomValue;
 use function Games\Util\Func\getOrReturn;
+use function Games\Util\Translate\t;
 
 class CardPlayer extends Player {
     private Team $team;
@@ -19,7 +20,7 @@ class CardPlayer extends Player {
     public function joinTeam(Team $team) {
         if (isset($this->team)) throw new \DomainException("Player '$this' has team already");
         $this->team = $team;
-        $this->send(CardSendMsg::YOUR_TEAM(), $team);
+        $this->send(CardSendMsg::YOUR_TEAM(), t($team));
     }
 
     public function deal(array $hand): void {

@@ -88,6 +88,9 @@ const createElement = (tagName = 'div', textContent = '', classes = []) => {
     return elem;
 };
 
+const div = (textContent = '', classes = []) => createElement('div', textContent, classes);
+const span = (textContent = '', classes = []) => createElement('span', textContent, classes);
+
 const appendChildren = (parent, children, clearParent = false) => {
     console.assert(parent instanceof Node);
     
@@ -108,9 +111,9 @@ const assignElement = (target, source) => {
 };
 
 const createElemsFromStr = (html) => {
-      const div = document.createElement('div');
-      div.innerHTML = html.trim();
-      return Array.from(div.children);
+      const wrapper = div();
+      wrapper.innerHTML = html.trim();
+      return Array.from(wrapper.children);
 };
 
 const toggleDisabled = elem => {
@@ -182,7 +185,7 @@ class Style {
     static _getWrapper(id = 'style-helper-wrapper') {
         let wrapper = document.querySelector(`#${id}`);
         if (!wrapper) {
-            wrapper = document.createElement('div');
+            wrapper = div();
             wrapper.id = id;
             hide(wrapper);
             document.documentElement.appendChild(wrapper);

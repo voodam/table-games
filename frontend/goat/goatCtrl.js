@@ -28,7 +28,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
         [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку в {1} очков', 
-        [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'
+        [RecvMsg.YOUR_PARTIE_SCORE]: '{0} набрали {1} очков'
     });
     ctrl.messagesOn(conn, {
         [RecvMsg.ASK_TRUMP]: 'Выберите козырь, {0}',

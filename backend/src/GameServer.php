@@ -20,7 +20,6 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
     abstract protected function startGame();
     
     protected function defaultPlayerName(): string {
-        echo '!';
         return 'Игрок ' . (count($this->players) + 1);
     }
 

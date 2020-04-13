@@ -14,6 +14,8 @@ use Games\Card\CardSendMsg;
 use Games\Card\CardPlayers;
 use Games\Card\CardPlayer;
 use function Games\Util\Iter\filter;
+use function Games\Util\Translate\t;
+use Games\Color;
 
 class Goat implements MsgObservableInterface {
     use MsgObservable;
@@ -91,7 +93,7 @@ class Goat implements MsgObservableInterface {
         $this->changeEachTeamScore(function(int $oldScore, Team $team) {
             $gameScore = $this->partie->gameScore($team);
             $cardsScore = $this->partie->cardsScore($team);
-            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), $cardsScore);
+            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), [t($team), $cardsScore]);
             return $gameScore + $oldScore;
         });
     }
@@ -100,7 +102,7 @@ class Goat implements MsgObservableInterface {
         $newScorePayload = [];
         foreach ($this->teams() as $team) {
             $this->score[$team] = $scoreCalc($this->score[$team] ?? null, $team);
-            $newScorePayload[(string)$team] = $this->score[$team];
+            $newScorePayload[t($team)] = $this->score[$team];
         }
         $this->players->sendAll(SendMsg::GAME_SCORE(), $newScorePayload);
     }
@@ -109,7 +111,7 @@ class Goat implements MsgObservableInterface {
 
     private function teams(): array {
         if (!isset($this->teams)) {
-            $this->teams = [new Team('Команда 1'), new Team('Команда 2')];
+            $this->teams = [new Team(Color::BLUE()), new Team(Color::RED())];
         }
         return $this->teams;
     }
