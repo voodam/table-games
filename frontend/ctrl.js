@@ -37,9 +37,9 @@ class GameController {
 
     constructor(inputManager, elements, messages = GameController.DEFAULT_MSGS) {
         this._inputManager = inputManager;
-        this._messagesContainer = elements.messages;
+        this._logMessages = elements.messages;
         this._scoreStatus = elements.score;
-        this._turnOfMessage = elements.turnOf;
+        this._headerMessage = elements.header;
         this._messages = messages;
     }
 
@@ -53,7 +53,7 @@ class GameController {
             conn.connect(name || null);
             this._inputManager.onAbort(conn.close.bind(conn));
             conn.onClose(() => {
-                this.message(this._messages.gameAborted);
+                this.logMessage(this._messages.gameAborted);
                 this._inputManager.onClose();
             });
 
@@ -62,12 +62,10 @@ class GameController {
                 [WebsocketConn.RecvMsg.WRONG_TURN]: this._messages.wrongTurn,
                 [WebsocketConn.RecvMsg.WINNER_IS]: this._messages.winnerIs
             });
-            conn.on(WebsocketConn.RecvMsg.TURN_OF, player => {
-                this._turnOfMessage.textContent = format(this._messages.turnOf, player);
-            });
-            conn.on(WebsocketConn.RecvMsg.YOUR_TURN, player => {
-                this._turnOfMessage.textContent = format(this._messages.yourTurn, player);
-            });
+            this.messagesOn(conn, {
+                [WebsocketConn.RecvMsg.TURN_OF]: this._messages.turnOf,
+                [WebsocketConn.RecvMsg.YOUR_TURN]: this._messages.yourTurn
+            }, this.headerMessage.bind(this));
             conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (score) => {
                 const elements = Object.keys(score).map(name => createElement(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
@@ -76,20 +74,24 @@ class GameController {
             hdl(conn);
         });
     }
+    
+    headerMessage(msg) {
+        this._headerMessage.textContent = msg;
+    }
 
-    message(msg) {
-        this._messagesContainer.prepend(createElement(msg));
+    logMessage(msg) {
+        this._logMessages.prepend(createElement(msg));
     }
     
-    messageOn(conn, msgType, msg) {
+    messageOn(conn, msgType, msg, messager = this.logMessage.bind(this)) {
         conn.on(msgType, payload => {
-            this.message(format(msg, ...toArray(payload)));
+            messager(format(msg, ...toArray(payload)));
         });
     }
 
-    messagesOn(conn, messages) {
+    messagesOn(conn, messages, messager = this.logMessage.bind(this)) {
         for (const [type, msg] of Object.entries(messages)) {
-            this.messageOn(conn, type, msg);
+            this.messageOn(conn, type, msg, messager);
         }
     }
 }
@@ -136,7 +138,7 @@ class InputManager {
         this._play.addEventListener('click', () => {
             const serverUrl = this._serverUrlInput.value.trim();
             if (!serverUrl) {
-                this.message(this._messages.enterUrl);
+                this.logMessage(this._messages.enterUrl);
                 return;
             }
             

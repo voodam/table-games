@@ -9,7 +9,7 @@ const ctrlFactory = () => {
     
     const controlsWrapper = ctrlWrapper.querySelector('.controls');
     const elements = GameController.createDefaultElements(controlsWrapper);
-    elements.turnOf = ctrlWrapper.querySelector('.turn-of');
+    elements.header = ctrlWrapper.querySelector('.turn-of');
     const ctrl = new GameController(new PromptInputManager, elements);
     return [ctrl, ctrlWrapper];
 };
@@ -27,11 +27,13 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     });
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
-        [RecvMsg.ASK_TRUMP]: 'Выберите козырь, {0}',
-        [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь',
         [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку в {1} очков', 
         [RecvMsg.YOUR_PARTIE_SCORE]: 'Ваша команда набрала {0} очков'
     });
+    ctrl.messagesOn(conn, {
+        [RecvMsg.ASK_TRUMP]: 'Выберите козырь, {0}',
+        [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь'
+    }, ctrl.headerMessage.bind(ctrl));
     
     const table = new CardTable(4, ctrlWrapper.querySelector('.hand'), ctrlWrapper.querySelector('.table'), ctrlWrapper.querySelector('.trump'));
     if (Debug.enabled) window.tables.push(table);
