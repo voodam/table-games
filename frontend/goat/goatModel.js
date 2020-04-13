@@ -67,7 +67,7 @@ class CardTable extends GameTable {
     clear() {
         super.clear();
         clearElement(this._hand);
-        clearElement(this._table);
+        this._clearTable(true);
     }
     
     rollbackTurn() {
@@ -100,8 +100,8 @@ class CardTable extends GameTable {
         return this._hand.childElementCount > 0;
     }
     
-    _clearTable() {
-        if (this._isTrickFull()) {
+    _clearTable(force = false) {
+        if (force || this._isTrickFull()) {
             clearElement(this._table);
             this._table.classList.remove('full-trick');
         }
