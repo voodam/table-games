@@ -13,7 +13,7 @@ class GameController {
     static createDefaultElements(parent) {
         const elements = createElemsFromStr(
             `<div class="info">
-                <div><div>Игровой счет</div><div class="score"></div></div>
+                <div><div>Игровой счет</div><div class="score">0</div></div>
                 <div class="messages"></div>
             </div>`);
         appendChildren(parent, elements);
@@ -198,7 +198,6 @@ class MultiplayerGameController {
     onPlay(hdl) {
         this._initCtrl(hdl);
         this._addPlayer.addEventListener('click', () => this._initCtrl(hdl));
-        this._firstCtrl = null;
     }
     
     displayOn(...msgTypes) {
@@ -209,21 +208,21 @@ class MultiplayerGameController {
     
     _initCtrl(hdl) {
         const [ctrl, wrapper] = this._ctrlFactory();
-        this._firstCtrl = this._firstCtrl || ctrl;
+        const displayWrapper = () => displayBetweenSiblings(wrapper);
         this._playersNumber++;
+        if (this._playersNumber === 1) {
+            displayWrapper();
+        }
+
         ctrl.onPlay(conn => {
             console.assert(this._playersNumber > 0);
             
             conn.on(WebsocketConn.RecvMsg.START_GAME, () => {
-                const displayCtrl = () => displayBetweenSiblings(wrapper);
                 if (this._playersNumber === 1) {
-                    displayCtrl();
+                    displayWrapper();
                 } else {
-                    if (ctrl === this._firstCtrl) {
-                        displayCtrl();
-                    }
                     for (const msgType of this._displayOnMessages.concat(WebsocketConn.RecvMsg.YOUR_TURN)) {
-                        conn.on(msgType, displayCtrl);
+                        conn.on(msgType, displayWrapper);
                     }
                 }
                 hide(this._addPlayer);
