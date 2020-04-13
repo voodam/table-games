@@ -34,6 +34,9 @@ class CardTable extends GameTable {
     playerPutsCard(player, card) {
         this._clearTable();
         this._table.appendChild(card.createImage(player));
+        if (this._isTrickFull()) {
+            this._table.classList.add('full-trick');
+        }
     }
     
     hideHand() {
@@ -72,6 +75,7 @@ class CardTable extends GameTable {
         const lastCard = this._table.lastChild;
         lastCard.remove();
         this._hand.appendChild(lastCard);
+        this._table.classList.remove('full-trick');
     }
     
     askTrump(handler) {
@@ -97,9 +101,14 @@ class CardTable extends GameTable {
     }
     
     _clearTable() {
-        if (this._table.childElementCount >= this._playersNumber) {
+        if (this._isTrickFull()) {
             clearElement(this._table);
+            this._table.classList.remove('full-trick');
         }
+    }
+    
+    _isTrickFull() {
+        return this._table.childElementCount >= this._playersNumber;
     }
     
     onPutCard(handler) { this._onPutCard = handler; }

@@ -9,8 +9,12 @@
 }
 
 .hand {
-    position: absolute;
+    position: fixed;
     bottom: 0;
+}
+
+.table.full-trick {
+    opacity: 50%;
 }
 
 .trump-wrap {
