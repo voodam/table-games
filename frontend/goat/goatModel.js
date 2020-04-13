@@ -48,13 +48,13 @@ class CardTable extends GameTable {
             return;
         }
         
-        this._forEachCard(card => card.src = 'img/back_green.png');
+        this._forEachHandCard(card => card.src = 'img/back_green.png');
         this._stopListenBrowserEvents();
         this._hiddenHand = true;
         
         this._hand.addEventListener('click', () => {
             if (this._hiddenHand) {
-                this._forEachCard(card => card.src = card.dataset.src);
+                this._forEachHandCard(card => card.src = card.dataset.src);
                 this._hiddenHand = false;
             }
 
@@ -114,7 +114,7 @@ class CardTable extends GameTable {
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     
-    _forEachCard(handler) {
+    _forEachHandCard(handler) {
         for (const cardWrapper of this._hand.children) {
             handler(cardWrapper.firstChild);
         }
