@@ -15,12 +15,12 @@ const SendMsg = Object.freeze({
 });
 
 class CardTable extends GameTable {
-    constructor(playersNumber, handContainer, tableContainer, trumpImage) {
+    constructor(playersNumber, handContainer, tableContainer, trumpContainer) {
         super();
         this._playersNumber = playersNumber;
         this._hand = handContainer;
         this._table = tableContainer;
-        this._trump = trumpImage;
+        this._trump = trumpContainer;
         this._listenBrowserEvents();
         this._hiddenHand = false;
         this._trumpSelectedAndNoTurns = false;
@@ -28,12 +28,12 @@ class CardTable extends GameTable {
     
     deal(hand) {
         appendChildren(this._hand, hand.map(card => card.createImage()), true);
-        this._trump.src = '';
+        clearElement(this._trump);
     }
     
-    playerPutsCard(card) {
+    playerPutsCard(player, card) {
         this._clearTable();
-        this._table.appendChild(card.createImage());
+        this._table.appendChild(card.createImage(player));
     }
     
     hideHand() {
@@ -45,18 +45,13 @@ class CardTable extends GameTable {
             return;
         }
         
-        for (const cardImage of this._hand.children) {
-            cardImage.dataset.src = cardImage.src;
-            cardImage.src = 'img/back_green.png';
-        }
+        this._forEachCard(card => card.src = 'img/back_green.png');
         this._stopListenBrowserEvents();
         this._hiddenHand = true;
         
         this._hand.addEventListener('click', () => {
             if (this._hiddenHand) {
-                for (const cardImage of this._hand.children) {
-                    cardImage.src = cardImage.dataset.src;
-                }
+                this._forEachCard(card => card.src = card.dataset.src);
                 this._hiddenHand = false;
             }
 
@@ -82,7 +77,7 @@ class CardTable extends GameTable {
     askTrump(handler) {
         setTimeout(() => {
             const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
-            appendChildren(this._table, suitCards.map(card => card.createImage()), true);
+            appendChildren(this._table, suitCards.map(card => card.createImage('Выберите козырь')), true);
 
             listenOnce(this._table, 'click', this._createImageHandler(({target}) => {
                 const card = Card.fromImage(target);
@@ -94,8 +89,7 @@ class CardTable extends GameTable {
     }
     
     displayTrump(trump) {
-        const card = new Card('ace', trump);
-        this._trump.src = card.createImage().src;
+        assignElement(this._trump, new Card('ace', trump).createImage('Козырь'));
     }
     
     haveCards() {
@@ -111,10 +105,20 @@ class CardTable extends GameTable {
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     
+    _forEachCard(handler) {
+        for (const cardWrapper of this._hand.children) {
+            handler(cardWrapper.firstChild);
+        }
+    }
+    
+    _removeHandCard(cardImage) {
+        cardImage.parentNode.remove();
+    }
+    
     _cardClickHandler = this._createImageHandler(({target}) => {
         const card = Card.fromImage(target);
-        this.playerPutsCard(card);
-        target.remove();
+        this.playerPutsCard('Вы', card);
+        this._removeHandCard(target);
         this._onPutCard(card);
     });
     
@@ -144,17 +148,24 @@ class Card {
     constructor(rank, suit) {
         this._rank = rank;
         this._suit = suit;
-        
     }
     
-    createImage() {
+    createImage(tooltipMsg = undefined) {
         const path = `img/${this._suit}_${this._rank}.png`;
         const image = new Image;
         image.dataset.rank = this._rank;
         image.dataset.suit = this._suit;
         image.classList.add('game-card');
         image.src = path;
-        return image;
+        image.dataset.src = path;
+        
+        const wrapper = createElement('div', '', ['game-card-wrap', 'tooltip-object']);
+        wrapper.appendChild(image);
+        if (tooltipMsg) {
+            const tooltip = createElement('span', tooltipMsg, 'tooltip-message');
+            wrapper.appendChild(tooltip);
+        }
+        return wrapper;
     }
 
     get rank() { return this._rank; }

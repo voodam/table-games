@@ -1,6 +1,11 @@
-.game-card {
+.game-card-wrap {
     width: 12.5%;
     padding: 1%;
+    display: inline-block;
+}
+
+.game-card-wrap img {
+    max-width: 100%;
 }
 
 .hand {
@@ -8,7 +13,7 @@
     bottom: 0;
 }
 
-.trump {
+.trump-wrap {
     position: absolute;
     right: 27%;
     top: 20px;

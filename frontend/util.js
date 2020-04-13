@@ -79,9 +79,12 @@ const createTable = ([numRows, numCells], table = undefined) => {
     return table;
 };
 
-const createElement = (textContent = '', tagName = 'div') => {
+const createElement = (tagName = 'div', textContent = '', classes = []) => {
     const elem = document.createElement(tagName);
     elem.textContent = textContent;
+    for (const c of toArray(classes)) {
+        elem.classList.add(c);
+    }
     return elem;
 };
 
@@ -91,9 +94,17 @@ const appendChildren = (parent, children, clearParent = false) => {
     if (clearParent) {
         clearElement(parent);
     }
-    for(const child of children) {
+    for(const child of toArray(children)) {
         parent.appendChild(child);
     }
+};
+
+const assignElement = (target, source) => {
+    for (const c of source.classList) {
+        target.classList.add(c);
+    }
+    
+    target.innerHTML = source.innerHTML;
 };
 
 const createElemsFromStr = (html) => {

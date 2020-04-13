@@ -23,7 +23,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     const cardPreparer = argsArrayToRest(_new(Card));
     conn.preparePayload({
         [RecvMsg.DEAL]: hand => hand.map(cardPreparer),
-        [RecvMsg.PLAYER_PUTS_CARD]: cardPreparer
+        [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict)({player: id, card: cardPreparer})
     });
     ctrl.messagesOn(conn, {
         [RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
@@ -35,12 +35,12 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
         [RecvMsg.PLAYER_DETERMS_TRUMP]: '{0} назначает козырь'
     }, ctrl.headerMessage.bind(ctrl));
     
-    const table = new CardTable(4, ctrlWrapper.querySelector('.hand'), ctrlWrapper.querySelector('.table'), ctrlWrapper.querySelector('.trump'));
+    const table = new CardTable(4, ctrlWrapper.querySelector('.hand'), ctrlWrapper.querySelector('.table'), ctrlWrapper.querySelector('.trump-wrap'));
     if (Debug.enabled) window.tables.push(table);
     
     GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
-    conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
+    conn.on(RecvMsg.PLAYER_PUTS_CARD, ({player, card}) => table.playerPutsCard(player, card));
     
     const hideHand = () => {
         if (mpCtrl.playersNumber > 1) table.hideHand();

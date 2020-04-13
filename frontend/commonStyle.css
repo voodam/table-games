@@ -45,3 +45,37 @@ button {
 
 * { box-sizing: border-box;}
 body { margin: 0; }
+
+/* Tooltip container */
+.tooltip-object {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip-object .tooltip-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: -15%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip-object:hover .tooltip-message {
+    visibility: visible;
+    opacity: 1;
+}
