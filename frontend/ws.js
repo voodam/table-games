@@ -23,6 +23,10 @@ class WebsocketConn {
         console.log(`connecting to ${this._url}`);
         this._ws = new WebSocket(this._url);
         this._ws.addEventListener('message', this._messageListener.bind(this));
+        if (Debug.enabled()) {
+            if (!window.conns) window.conns = [];
+            window.conns.push(this);
+        }
         this.send(WebsocketConn.SendMsg.CONNECT, name);
         return this;
     }
