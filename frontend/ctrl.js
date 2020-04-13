@@ -181,7 +181,9 @@ class PromptInputManager {
     onCredentials(handler) {
         const serverPath = location.pathname.slice(0, -1);
         const name = prompt(this._messages.enterName);
-        handler(name, `ws://91.191.245.9:8080${serverPath}`);
+        if (name !== null) {
+            handler(name, `ws://91.191.245.9:8080${serverPath}`);
+        }
     }
     
     onAbort(handler) {}
