@@ -123,10 +123,9 @@ const displayBetweenSiblings = elem => {
 const listenOnce = (elem, eventType, handler) => {
     const fullHandler = (...args) => {
         const remove = handler(...args);
-        if (remove === false) {
-            return;
+        if (remove !== false) {
+            elem.removeEventListener(eventType, fullHandler);
         }
-        elem.removeEventListener(eventType, fullHandler);
     };
     elem.addEventListener(eventType, fullHandler);
 };

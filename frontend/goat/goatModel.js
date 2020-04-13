@@ -84,12 +84,12 @@ class CardTable extends GameTable {
             const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
             appendChildren(this._table, suitCards.map(card => card.createImage()), true);
 
-            this._table.addEventListener('click', ({target}) => {
+            listenOnce(this._table, 'click', this._createImageHandler(({target}) => {
                 const card = Card.fromImage(target);
                 handler(card.suit);
                 this._trumpSelectedAndNoTurns = true;
                 this._clearTable();
-            }, {once: true});
+            }));
         }, 1000);
     }
     
@@ -107,20 +107,21 @@ class CardTable extends GameTable {
     onPutCard(handler) { this._onPutCard = handler; }
     _onPutCard() {}
     
-    _cardClickHandler = ({target}) => {
-        if (!(target instanceof Image) || !target.dataset.rank || !target.dataset.suit) {
-            return; // strange mama's bug
-        }
+    _cardClickHandler = this._createImageHandler(({target}) => {
         const card = Card.fromImage(target);
         this.playerPutsCard(card);
         target.remove();
         this._onPutCard(card);
-    }
+    });
     
     _listenBrowserEvents() {
         if (!this._hiddenHand) {
             this._hand.addEventListener('click', this._cardClickHandler); 
         }
+    }
+    
+    _createImageHandler(handler) {
+        return event => event.target instanceof Image ? handler(event) : false;
     }
     
     _stopListenBrowserEvents() { this._hand.removeEventListener('click', this._cardClickHandler); }
