@@ -99,8 +99,8 @@ class CardTable extends GameTable {
         }, 1000);
     }
     
-    displayTrump(trump) {
-        assignElement(this._trump, new Card('ace', trump).createImage('Козырь'));
+    displayTrump(trump, player) {
+        assignElement(this._trump, new Card('ace', trump).createImage(player));
     }
     
     haveCards() {

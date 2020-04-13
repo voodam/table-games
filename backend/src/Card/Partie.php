@@ -39,7 +39,7 @@ abstract class Partie {
     
     public function determineTrump(Trump $trump) { 
         $this->trump = $trump;
-        $this->players->sendAll(CardSendMsg::TRUMP_IS(), $this->trump);
+        $this->players->sendAll(CardSendMsg::TRUMP_IS(), ['trump' => $this->trump, 'player' => $this->trumpPlayer]);
         $this->newTrick($this->eldest);
     }
 

@@ -46,7 +46,7 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
         if (mpCtrl.playersNumber > 1) table.hideHand();
     };
     conn.on([RecvMsg.PLAYER_DETERMS_TRUMP, WebsocketConn.RecvMsg.YOUR_TURN, WebsocketConn.RecvMsg.TURN_OF], hideHand);
-    conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));
+    conn.on(RecvMsg.TRUMP_IS, ({trump, player}) => table.displayTrump(trump, player));
     conn.on(RecvMsg.ASK_TRUMP, () => {
         hideHand();
         table.askTrump(trump => conn.send(SendMsg.DETERMINE_TRUMP, trump));
