@@ -86,7 +86,8 @@ class CardTable extends GameTable {
         this._trumpSelecting = true;
         setTimeout(() => {
             const suitCards = ['clubs', 'diamonds', 'hearts', 'spades'].map(suit => new Card('ace', suit));
-            appendChildren(this._table, suitCards.map(card => card.createImage('Выберите козырь')), true);
+            this._clearTable();
+            appendChildren(this._table, suitCards.map(card => card.createImage('Выберите козырь')));
 
             listenOnce(this._table, 'click', this._createImageHandler(({target}) => {
                 const card = Card.fromImage(target);
