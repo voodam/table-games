@@ -18,22 +18,29 @@ class CardPlayers extends Players {
     }
     
     public function sendTeam(Team $team, Enum $message, $payload = null): void {
-        $teamPlayers = filter($this, fn(CardPlayer $player) => $player->team()->eq($team));
+        $teamPlayers = filter($this, fn(CardPlayer $player) => $player->hasTeam($team));
         self::sendTo($teamPlayers, $message, $payload);
     }
     
     public function teams(): array {
         $teams = [];
         foreach ($this as $player) {
+            assert($player instanceof CardPlayer);
             foreach ($teams as $team) {
-                if ($player->team()->eq($team)) {
+                if ($player->hasTeam($team)) {
                     continue 2;
                 }
             }
             
             $teams[] = $player->team();
         }
+        assert(count($teams) <= $this->maxTeams);
         return $teams;
+    }
+    
+    public function getOtherTeams(object $playerOrTeam): array {
+        $player = CardPlayer::getTeam($playerOrTeam);
+        return filter($this->teams(), fn(Team $team) => !$player->hasTeam($team));
     }
 
     protected function playerClass(): string { return CardPlayer::class; }

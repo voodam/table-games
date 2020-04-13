@@ -10,6 +10,7 @@ class Players implements \IteratorAggregate, \Countable {
     use Logging;
 
     private MyObjectStorage $storage; // ConnectionInterface -> Player
+    private int $maxPlayers;
     
     public static function sendTo(iterable $players, Enum $message, $payload = null): void {
         if (!is_callable($payload)) {
@@ -20,8 +21,9 @@ class Players implements \IteratorAggregate, \Countable {
         }
     }
 
-    public function __construct() {
+    public function __construct(int $maxPlayers = PHP_INT_MAX) {
         $this->storage = new MyObjectStorage;
+        $this->maxPlayers = $maxPlayers;
     }
 
     public function getIterator(): \Traversable {
@@ -53,7 +55,9 @@ class Players implements \IteratorAggregate, \Countable {
     
     public function getOther(object $connOrPlayer): array {
         $connection = Player::getConn($connOrPlayer);
-        return $this->storage->getOtherInfo($connection);
+        $otherPlayers = $this->storage->getOtherInfo($connection);
+        assert(count($otherPlayers) <= $this->maxPlayers - 1);
+        return $otherPlayers;
     }
 
     public function getNext(Player $prevPlayer): Player {
@@ -84,6 +88,7 @@ class Players implements \IteratorAggregate, \Countable {
     }
 
     public function set(ConnectionInterface $conn, Player $player): void {
+        if (count($this) >= $this->maxPlayers) throw new \OverflowException("Max players number reached: $this->maxPlayers");
         $this->log("set player: $player");
         if ($this->contains($conn)) throw new \OverflowException('Player exists');
         $this->storage[$conn] = $player;
@@ -98,10 +103,15 @@ class Players implements \IteratorAggregate, \Countable {
         return isset($this->storage[Player::getConn($connOrPlayer)]);         
     }
     
+    public function count(): int {
+        $count = count($this->storage);
+        assert($count <= $this->maxPlayers);
+        return $count;
+    }
+    
     public function getFirst(): Player { return $this->storage->getFirstInfo(); }
     public function maybeGet(ConnectionInterface $conn): ?Player { return $this->storage[$conn] ?? null; }
     public function clear(): void { $this->storage->detachAll(); }
-    public function count(): int { return count($this->storage); }
     
     protected function playerClass(): string { return Player::class; }
 }

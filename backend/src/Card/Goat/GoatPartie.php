@@ -22,17 +22,16 @@ class GoatPartie extends Partie {
     
     protected function calculateGameScore(int $cardsScore, Team $team): int {
         if ($cardsScore === 120) {
-            $gameScore = 4;
-        } elseif ($cardsScore <= 60) {
-            $gameScore = 0;
-        } else {
-            $gameScore = $cardsScore > 90 ? 2 : 1;
-            if (!$this->trumpPlayer->team()->eq($team)) {
-                $gameScore *= 2;
-            }
+            $otherTeam = $this->players->getOtherTeams($team)[0] ?? null;
+            assert(isset($otherTeam));
+            return $this->gotAnyTrick($otherTeam) ? 2 : 4;
+        }
+        if ($cardsScore <= 60) {
+            return 0;
         }
         
-        return $gameScore;
+        $score = $cardsScore > 90 ? 2 : 1;
+        return $this->trumpPlayer->hasTeam($team) ? $score : $score * 2;
     }
     
     protected function createTrick(): Trick { return new GoatTrick($this->players, $this->trump); }

@@ -1,8 +1,8 @@
 <?php
 namespace Games\Card;
 
-use Games\Util\MyObjectStorage;
 use Games\Util\Logging;
+use function Games\Util\Iter\any;
 
 abstract class Partie {
     use Logging;
@@ -10,9 +10,9 @@ abstract class Partie {
     protected CardPlayer $trumpPlayer;
     protected CardPlayer $eldest;
     protected Trump $trump;
-    private MyObjectStorage $cardsScore; // Team -> int
+    private array $tricks = [];
     protected CardPlayers $players;
-    private Trick $trick;
+    private \SplObjectStorage $cardScoreCache;
 
     abstract public function next(): self;
     abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
@@ -23,10 +23,7 @@ abstract class Partie {
         $this->players = $players;
         $this->eldest = $eldest;
         $this->log("Partie eldest is '$this->eldest'");
-        $this->cardsScore = new MyObjectStorage;
-        foreach ($this->players->teams() as $team) {
-            $this->cardsScore[$team] = 0;
-        }
+        $this->cardScoreCache = new \SplObjectStorage;
     }
     
     public function deal(): void {
@@ -49,10 +46,10 @@ abstract class Partie {
     public function putCard(CardPlayer $player, Card $card): void {
         if (!isset($this->trump)) throw new CardException('Can not make turn while trump is not set');
         if ($this->ended()) throw new CardException('Party is over');
-        assert(!$this->trick->ended());
+        assert(!$this->curTrick()->ended());
     
-        $this->trick->putCard($player, $card);
-        if ($this->trick->ended()) {
+        $this->curTrick()->putCard($player, $card);
+        if ($this->curTrick()->ended()) {
             $this->getTrick();
         } else {
             $this->players->sendNext($this->players->getNext($player));
@@ -61,22 +58,35 @@ abstract class Partie {
 
     public function gameScore(Team $team): int {
         if (!$this->ended()) throw new CardException('Party is not over');
-        return $this->calculateGameScore($this->cardsScore[$team], $team);
+        return $this->calculateGameScore($this->cardsScore($team), $team);
     }
+    
     
     public function cardsScore(Team $team): int {
         if (!$this->ended()) throw new CardException('Party is not over');
-        return $this->cardsScore[$team];
+        
+        if (!isset($this->cardScoreCache[$team])) {
+            $score = array_reduce($this->tricks, fn(int $allScore, Trick $trick) => $trick->winner()->hasTeam($team) 
+                ? $allScore + $trick->calculateScore() 
+                : $allScore, 0);
+            
+            $this->cardScoreCache[$team] = $score;
+        }
+        return $this->cardScoreCache[$team];
     }
     
     public function ended(): bool {
         return !$this->players->haveCards();
     }
+    
+    protected function gotAnyTrick(Team $team): bool {
+        if (!$this->ended()) throw new CardException('Party is not over');
+        return any($this->tricks, fn(Trick $trick) => $trick->winner()->hasTeam($team));
+    }
 
     private function getTrick(): void {
-        $winner = $this->trick->winner();
-        $trickScore = $this->trick->calculateScore();
-        $this->cardsScore[$winner->team()] += $trickScore;
+        $winner = $this->curTrick()->winner();
+        $trickScore = $this->curTrick()->calculateScore();
         $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$winner, $trickScore]);
         
         if (!$this->ended()) {
@@ -85,8 +95,13 @@ abstract class Partie {
     }
 
     private function newTrick(CardPlayer $eldest): void {
-        assert(!isset($this->trick) || $this->trick->ended());
-        $this->trick = $this->createTrick();
+        assert(empty($this->tricks) || $this->curTrick()->ended());
+        array_unshift($this->tricks, $this->createTrick());
         $this->players->sendNext($eldest);
+    }
+    
+    private function curTrick(): Trick { 
+        if (empty($this->tricks)) throw new \LogicException('First trick was not created');
+        return $this->tricks[0];
     }
 }

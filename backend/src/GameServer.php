@@ -24,9 +24,9 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         return 'Игрок ' . (count($this->players) + 1);
     }
 
-    public function __construct(int $needPlayersNumber) {    
-        $this->players = $this->createPlayers();
+    public function __construct(int $needPlayersNumber) {
         $this->needPlayersNumber = $needPlayersNumber;
+        $this->players = $this->createPlayers($needPlayersNumber);
         $this->attachObserver($this, RecvMsg::CONNECT());
     }
     
@@ -94,7 +94,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         }
     }
     
-    protected function createPlayers(): Players { return new Players; }
+    protected function createPlayers(int $maxPlayers): Players { return new Players($maxPlayers); }
     protected function preparePayload(Enum $message, callable $preparer) { $this->payloadPreparers[$message->getValue()] = $preparer; }
     public function onOpen(ConnectionInterface $conn) {}
 }

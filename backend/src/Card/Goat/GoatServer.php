@@ -38,5 +38,5 @@ class GoatServer extends GameServer {
         return array_shift($this->defaultPlayers) ?? parent::defaultPlayerName();
     }
     
-    protected function createPlayers(): CardPlayers { return new CardPlayers; }
+    protected function createPlayers(int $maxPlayers): CardPlayers { return new CardPlayers($maxPlayers); }
 }

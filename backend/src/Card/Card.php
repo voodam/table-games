@@ -5,6 +5,7 @@ use Games\Util\Cmp;
 use Games\Card\Rank;
 use Games\Card\Suit;
 use function Games\Util\Translate\t;
+use function Games\Util\Func\getOrReturn;
 
 final class Card implements \JsonSerializable {
     private Rank $rank;
@@ -42,7 +43,6 @@ final class Card implements \JsonSerializable {
     public function suit(): Suit { return $this->suit; }
     
     private static function getSuit(object $cardOrSuit): Suit {
-        assert($cardOrSuit instanceof self || $cardOrSuit instanceof Suit);
-        return $cardOrSuit instanceof self ? $cardOrSuit->suit() : $cardOrSuit;
+        return getOrReturn($cardOrSuit, [self::class, Suit::class], 'suit');
     }
 }

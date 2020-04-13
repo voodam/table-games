@@ -1,6 +1,8 @@
 <?php
 namespace Games\Util\Func;
 
+use function Games\Util\Iter\any;
+
 function noop() {}
 function id($val) { return $val; }
 function _instanceof(string $class): callable { return fn($val) => $val instanceof $class; }
@@ -11,4 +13,15 @@ function argsArrayToRest(callable $f): callable { return fn(array $args) => $f(.
 
 function repeat(int $times, callable $cbk): void { 
     for ($i = 0; $i < $times; $i++) $cbk(); 
+}
+
+function getOrReturn($value, array $types, $method) {
+    assert(count($types) === 2);
+    $types = array_map(fn ($type) => is_callable($type) ? $type : _instanceof($type), $types);
+    assert(any($types, fn (callable $type) => $type($value)));
+    
+    if (is_string($method)) {
+        $method = [$value, $method];
+    }
+    return $types[0]($value) ? $method() : $value;
 }

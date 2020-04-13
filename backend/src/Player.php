@@ -1,10 +1,10 @@
 <?php
-
 namespace Games;
 
 use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
+use function Games\Util\Func\getOrReturn;
 
 class Player implements \JsonSerializable {
     use Logging;
@@ -13,8 +13,7 @@ class Player implements \JsonSerializable {
     private string $name;
     
     public static function getConn(object $connOrPlayer): ConnectionInterface {
-        assert($connOrPlayer instanceof self || $connOrPlayer instanceof ConnectionInterface);
-        return $connOrPlayer instanceof self ? $connOrPlayer->conn() : $connOrPlayer;
+        return getOrReturn($connOrPlayer, [self::class, ConnectionInterface::class], 'conn');
     }
     
     public static function createJsonMsg(Enum $type, $payload = null): string {
