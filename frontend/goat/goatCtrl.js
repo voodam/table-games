@@ -1,5 +1,6 @@
 (() => {
 Debug.init();
+if (Debug.enabled) window.tables = [];
 
 const ctrlFactory = () => {
     const template = document.querySelector('.controller-template .controller');
@@ -33,12 +34,14 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
     });
     
     const table = new CardTable(4, ctrlWrapper.querySelector('.hand'), ctrlWrapper.querySelector('.table'), ctrlWrapper.querySelector('.trump'));
+    if (Debug.enabled) window.tables.push(table);
+    
     GameController.initLocking(conn, table);
     conn.on(RecvMsg.DEAL, table.deal.bind(table));
     conn.on(RecvMsg.PLAYER_PUTS_CARD, table.playerPutsCard.bind(table));
     
     const hideHand = () => {
-        if (mpCtrl.playersNumber > 1 && !Debug.enabled()) table.hideHand();
+        if (mpCtrl.playersNumber > 1) table.hideHand();
     };
     conn.on([WebsocketConn.RecvMsg.YOUR_TURN, WebsocketConn.RecvMsg.TURN_OF], hideHand);
     conn.on(RecvMsg.TRUMP_IS, table.displayTrump.bind(table));

@@ -37,7 +37,7 @@ class CardTable extends GameTable {
     }
     
     hideHand() {
-        if (this._hiddenHand) {
+        if (this._hiddenHand || !this.haveCards()) {
             return;
         }
         if (this._trumpSelectedAndNoTurns) {
@@ -96,6 +96,10 @@ class CardTable extends GameTable {
     displayTrump(trump) {
         const card = new Card('ace', trump);
         this._trump.src = card.createImage().src;
+    }
+    
+    haveCards() {
+        return this._hand.childElementCount > 0;
     }
     
     _clearTable() {
