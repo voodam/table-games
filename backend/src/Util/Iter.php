@@ -5,6 +5,13 @@ function filter(iterable $iterable, callable $predicate, int $flag = 0): array {
     return array_values(array_filter(toArray($iterable), $predicate, $flag));
 }
 
+function getOneMaybe(iterable $iterable, callable $predicate) {
+    $items = filter($iterable, $predicate);
+    $itemsNumber = count($items);
+    if ($itemsNumber > 1) throw \LogicException("Must be zero or none items, given: $itemsNumber");
+    return $items[0] ?? null;
+}
+
 function any(iterable $iterable, callable $predicate): bool {
     foreach (toArray($iterable) as $item) {
         if ($predicate($item)) {

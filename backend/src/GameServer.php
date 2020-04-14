@@ -34,11 +34,11 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
 
     public function connect(?string $name, $_, ConnectionInterface $conn) {
         $this->log('connect');
-        $count = count($this->players);
+        $playersNumber = count($this->players);
         if ($this->players->contains($conn)) throw new \LogicException("Connection for player {$this->players->get($conn)} was added already");
-        assert($count <= $this->needPlayersNumber);
+        assert($playersNumber <= $this->needPlayersNumber);
 
-        if ($count === $this->needPlayersNumber) {
+        if ($playersNumber === $this->needPlayersNumber) {
             $this->log('too many players');
             $conn->close();
             return;

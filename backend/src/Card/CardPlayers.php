@@ -4,13 +4,12 @@ namespace Games\Card;
 use Games\Players;
 use MyCLabs\Enum\Enum;
 use function Games\Util\Iter\filter;
+use function Games\Util\Iter\getOneMaybe;
 use function Games\Util\Iter\any;
 
 class CardPlayers extends Players {
     public function havingCard(Card $card): ?CardPlayer {
-        $players = filter($this, fn(CardPlayer $player) => $player->hasCard($card));
-        assert(count($players) <= 1);
-        return $players[0] ?? null;
+        return getOneMaybe($this, fn(CardPlayer $player) => $player->hasCard($card));
     }
 
     public function haveCards(): bool {
@@ -41,6 +40,13 @@ class CardPlayers extends Players {
     public function getOtherTeams(object $playerOrTeam): array {
         $player = CardPlayer::getTeam($playerOrTeam);
         return filter($this->teams(), fn(Team $team) => !$player->hasTeam($team));
+    }
+    
+    public function getOtherTeam(object $playerOrTeam): Team {
+        $otherTeams = $this->players->getOtherTeams($playerOrTeam);
+        $teamsNumber = count($otherTeams);
+        if ($teamsNumber > 1) throw \LogicException("Supposed to be one other team, $teamsNumber given");
+        return $otherTeams[0];
     }
 
     protected function playerClass(): string { return CardPlayer::class; }

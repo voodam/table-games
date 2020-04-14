@@ -22,8 +22,7 @@ class GoatPartie extends Partie {
     
     protected function calculateGameScore(int $cardsScore, Team $team): int {
         if ($cardsScore === 120) {
-            $otherTeam = $this->players->getOtherTeams($team)[0] ?? null;
-            assert(isset($otherTeam));
+            $otherTeam = $this->players->getOtherTeam($team);
             return $this->gotAnyTrick($otherTeam) ? 2 : 4;
         }
         if ($cardsScore <= 60) {

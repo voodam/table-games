@@ -13,7 +13,7 @@ use Games\Util\Logging;
 use Games\Card\CardSendMsg;
 use Games\Card\CardPlayers;
 use Games\Card\CardPlayer;
-use function Games\Util\Iter\filter;
+use function Games\Util\Iter\getOneMaybe;
 use function Games\Util\Translate\t;
 use Games\Color;
 
@@ -82,9 +82,7 @@ class Goat implements MsgObservableInterface {
     }
 
     private function winner(): ?Team {
-        $winners = filter($this->teams(), fn($team) => $this->score[$team] >= 12);
-        assert(count($winners) <= 1);
-        return $winners[0] ?? null;
+        return getOneMaybe($this->teams(), fn($team) => $this->score[$team] >= 12);
     }
 
     private function updateScore(): void {
