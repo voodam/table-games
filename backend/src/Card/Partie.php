@@ -14,7 +14,6 @@ abstract class Partie {
     protected CardPlayers $players;
     private \SplObjectStorage $cardScoreCache;
 
-    abstract public function next(): self;
     abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
     abstract protected function trumpPlayer(): CardPlayer;
     protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
@@ -57,22 +56,18 @@ abstract class Partie {
     }
 
     public function gameScore(Team $team): int {
-        if (!$this->ended()) throw new CardException('Party is not over');
+        $this->checkEnded();
         return $this->calculateGameScore($this->cardsScore($team), $team);
     }
     
-    
     public function cardsScore(Team $team): int {
-        if (!$this->ended()) throw new CardException('Party is not over');
-        
-        if (!isset($this->cardScoreCache[$team])) {
-            $score = array_reduce($this->tricks, fn(int $allScore, Trick $trick) => $trick->winner()->hasTeam($team) 
-                ? $allScore + $trick->calculateScore() 
-                : $allScore, 0);
-            
-            $this->cardScoreCache[$team] = $score;
-        }
-        return $this->cardScoreCache[$team];
+        $this->checkEnded();
+        return $this->cardScoreCache[$team] ??= $this->calculateCardsScore($team);
+    }
+    
+    public function next(): self {
+        $this->checkEnded();
+        return new static($this->players, $this->players->getNext($this->eldest));
     }
     
     public function ended(): bool {
@@ -80,8 +75,14 @@ abstract class Partie {
     }
     
     protected function gotAnyTrick(Team $team): bool {
-        if (!$this->ended()) throw new CardException('Party is not over');
+        $this->checkEnded();
         return any($this->tricks, fn(Trick $trick) => $trick->winner()->hasTeam($team));
+    }
+    
+    private function calculateCardsScore(Team $team): int {
+        return array_reduce($this->tricks, fn(int $allScore, Trick $trick) => $trick->winner()->hasTeam($team) 
+            ? $allScore + $trick->calculateScore() 
+            : $allScore, 0);
     }
 
     private function getTrick(): void {
@@ -103,5 +104,9 @@ abstract class Partie {
     private function curTrick(): Trick { 
         if (empty($this->tricks)) throw new \LogicException('First trick was not created');
         return $this->tricks[0];
+    }
+    
+    private function checkEnded(): void {
+        if (!$this->ended()) throw new CardException('Party is not over');
     }
 }

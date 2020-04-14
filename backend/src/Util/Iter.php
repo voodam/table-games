@@ -13,7 +13,7 @@ function getOneMaybe(iterable $iterable, callable $predicate) {
 }
 
 function any(iterable $iterable, callable $predicate): bool {
-    foreach (toArray($iterable) as $item) {
+    foreach ($iterable as $item) {
         if ($predicate($item)) {
             return true;
         }

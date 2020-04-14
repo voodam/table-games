@@ -43,7 +43,7 @@ class CardPlayers extends Players {
     }
     
     public function getOtherTeam(object $playerOrTeam): Team {
-        $otherTeams = $this->players->getOtherTeams($playerOrTeam);
+        $otherTeams = $this->getOtherTeams($playerOrTeam);
         $teamsNumber = count($otherTeams);
         if ($teamsNumber > 1) throw \LogicException("Supposed to be one other team, $teamsNumber given");
         return $otherTeams[0];

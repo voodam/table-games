@@ -15,11 +15,11 @@ final class Board {
     }
 
     public function pieces(): \Traversable {
-        foreach (range('A', 'H') as $letter) {
+        $this->forEachLetter(function ($letter) {
             foreach ($this->pieces[$letter] as $number => $piece) {
                 yield [$piece, new Coords($letter, $number)];
             }
-        }
+        });
     }
 
     private function setupSet(Color $color, int $pawnCoord, int $notPawnCoord) {
@@ -31,14 +31,17 @@ final class Board {
         $this->pieces['F'][$notPawnCoord] = new Piece(PieceType::BISHOP(), $color);
         $this->pieces['G'][$notPawnCoord] = new Piece(PieceType::HORSE(), $color);
         $this->pieces['H'][$notPawnCoord] = new Piece(PieceType::ROOK(), $color);
-        foreach (range('A', 'H') as $letter) {
-            $this->pieces[$letter][$pawnCoord] = new Piece(PieceType::PAWN(), $color);
-        }
+
+        $this->forEachLetter(fn($letter) => $this->pieces[$letter][$pawnCoord] = new Piece(PieceType::PAWN(), $color));
     }
 
     private function resetPieces() {
+        $this->forEachLetter(fn($letter) => $this->pieces[$letter] = []);
+    }
+    
+    private function forEachLetter(callable $cbk): void {
         foreach (range('A', 'H') as $letter) {
-            $this->pieces[$letter] = [];
+            $cbk($letter);
         }
     }
 }

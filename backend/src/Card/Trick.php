@@ -31,17 +31,17 @@ class Trick {
     }
     
     public function collectCards(): array { 
-        if (!$this->ended()) throw new CardException('Can not collect cards: trick is not over');
+        $this->checkEnded();
         return iterator_to_array($this->cards);
     }
     
     public function calculateScore(): int {
-        if (!$this->ended()) throw new CardException('Can not collect cards: trick is not over');
+        $this->checkEnded();
         return array_reduce(iterator_to_array($this->cards), fn(int $score, Card $card) => $score + ScoreCalc::tenAceAndFaceCards($card), 0);
     }
 
     public function winner(): CardPlayer {
-        if (!$this->ended()) throw new CardException('Trick is not over, so there is no winner');
+        $this->checkEnded();
         
         $selectMaxCard = function (?Card $maxCard, Card $card) {
             if (!isset($maxCard)) return $card;
@@ -53,5 +53,9 @@ class Trick {
 
     public function ended(): bool { 
         return count($this->cards) >= count($this->players);
+    }
+    
+    private function checkEnded(): void {
+        if (!$this->ended()) throw new CardException('Trick is not over');
     }
 }

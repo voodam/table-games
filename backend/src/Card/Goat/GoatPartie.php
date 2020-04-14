@@ -10,10 +10,6 @@ use Games\Card\Card;
 use Games\Card\CardPlayer;
 
 class GoatPartie extends Partie {
-    public function next(): self {
-        return new self($this->players, $this->players->getNext($this->eldest));
-    }
-    
     protected function trumpPlayer(): CardPlayer {
         $trumpPlayer = $this->players->havingCard(new Card(Rank::JACK(), Suit::CLUBS()));
         if (!isset($trumpPlayer)) throw new CardException('Can not to determine trump player (probably some cards are out of hands)');

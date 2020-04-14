@@ -8,8 +8,11 @@ use MyCLabs\Enum\Enum;
 use Games\SendMsg;
 use Ratchet\ConnectionInterface;
 use function Games\Util\Func\repeat;
+use Games\Util\Logging;
 
 abstract class ServerTest {
+    use Logging;
+    
     abstract protected function msgHandler(Player $player, string $type, $payload = null): void;
     abstract protected function createServer(): GameServer;
     protected function gamesNumber(): int { return 1; }
@@ -30,7 +33,7 @@ abstract class ServerTest {
         if ($type === SendMsg::WINNER_IS()->getValue()) {
             $this->currentGamesNumber++;
             if ($this->currentGamesNumber === $this->gamesNumber()) {
-                echo "Test ended! Number of games: $this->currentGamesNumber\n";
+                $this->log("Test ended! Number of games: $this->currentGamesNumber");
                 exit();
             }
         }
