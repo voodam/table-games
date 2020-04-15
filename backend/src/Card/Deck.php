@@ -3,6 +3,7 @@ namespace Games\Card;
 
 use Games\Util\Cmp;
 use function Games\Util\Iter\filter;
+use function Games\Util\Iter\checkCountable;
 
 final class Deck {
     private array $cards;
@@ -30,6 +31,7 @@ final class Deck {
     }
 
     public function deal(iterable $players): void {
+        checkCountable($players);
         $cardsNumber = count($this->cards);
         $playersNumber = count($players);
         if ($cardsNumber === 0) throw new CardException('No cards in deck');

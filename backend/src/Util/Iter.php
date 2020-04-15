@@ -30,7 +30,8 @@ function flat(iterable $iterable): array {
 }
 
 function randomValue(iterable $iterable) {
-    if (empty($iterable)) throw new \UnderflowException('Array is empty');
+    checkCountable($iterable);
+    if (empty($iterable)) throw new \UnderflowException('Collection is empty');
     return array_values(toArray($iterable))[mt_rand(0, count($iterable) - 1)];
 }
 
@@ -45,4 +46,12 @@ function getFirstKey(iterable $iterable, callable $predicate, $defaultValue = nu
 
 function toArray(iterable $iterable): array {
     return $iterable instanceof \Traversable ? iterator_to_array($iterable) : $iterable;
+}
+
+function isCountable($value): bool {
+    return is_array($value) || $value instanceof \Countable;
+}
+
+function checkCountable($value): void {
+    if (!isCountable($value)) throw new \InvalidArgumentException('Given argument must be instance of Countable or array');
 }
