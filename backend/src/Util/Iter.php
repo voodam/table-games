@@ -48,10 +48,6 @@ function toArray(iterable $iterable): array {
     return $iterable instanceof \Traversable ? iterator_to_array($iterable) : $iterable;
 }
 
-function isCountable($value): bool {
-    return is_array($value) || $value instanceof \Countable;
-}
-
 function checkCountable($value): void {
-    if (!isCountable($value)) throw new \InvalidArgumentException('Given argument must be instance of Countable or array');
+    if (!is_countable($value)) throw new \InvalidArgumentException('Given value is not countable');
 }

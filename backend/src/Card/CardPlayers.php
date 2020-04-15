@@ -37,8 +37,8 @@ class CardPlayers extends Players {
     }
     
     public function getOtherTeams(object $playerOrTeam): array {
-        $player = CardPlayer::getTeam($playerOrTeam);
-        return filter($this->teams(), fn(Team $team) => !$player->hasTeam($team));
+        $team = CardPlayer::getTeam($playerOrTeam);
+        return filter($this->teams(), fn(Team $t) => !$team->eq($t));
     }
     
     public function getOtherTeam(object $playerOrTeam): Team {
