@@ -33,7 +33,6 @@ class CardPlayers extends Players {
             
             $teams[] = $player->team();
         }
-        assert(count($teams) <= $this->maxTeams);
         return $teams;
     }
     

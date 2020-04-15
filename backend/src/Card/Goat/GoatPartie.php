@@ -17,16 +17,17 @@ class GoatPartie extends Partie {
     }
     
     protected function calculateGameScore(int $cardsScore, Team $team): int {
+        $thisTeamOfTrumpPlayer = $this->trumpPlayer->hasTeam($team);
         if ($cardsScore === 120) {
             $otherTeam = $this->players->getOtherTeam($team);
-            return $this->gotAnyTrick($otherTeam) ? 2 : 4;
+            return $thisTeamOfTrumpPlayer && $this->gotAnyTrick($otherTeam) ? 2 : 4;
         }
         if ($cardsScore <= 60) {
             return 0;
         }
         
         $score = $cardsScore > 90 ? 2 : 1;
-        return $this->trumpPlayer->hasTeam($team) ? $score : $score * 2;
+        return $thisTeamOfTrumpPlayer ? $score : $score * 2;
     }
     
     protected function createTrick(): Trick { return new GoatTrick($this->players, $this->trump); }
