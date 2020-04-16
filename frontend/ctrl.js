@@ -12,12 +12,14 @@ class GameController {
     static createDefaultElements(parent) {
         const elements = createElemsFromStr(
             `<div class="info">
+                <div class="team-color"></div>
                 <div class="header"></div>
                 <div><div>Игровой счет</div><div class="score">0</div></div>
                 <div class="messages"></div>
             </div>`);
         appendChildren(parent, elements);
         return {
+            teamColor: parent.querySelector('.info .team-color'),
             header: parent.querySelector('.info .header'),
             messages: parent.querySelector('.info .messages'),
             score: parent.querySelector('.info .score')
@@ -41,6 +43,7 @@ class GameController {
         this._logMessages = elements.messages;
         this._scoreStatus = elements.score;
         this._headerMessage = elements.header;
+        this._teamColor = elements.teamColor;
         this._messages = messages;
     }
 
@@ -66,7 +69,10 @@ class GameController {
                 [WebsocketConn.RecvMsg.TURN_OF]: this._messages.turnOf,
                 [WebsocketConn.RecvMsg.YOUR_TURN]: this._messages.yourTurn
             }, this.headerMessage.bind(this));
-            conn.on(WebsocketConn.RecvMsg.GAME_SCORE, (score) => {
+            conn.on(WebsocketConn.RecvMsg.YOUR_TEAM, team => {
+                this._teamColor.style.backgroundColor = team;
+            });
+            conn.on(WebsocketConn.RecvMsg.GAME_SCORE, score => {
                 const elements = Object.keys(score).map(name => div(`${name}: ${score[name]}`));
                 appendChildren(this._scoreStatus, elements, true);
             });

@@ -26,7 +26,6 @@ mpCtrl.onPlay((conn, ctrl, ctrlWrapper) => {
         [RecvMsg.PLAYER_PUTS_CARD]: curry(mapDict)({player: id, card: cardPreparer})
     });
     ctrl.messagesOn(conn, {
-        [WebsocketConn.RecvMsg.YOUR_TEAM]: 'Ваша команда: {0}',
         [RecvMsg.TRICK_WINNER_IS]: '{0} забирает взятку в {1} очков', 
         [RecvMsg.YOUR_PARTIE_SCORE]: '{0} набрали {1} очков'
     });

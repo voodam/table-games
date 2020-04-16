@@ -33,7 +33,7 @@ class Player implements \JsonSerializable {
     public function joinTeam(Team $team) {
         if (isset($this->team)) throw new \DomainException("Player '$this' has team already");
         $this->team = $team;
-        $this->send(SendMsg::YOUR_TEAM(), t($team));
+        $this->send(SendMsg::YOUR_TEAM(), $team);
     }
 
     final public function __construct(ConnectionInterface $conn, string $name) {

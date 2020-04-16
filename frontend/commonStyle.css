@@ -10,6 +10,14 @@
     font-size: 20px;
 }
 
+.team-color {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+}
+
 button {
     width: 80px;
     height: 40px;
