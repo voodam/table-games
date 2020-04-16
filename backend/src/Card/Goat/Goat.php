@@ -5,7 +5,7 @@ use Games\MsgObservableInterface;
 use Games\MsgObservable;
 use Games\SendMsg;
 use Games\Card\Card;
-use Games\Card\Team;
+use Games\Team;
 use Games\Card\Partie;
 use Games\Card\CardRecvMsg;
 use Games\Exception\GameEndException;

@@ -1,5 +1,4 @@
 const RecvMsg = Object.freeze({
-    YOUR_TEAM: 'yourTeam',
     DEAL: 'deal',
     PLAYER_PUTS_CARD: 'playerPutsCard',
     ASK_TRUMP: 'askTrump',

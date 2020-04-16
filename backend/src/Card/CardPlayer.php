@@ -3,25 +3,12 @@ namespace Games\Card;
 
 use Games\Player;
 use function Games\Util\Iter\randomValue;
-use function Games\Util\Func\getOrReturn;
-use function Games\Util\Translate\t;
 
 class CardPlayer extends Player {
-    private Team $team;
     /**
      * @var Card[]
      */
     private array $hand = [];
-    
-    public static function getTeam(object $playerOrTeam): Team {
-        return getOrReturn($playerOrTeam, [self::class, Team::class], 'team');
-    }
-
-    public function joinTeam(Team $team) {
-        if (isset($this->team)) throw new \DomainException("Player '$this' has team already");
-        $this->team = $team;
-        $this->send(CardSendMsg::YOUR_TEAM(), t($team));
-    }
 
     public function deal(array $hand): void {
         $this->hand = $hand;
@@ -46,8 +33,6 @@ class CardPlayer extends Player {
     
     public function randomCard(): Card { return randomValue($this->hand); }
     public function hasCards(): bool { return !empty($this->hand); }
-    public function team(): Team { return $this->team; }
-    public function hasTeam(Team $team): bool { return $this->team->eq($team); }
     
     private function getCardIndex(Card $card) {
         foreach ($this->hand as $index => $ownCard) {

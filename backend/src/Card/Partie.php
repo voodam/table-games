@@ -1,6 +1,7 @@
 <?php
 namespace Games\Card;
 
+use Games\Team;
 use Games\Util\Logging;
 use function Games\Util\Iter\any;
 

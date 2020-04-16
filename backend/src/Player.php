@@ -5,15 +5,21 @@ use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
 use function Games\Util\Func\getOrReturn;
+use function Games\Util\Translate\t;
 
 class Player implements \JsonSerializable {
     use Logging;
 
     private ConnectionInterface $conn;
     private string $name;
+    private Team $team;
     
     public static function getConn(object $connOrPlayer): ConnectionInterface {
         return getOrReturn($connOrPlayer, [self::class, ConnectionInterface::class], 'conn');
+    }
+    
+    public static function getTeam(object $playerOrTeam): Team {
+        return getOrReturn($playerOrTeam, [self::class, Team::class], 'team');
     }
     
     public static function createJsonMsg(Enum $type, $payload = null): string {
@@ -22,6 +28,12 @@ class Player implements \JsonSerializable {
             $message['payload'] = $payload;
         }
         return json_encode($message);
+    }
+    
+    public function joinTeam(Team $team) {
+        if (isset($this->team)) throw new \DomainException("Player '$this' has team already");
+        $this->team = $team;
+        $this->send(SendMsg::YOUR_TEAM(), t($team));
     }
 
     final public function __construct(ConnectionInterface $conn, string $name) {
@@ -39,6 +51,8 @@ class Player implements \JsonSerializable {
         return $this->conn->close();
     }
 
+    public function team(): Team { return $this->team; }
+    public function hasTeam(Team $team): bool { return $this->team->eq($team); }
     public function conn(): ConnectionInterface { return $this->conn; }
     public function jsonSerialize() { return $this->name; }
     public function __toString(): string { return $this->name; }

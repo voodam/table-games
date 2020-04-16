@@ -1,5 +1,5 @@
 <?php
-namespace Games\Card;
+namespace Games;
 
 use Games\Color;
 

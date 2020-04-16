@@ -4,7 +4,6 @@ namespace Games\Card;
 use MyCLabs\Enum\Enum;
 
 class CardSendMsg extends Enum {
-    private const YOUR_TEAM = 'yourTeam';
     private const DEAL = 'deal';
     private const PLAYER_PUTS_CARD = 'playerPutsCard';
     private const ASK_TRUMP = 'askTrump';

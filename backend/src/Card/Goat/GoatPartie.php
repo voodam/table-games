@@ -2,7 +2,7 @@
 namespace Games\Card\Goat;
 
 use Games\Card\Partie;
-use Games\Card\Team;
+use Games\Team;
 use Games\Card\Trick;
 use Games\Card\Suit;
 use Games\Card\Rank;

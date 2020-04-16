@@ -1,6 +1,7 @@
 class WebsocketConn {
     static RecvMsg = Object.freeze({
         START_GAME: 'startGame',
+        YOUR_TEAM: 'yourTeam',
         YOUR_TURN: 'yourTurn',
         WAIT_PLAYERS: 'waitPlayers',
         TURN_OF: 'turnOf',

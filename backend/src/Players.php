@@ -5,6 +5,7 @@ use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use Games\Util\MyObjectStorage;
 use MyCLabs\Enum\Enum;
+use function Games\Util\Iter\filter;
 
 class Players implements \IteratorAggregate, \Countable {
     use Logging;
@@ -24,6 +25,38 @@ class Players implements \IteratorAggregate, \Countable {
     public function __construct(int $maxPlayers = PHP_INT_MAX) {
         $this->storage = new MyObjectStorage;
         $this->maxPlayers = $maxPlayers;
+    }
+    
+    public function sendTeam(Team $team, Enum $message, $payload = null): void {
+        $teamPlayers = filter($this, fn(Player $player) => $player->hasTeam($team));
+        self::sendTo($teamPlayers, $message, $payload);
+    }
+    
+    public function teams(): array {
+        $teams = [];
+        foreach ($this as $player) {
+            assert($player instanceof Player);
+            foreach ($teams as $team) {
+                if ($player->hasTeam($team)) {
+                    continue 2;
+                }
+            }
+            
+            $teams[] = $player->team();
+        }
+        return $teams;
+    }
+    
+    public function getOtherTeams(object $playerOrTeam): array {
+        $team = Player::getTeam($playerOrTeam);
+        return filter($this->teams(), fn(Team $t) => !$team->eq($t));
+    }
+    
+    public function getOtherTeam(object $playerOrTeam): Team {
+        $otherTeams = $this->getOtherTeams($playerOrTeam);
+        $teamsNumber = count($otherTeams);
+        if ($teamsNumber > 1) throw \LogicException("Supposed to be one other team, $teamsNumber given");
+        return $otherTeams[0];
     }
 
     public function getIterator(): \Traversable {
