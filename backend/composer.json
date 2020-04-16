@@ -6,6 +6,8 @@
         "files": [
             "src/Util/Iter.php",
             "src/Util/Func.php",
+            "src/Util/String.php",
+            "src/Util/Misc.php",
             "src/Util/Translate.php"
         ]
     },

@@ -25,10 +25,14 @@ class Goat implements MsgObservableInterface {
     private \SplObjectStorage $score; // Team -> int
     private Partie $partie;
 
-    public function __construct(CardPlayers $players) {
+    public function __construct(CardPlayers $players, array $initialTeamScore = []) {
         $this->players = $players;
         $this->score = new \SplObjectStorage;
-        $this->changeEachTeamScore(fn() => 0);
+        
+        $initialTeamScore = $initialTeamScore ?: [0, 0];
+        $numberTeamScore = count($initialTeamScore);
+        if ($numberTeamScore !== 2) throw new \LogicException("Two teams in ths game, but given initial score for $numberTeamScore teams");
+        $this->changeEachTeamScore(fn($_, $__, $teamIndex) => $initialTeamScore[$teamIndex]);
     }
 
     public function start() {
@@ -86,7 +90,7 @@ class Goat implements MsgObservableInterface {
     }
 
     private function updateScore(): void {
-        assert ($this->winner() === null);
+        assert($this->winner() === null);
         
         $this->changeEachTeamScore(function(int $oldScore, Team $team) {
             $gameScore = $this->partie->gameScore($team);
@@ -98,8 +102,8 @@ class Goat implements MsgObservableInterface {
     
     private function changeEachTeamScore(callable $scoreCalc): void {
         $newScorePayload = [];
-        foreach ($this->teams() as $team) {
-            $this->score[$team] = $scoreCalc($this->score[$team] ?? null, $team);
+        foreach ($this->teams() as $i => $team) {
+            $this->score[$team] = $scoreCalc($this->score[$team] ?? null, $team, $i);
             $newScorePayload[t($team)] = $this->score[$team];
         }
         $this->players->sendAll(SendMsg::GAME_SCORE(), $newScorePayload);

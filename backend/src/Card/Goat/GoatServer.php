@@ -13,17 +13,16 @@ use Ratchet\ConnectionInterface;
 class GoatServer extends GameServer {
     private Goat $game;
     
-    public function __construct() {
-        parent::__construct(4);
+    public function __construct(array $initialTeamScore = []) {
+        parent::__construct(4, $initialTeamScore);
     }
     
     protected function startGame() {
-        $this->defaultPlayers = ['Мама', 'Папа'];
         $this->preparePayload(CardRecvMsg::PUT_CARD(), [Card::class, 'fromPair']);
         $this->preparePayload(CardRecvMsg::DETERMINE_TRUMP(), compose(_new(GoatTrump::class), _new(Suit::class)) );
         
         $this->detachObserver($this->game ?? null, CardRecvMsg::PUT_CARD());
-        $this->game = new Goat($this->players);
+        $this->game = new Goat($this->players, $this->initialTeamScore);
         $this->attachObserver($this->game, CardRecvMsg::PUT_CARD());
         $this->game->start();
     }

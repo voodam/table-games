@@ -15,6 +15,7 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
 
     protected Players $players;
     protected int $needPlayersNumber;
+    protected array $initialTeamScore;
     private array $payloadPreparers = [];
 
     abstract protected function startGame();
@@ -23,9 +24,10 @@ abstract class GameServer implements MessageComponentInterface, MsgObservableInt
         return 'Игрок ' . (count($this->players) + 1);
     }
 
-    public function __construct(int $needPlayersNumber) {
+    public function __construct(int $needPlayersNumber, array $initialTeamScore = []) {
         $this->needPlayersNumber = $needPlayersNumber;
         $this->players = $this->createPlayers($needPlayersNumber);
+        $this->initialTeamScore = $initialTeamScore;
         $this->attachObserver($this, RecvMsg::CONNECT());
     }
     
