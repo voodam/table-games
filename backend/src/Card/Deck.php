@@ -6,6 +6,9 @@ use function Games\Util\Iter\filter;
 use function Games\Util\Iter\checkCountable;
 
 final class Deck {
+    /**
+     * @var Card[]
+     */
     private array $cards;
 
     public static function new32(): self {

@@ -4,6 +4,7 @@ namespace Games\Card;
 use Games\Team;
 use Games\Util\Logging;
 use function Games\Util\Iter\any;
+use Games\Card\TrickInterface;
 
 abstract class Partie {
     use Logging;
@@ -11,13 +12,16 @@ abstract class Partie {
     protected CardPlayer $trumpPlayer;
     protected CardPlayer $eldest;
     protected Trump $trump;
+    /**
+     * @var TrickInterface[]
+     */
     private array $tricks = [];
     protected CardPlayers $players;
-    private \SplObjectStorage $cardScoreCache;
+    private \SplObjectStorage $cardScoreCache; // Team -> int
 
     abstract protected function calculateGameScore(int $cardsScore, Team $team): int;
     abstract protected function trumpPlayer(): CardPlayer;
-    protected function createTrick(): Trick { return new Trick($this->players, $this->trump); }
+    protected function createTrick(): TrickInterface { return new Trick($this->players, $this->trump); }
 
     public function __construct(CardPlayers $players, CardPlayer $eldest) {
         $this->players = $players;
@@ -77,11 +81,11 @@ abstract class Partie {
     
     protected function gotAnyTrick(Team $team): bool {
         $this->checkEnded();
-        return any($this->tricks, fn(Trick $trick) => $trick->winner()->hasTeam($team));
+        return any($this->tricks, fn(TrickInterface $trick) => $trick->winner()->hasTeam($team));
     }
     
     private function calculateCardsScore(Team $team): int {
-        return array_reduce($this->tricks, fn(int $allScore, Trick $trick) => $trick->winner()->hasTeam($team) 
+        return array_reduce($this->tricks, fn(int $allScore, TrickInterface $trick) => $trick->winner()->hasTeam($team) 
             ? $allScore + $trick->calculateScore() 
             : $allScore, 0);
     }
@@ -102,7 +106,7 @@ abstract class Partie {
         $this->players->sendNext($eldest);
     }
     
-    private function curTrick(): Trick { 
+    private function curTrick(): TrickInterface { 
         if (empty($this->tricks)) throw new \LogicException('First trick was not created');
         return $this->tricks[0];
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Games\Test;
 
 use Games\GameServer;
@@ -9,6 +8,7 @@ use Games\SendMsg;
 use Ratchet\ConnectionInterface;
 use function Games\Util\Func\repeat;
 use Games\Util\Logging;
+use Games\Test\Doubles\ConnStub;
 
 abstract class ServerTest {
     use Logging;
@@ -25,7 +25,7 @@ abstract class ServerTest {
     }
     
     public function start(): void {
-        $connect = fn() => $this->server->connect(null, null, new Conn([$this, 'fullMsgHandler']));
+        $connect = fn() => $this->server->connect(null, null, new ConnStub([$this, 'fullMsgHandler']));
         repeat($this->server->needPlayersNumber(), $connect);
     }
     

@@ -1,12 +1,14 @@
 <?php
-namespace Games\Test;
+namespace Games\Test\Doubles;
 
 use Ratchet\ConnectionInterface;
+use Games\Util\Func\noop;
 
-class Conn implements ConnectionInterface {
+class ConnStub implements ConnectionInterface {
     private $msgHandler; 
     
-    public function __construct(callable $msgHandler) {
+    public function __construct(callable $msgHandler = null) {
+        $msgHandler ??= noop::class;
         $this->msgHandler = $msgHandler;
     }
     

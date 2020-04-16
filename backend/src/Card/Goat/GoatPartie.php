@@ -3,7 +3,7 @@ namespace Games\Card\Goat;
 
 use Games\Card\Partie;
 use Games\Team;
-use Games\Card\Trick;
+use Games\Card\TrickInterface;
 use Games\Card\Suit;
 use Games\Card\Rank;
 use Games\Card\Card;
@@ -30,5 +30,5 @@ class GoatPartie extends Partie {
         return $thisTeamOfTrumpPlayer ? $score : $score * 2;
     }
     
-    protected function createTrick(): Trick { return new GoatTrick($this->players, $this->trump); }
+    protected function createTrick(): TrickInterface { return new GoatTrick($this->players, $this->trump); }
 }

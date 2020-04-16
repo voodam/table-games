@@ -5,7 +5,6 @@ use Ratchet\ConnectionInterface;
 use Games\Util\Logging;
 use MyCLabs\Enum\Enum;
 use function Games\Util\Func\getOrReturn;
-use function Games\Util\Translate\t;
 
 class Player implements \JsonSerializable {
     use Logging;

@@ -8,7 +8,6 @@ use Games\Card\Card;
 use Games\Team;
 use Games\Card\Partie;
 use Games\Card\CardRecvMsg;
-use Games\Exception\GameEndException;
 use Games\Util\Logging;
 use Games\Card\CardSendMsg;
 use Games\Card\CardPlayers;
@@ -41,7 +40,7 @@ class Goat implements MsgObservableInterface {
     }
 
     public function putCard(Card $card, CardPlayer $player) {
-        if ($this->winner()) throw new GameEndException('Game was ended: we have a winner');
+        if ($this->winner()) throw new \LogicException('Game was ended: we have a winner');
         assert(!$this->partie->ended());
         
         $this->partie->putCard($player, $card);

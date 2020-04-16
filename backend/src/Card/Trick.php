@@ -6,7 +6,7 @@ use Games\Util\MyObjectStorage;
 use Games\Util\Logging;
 use Games\Card\ScoreCalc;
 
-class Trick {
+class Trick implements TrickInterface {
     use Logging;
     
     protected MyObjectStorage $cards; // Card -> CardPlayer
@@ -28,11 +28,6 @@ class Trick {
         $player->putCard($card);
         $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), ['player' => ['name' => $player, 'team' => (string)$player->team()], 'card' => $card]);
         $this->cards[$card] = $player;
-    }
-    
-    public function collectCards(): array { 
-        $this->checkEnded();
-        return iterator_to_array($this->cards);
     }
     
     public function calculateScore(): int {
