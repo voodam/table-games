@@ -6,7 +6,6 @@ class GameController {
         enterName: 'Введите имя',
         yourTurn: 'Ваш ход, {0}',
         turnOf: 'Ходит {0}',
-        wrongTurn: '{0}',
         winnerIs: 'Победил(и) {0}!'
     };
 
@@ -59,7 +58,6 @@ class GameController {
 
             this.messagesOn(conn, {
                 [WebsocketConn.RecvMsg.WAIT_PLAYERS]: this._messages.waitPlayers,
-                [WebsocketConn.RecvMsg.WRONG_TURN]: this._messages.wrongTurn,
                 [WebsocketConn.RecvMsg.WINNER_IS]: this._messages.winnerIs
             });
             this.messagesOn(conn, {
