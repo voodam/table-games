@@ -12,11 +12,13 @@ class GameController {
     static createDefaultElements(parent) {
         const elements = createElemsFromStr(
             `<div class="info">
+                <div class="header"></div>
                 <div><div>Игровой счет</div><div class="score">0</div></div>
                 <div class="messages"></div>
             </div>`);
         appendChildren(parent, elements);
         return {
+            header: parent.querySelector('.info .header'),
             messages: parent.querySelector('.info .messages'),
             score: parent.querySelector('.info .score')
         };

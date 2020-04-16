@@ -15,11 +15,11 @@ final class Board {
     }
 
     public function pieces(): \Traversable {
-        $this->forEachLetter(function ($letter) {
+        foreach ($this->letters() as $letter) {
             foreach ($this->pieces[$letter] as $number => $piece) {
                 yield [$piece, new Coords($letter, $number)];
             }
-        });
+        }
     }
 
     private function setupSet(Color $color, int $pawnCoord, int $notPawnCoord) {
@@ -40,8 +40,12 @@ final class Board {
     }
     
     private function forEachLetter(callable $cbk): void {
-        foreach (range('A', 'H') as $letter) {
+        foreach ($this->letters() as $letter) {
             $cbk($letter);
         }
+    }
+    
+    private function letters(): array {
+        return range('A', 'H');
     }
 }

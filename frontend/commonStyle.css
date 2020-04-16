@@ -2,7 +2,7 @@
     filter: brightness(85%);
 }
 
-.turn-of {
+.ctrl-header {
     position: absolute;
     top: 0;
     left: 20%;

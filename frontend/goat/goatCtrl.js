@@ -9,7 +9,7 @@ const ctrlFactory = () => {
     
     const controlsWrapper = ctrlWrapper.querySelector('.controls');
     const elements = GameController.createDefaultElements(controlsWrapper);
-    elements.header = ctrlWrapper.querySelector('.turn-of');
+    elements.header = ctrlWrapper.querySelector('.ctrl-header');
     const ctrl = new GameController(new PromptInputManager, elements);
     return [ctrl, ctrlWrapper];
 };
