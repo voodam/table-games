@@ -90,13 +90,7 @@ class Goat implements MsgObservableInterface {
 
     private function updateScore(): void {
         assert($this->winner() === null);
-        
-        $this->changeEachTeamScore(function(int $oldScore, Team $team) {
-            $gameScore = $this->partie->gameScore($team);
-            $cardsScore = $this->partie->cardsScore($team);
-            $this->players->sendTeam($team, CardSendMsg::YOUR_PARTIE_SCORE(), [t($team), $cardsScore]);
-            return $gameScore + $oldScore;
-        });
+        $this->changeEachTeamScore(fn(int $oldScore, Team $team) =>  $oldScore + $this->partie->gameScore($team));
     }
     
     private function changeEachTeamScore(callable $scoreCalc): void {

@@ -29,7 +29,7 @@ class Trick implements TrickInterface {
         $this->cards[$card] = $player;
         
         if ($this->ended()) {
-            //$this->sendWinner();
+            $this->sendWinner();
         }
     }
     

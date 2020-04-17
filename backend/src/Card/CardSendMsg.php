@@ -10,8 +10,8 @@ class CardSendMsg extends Enum {
     
     // Should be sent in partie
     private const DEAL = 'deal'; // required
+    private const ASK_TRUMP = 'askTrump'; // required
+    private const TRUMP_IS = 'trumpIs'; // required
     private const YOUR_PARTIE_SCORE = 'yourPartieScore';
-    private const ASK_TRUMP = 'askTrump';
     private const PLAYER_DETERMS_TRUMP = 'playerDetermsTrump';
-    private const TRUMP_IS = 'trumpIs';
 }
