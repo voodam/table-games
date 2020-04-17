@@ -6,7 +6,7 @@ use Games\MsgObservable;
 use Games\SendMsg;
 use Games\Card\Card;
 use Games\Team;
-use Games\Card\Partie;
+use Games\Card\PartieInterface;
 use Games\Card\CardRecvMsg;
 use Games\Util\Logging;
 use Games\Card\CardSendMsg;
@@ -22,7 +22,7 @@ class Goat implements MsgObservableInterface {
     
     private CardPlayers $players;
     private \SplObjectStorage $score; // Team -> int
-    private Partie $partie;
+    private PartieInterface $partie;
 
     public function __construct(CardPlayers $players, array $initialTeamScore = []) {
         $this->players = $players;

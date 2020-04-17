@@ -6,7 +6,7 @@ use Games\Util\Logging;
 use function Games\Util\Iter\any;
 use Games\Card\TrickInterface;
 
-abstract class Partie {
+abstract class Partie implements PartieInterface {
     use Logging;
     
     protected CardPlayer $trumpPlayer;
