@@ -9,11 +9,11 @@ class SendMsg extends Enum {
     private const YOUR_TEAM = 'yourTeam';
     private const WRONG_TURN = 'wrongTurn';
     
-    // Should be sent in card partie / other game
-    private const YOUR_TURN = 'yourTurn';
-    private const TURN_OF = 'turnOf';
+    // Should be sent in card partie or game
+    private const YOUR_TURN = 'yourTurn'; // required
+    private const TURN_OF = 'turnOf'; // required
     
-    // Should be sent in game (optionally)
+    // Should be sent in game
     private const WINNER_IS = 'winnerIs';
     private const GAME_SCORE = 'gameScore';
 }

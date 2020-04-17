@@ -4,7 +4,6 @@ namespace Games\Card;
 use Games\Util\Cmp;
 use Games\Util\MyObjectStorage;
 use Games\Util\Logging;
-use Games\Card\ScoreCalc;
 
 class Trick implements TrickInterface {
     use Logging;
@@ -28,6 +27,10 @@ class Trick implements TrickInterface {
         $player->putCard($card);
         $this->players->sendOther($player, CardSendMsg::PLAYER_PUTS_CARD(), ['player' => ['name' => $player, 'team' => (string)$player->team()], 'card' => $card]);
         $this->cards[$card] = $player;
+        
+        if ($this->ended()) {
+            //$this->sendWinner();
+        }
     }
     
     public function calculateScore(): int {
@@ -48,6 +51,10 @@ class Trick implements TrickInterface {
 
     public function ended(): bool { 
         return count($this->cards) >= count($this->players);
+    }
+    
+    private function sendWinner(): void {
+        $this->players->sendAll(CardSendMsg::TRICK_WINNER_IS(), [$this->winner(), $this->calculateScore()]);
     }
     
     private function checkEnded(): void {

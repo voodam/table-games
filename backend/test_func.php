@@ -3,6 +3,7 @@ require __DIR__ . '/vendor/autoload.php';
 ini_set('xdebug.halt_level', E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE);
 ini_set('xdebug.max_nesting_level', 16384);
 set_error_handler(fn ($errno, $errstr, $errfile, $errline) => file_put_contents('err.log', "$errno, $errstr, $errfile, $errline"));
+define('DISABLE_LOGGING', $argv[1] ?? false);
 
 use Games\Test\GoatServerTest;
 

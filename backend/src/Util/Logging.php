@@ -3,7 +3,9 @@ namespace Games\Util;
 
 trait Logging {
     protected function log(string $msg): void {
-        echo $msg . "\n";
+        if (!defined('DISABLE_LOGGING') || DISABLE_LOGGING === false) {
+            echo $msg . "\n";
+        }
     }
     
     protected function error(string $msg): void {
